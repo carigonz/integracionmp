@@ -1,0 +1,39 @@
+{
+  "items": [
+    {
+      "name": "María García",
+      "role": "Propietaria",
+      "company": "Departamento en Palermo",
+      "quote": "Excelente trabajo. Actualizaron todo el tablero eléctrico de mi departamento en un día. Muy profesionales y prolijos.",
+      "rating": 5
+    },
+    {
+      "name": "Carlos Rodríguez",
+      "role": "Gerente",
+      "company": "Restaurante Don Carlos",
+      "quote": "Contratamos a ElectriPro para la instalación eléctrica completa del local. Cumplieron con los plazos y nos ayudaron con la habilitación.",
+      "rating": 5
+    },
+    {
+      "name": "Laura Fernández",
+      "role": "Administradora",
+      "company": "Consorcio Av. Santa Fe 2200",
+      "quote": "Mantienen nuestro edificio desde hace 3 años. Siempre puntuales, con reportes claros y respuesta inmediata ante emergencias.",
+      "rating": 5
+    },
+    {
+      "name": "Roberto Sánchez",
+      "role": "Director de Obra",
+      "company": "Constructora RSA",
+      "quote": "Trabajamos juntos en varios proyectos. Su planificación eléctrica es impecable y siempre encuentran la solución más eficiente.",
+      "rating": 4
+    },
+    {
+      "name": "Ana Martínez",
+      "role": "Propietaria",
+      "company": "Casa en Vicente López",
+      "quote": "Vinieron de emergencia un domingo porque se cortó la luz. En dos horas teníamos todo funcionando. Servicio de primera.",
+      "rating": 5
+    }
+  ]
+}

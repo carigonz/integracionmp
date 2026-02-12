@@ -1,0 +1,58 @@
+---
+import '@/styles/global.css';
+import { siteConfig } from '@/config/site.config';
+import SEOHead from '@/components/seo/SEOHead.astro';
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalUrl?: string;
+  noindex?: boolean;
+  image?: string;
+}
+
+const { title, description, canonicalUrl, noindex, image } = Astro.props;
+---
+
+<!doctype html>
+<html lang={siteConfig.site.locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <SEOHead
+      title={title}
+      description={description}
+      canonicalUrl={canonicalUrl}
+      noindex={noindex}
+      image={image}
+    />
+
+    <slot name="head" />
+  </head>
+  <body class="min-h-screen flex flex-col bg-white text-neutral-800 font-body antialiased">
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-primary-600 focus:text-white focus:px-4 focus:py-2 focus:rounded"
+    >
+      Saltar al contenido principal
+    </a>
+
+    <Header />
+
+    <slot />
+
+    <Footer />
+  </body>
+</html>

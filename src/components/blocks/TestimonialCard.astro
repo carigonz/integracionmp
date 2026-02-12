@@ -1,0 +1,40 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  name: string;
+  role?: string;
+  company?: string;
+  quote: string;
+  rating: number;
+}
+
+const { name, role, company, quote, rating } = Astro.props;
+
+const filledStars = Math.min(Math.max(Math.round(rating), 0), 5);
+const emptyStars = 5 - filledStars;
+---
+
+<div class="bg-white rounded-xl p-6 border border-neutral-200">
+  <div class="flex gap-1">
+    {Array.from({ length: filledStars }).map(() => (
+      <Icon name="lucide:star" class="size-5 text-secondary-500" />
+    ))}
+    {Array.from({ length: emptyStars }).map(() => (
+      <Icon name="lucide:star" class="size-5 text-neutral-300" />
+    ))}
+  </div>
+
+  <blockquote class="text-neutral-700 italic mt-4">
+    &ldquo;{quote}&rdquo;
+  </blockquote>
+
+  <div class="mt-4">
+    <p class="font-semibold text-neutral-900">{name}</p>
+    {(role || company) && (
+      <p class="text-sm text-neutral-500">
+        {role}{role && company && ', '}{company}
+      </p>
+    )}
+  </div>
+</div>

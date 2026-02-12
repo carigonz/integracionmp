@@ -1,0 +1,114 @@
+---
+import { Icon } from 'astro-icon/components';
+import { siteConfig } from '@/config/site.config';
+import type { NavItem } from '@/types';
+import Container from '@/components/common/Container.astro';
+import MobileMenu from '@/components/layout/MobileMenu.astro';
+
+const { navigation, theme, business, features } = siteConfig;
+const currentPath = Astro.url.pathname;
+
+function isActive(href: string): boolean {
+  if (href === '/') return currentPath === '/';
+  return currentPath.startsWith(href);
+}
+
+function shouldShowItem(item: NavItem): boolean {
+  if (item.href === '/blog' && !features.blog) return false;
+  if (item.href === '/team' && !features.team) return false;
+  return true;
+}
+
+const filteredNav = navigation.filter(shouldShowItem);
+---
+
+<header class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-neutral-200">
+  <Container>
+    <div class="flex items-center justify-between h-16 lg:h-20">
+      <!-- Logo -->
+      <a href="/" class="text-xl lg:text-2xl font-bold text-primary-600 flex-shrink-0">
+        {theme.logoText || business.name}
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav aria-label="Navegacion principal" class="hidden lg:flex items-center gap-1">
+        {filteredNav.map((item) => (
+          item.children && item.children.length > 0 ? (
+            <div class="relative group">
+              <a
+                href={item.href}
+                class:list={[
+                  'inline-flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-lg transition-colors',
+                  isActive(item.href)
+                    ? 'text-primary-600 bg-primary-50'
+                    : 'text-neutral-700 hover:text-primary-600 hover:bg-neutral-50',
+                ]}
+                aria-current={isActive(item.href) ? 'page' : undefined}
+              >
+                {item.label}
+                <Icon name="lucide:chevron-down" class="size-4 transition-transform group-hover:rotate-180" />
+              </a>
+              <div class="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                <div class="bg-white rounded-xl shadow-lg border border-neutral-200 py-2 min-w-56">
+                  {item.children.map((child) => (
+                    <a
+                      href={child.href}
+                      class:list={[
+                        'block px-4 py-2.5 text-sm transition-colors',
+                        isActive(child.href)
+                          ? 'text-primary-600 bg-primary-50 font-medium'
+                          : 'text-neutral-700 hover:text-primary-600 hover:bg-neutral-50',
+                      ]}
+                      aria-current={isActive(child.href) ? 'page' : undefined}
+                    >
+                      {child.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <a
+              href={item.href}
+              class:list={[
+                'px-3 py-2 text-sm font-medium rounded-lg transition-colors',
+                isActive(item.href)
+                  ? 'text-primary-600 bg-primary-50'
+                  : 'text-neutral-700 hover:text-primary-600 hover:bg-neutral-50',
+              ]}
+              aria-current={isActive(item.href) ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          )
+        ))}
+      </nav>
+
+      <!-- Desktop CTA & Mobile Toggle -->
+      <div class="flex items-center gap-3">
+        <!-- Phone CTA (desktop) -->
+        <a
+          href={`tel:${business.phone.replace(/\s/g, '')}`}
+          class="hidden lg:inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-primary-600 rounded-lg hover:bg-primary-700 transition-colors"
+        >
+          <Icon name="lucide:phone" class="size-4" />
+          <span>{business.phone}</span>
+        </a>
+
+        <!-- Mobile Menu Toggle -->
+        <button
+          type="button"
+          id="mobile-menu-toggle"
+          class="lg:hidden inline-flex items-center justify-center p-2 rounded-lg text-neutral-700 hover:bg-neutral-100 transition-colors"
+          aria-label="Abrir menu de navegacion"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+        >
+          <Icon name="lucide:menu" class="size-6" />
+        </button>
+      </div>
+    </div>
+  </Container>
+</header>
+
+<MobileMenu />

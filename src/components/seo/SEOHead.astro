@@ -1,0 +1,40 @@
+---
+import { siteConfig } from '@/config/site.config';
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalUrl?: string;
+  noindex?: boolean;
+  image?: string;
+}
+
+const { title, description, canonicalUrl, noindex = false, image } = Astro.props;
+
+const formattedTitle = siteConfig.seo.titleTemplate.replace('%s', title);
+const canonical = canonicalUrl ?? `${siteConfig.site.url}${Astro.url.pathname}`;
+const ogImage = image ?? siteConfig.seo.defaultImage;
+const absoluteImageUrl = ogImage.startsWith('http') ? ogImage : `${siteConfig.site.url}${ogImage}`;
+---
+
+<!-- Primary Meta Tags -->
+<title>{formattedTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonical} />
+<meta property="og:title" content={formattedTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={absoluteImageUrl} />
+<meta property="og:locale" content={siteConfig.site.locale} />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonical} />
+<meta name="twitter:title" content={formattedTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={absoluteImageUrl} />

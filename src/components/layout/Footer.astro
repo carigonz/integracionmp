@@ -1,0 +1,165 @@
+---
+import { Icon } from 'astro-icon/components';
+import { siteConfig } from '@/config/site.config';
+import type { NavItem } from '@/types';
+import Container from '@/components/common/Container.astro';
+
+const { navigation, business, features } = siteConfig;
+
+function shouldShowItem(item: NavItem): boolean {
+  if (item.href === '/blog' && !features.blog) return false;
+  if (item.href === '/team' && !features.team) return false;
+  return true;
+}
+
+const filteredNav = navigation.filter(shouldShowItem);
+
+const currentYear = new Date().getFullYear();
+
+const socialIcons: Record<string, string> = {
+  instagram: 'lucide:instagram',
+  facebook: 'lucide:facebook',
+  linkedin: 'lucide:linkedin',
+  twitter: 'lucide:twitter',
+  youtube: 'lucide:youtube',
+  google: 'lucide:map-pin',
+};
+
+// Service links derived from navigation children
+const servicesNav = navigation.find((item) => item.href === '/services');
+const serviceLinks = servicesNav?.children ?? [];
+---
+
+<footer class="bg-neutral-900 text-neutral-300">
+  <Container>
+    <!-- Main Footer Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 py-16 md:py-20">
+      <!-- Column 1: About -->
+      <div class="space-y-6">
+        <a href="/" class="inline-block text-xl font-bold text-white">
+          {siteConfig.theme.logoText || business.name}
+        </a>
+        <p class="text-sm leading-relaxed text-neutral-400">
+          {business.tagline}
+        </p>
+        {business.socialMedia.length > 0 && (
+          <div class="flex items-center gap-3">
+            {business.socialMedia.map((social) => (
+              <a
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.label}
+                class="inline-flex items-center justify-center size-10 rounded-lg bg-neutral-800 text-neutral-400 hover:bg-primary-600 hover:text-white transition-colors"
+              >
+                <Icon name={socialIcons[social.platform] || 'lucide:link'} class="size-5" />
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <!-- Column 2: Quick Links -->
+      <div>
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-white mb-6">
+          Enlaces rapidos
+        </h3>
+        <ul class="space-y-3">
+          {filteredNav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="text-sm text-neutral-400 hover:text-white transition-colors"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Column 3: Services -->
+      <div>
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-white mb-6">
+          Servicios
+        </h3>
+        <ul class="space-y-3">
+          {serviceLinks.map((service) => (
+            <li>
+              <a
+                href={service.href}
+                class="text-sm text-neutral-400 hover:text-white transition-colors"
+              >
+                {service.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Column 4: Contact -->
+      <div>
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-white mb-6">
+          Contacto
+        </h3>
+        <ul class="space-y-4">
+          <li>
+            <a
+              href={`https://maps.google.com/?q=${encodeURIComponent(`${business.address.street}, ${business.address.city}, ${business.address.state}`)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-start gap-3 text-sm text-neutral-400 hover:text-white transition-colors"
+            >
+              <Icon name="lucide:map-pin" class="size-5 mt-0.5 flex-shrink-0 text-primary-500" />
+              <span>
+                {business.address.street}<br />
+                {business.address.city}, {business.address.state} {business.address.zip}
+              </span>
+            </a>
+          </li>
+          <li>
+            <a
+              href={`tel:${business.phone.replace(/\s/g, '')}`}
+              class="flex items-center gap-3 text-sm text-neutral-400 hover:text-white transition-colors"
+            >
+              <Icon name="lucide:phone" class="size-5 flex-shrink-0 text-primary-500" />
+              <span>{business.phone}</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href={`mailto:${business.email}`}
+              class="flex items-center gap-3 text-sm text-neutral-400 hover:text-white transition-colors"
+            >
+              <Icon name="lucide:mail" class="size-5 flex-shrink-0 text-primary-500" />
+              <span>{business.email}</span>
+            </a>
+          </li>
+          <li class="flex items-start gap-3 text-sm text-neutral-400">
+            <Icon name="lucide:clock" class="size-5 mt-0.5 flex-shrink-0 text-primary-500" />
+            <div>
+              <p>{business.hours.weekdays}</p>
+              <p>{business.hours.saturday}</p>
+              <p>{business.hours.sunday}</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="border-t border-neutral-800 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-sm text-neutral-500">
+        &copy; {currentYear} {business.legalName || business.name}. Todos los derechos reservados.
+      </p>
+      <div class="flex items-center gap-6">
+        <a href="/privacy" class="text-sm text-neutral-500 hover:text-white transition-colors">
+          Politica de privacidad
+        </a>
+        <a href="/terms" class="text-sm text-neutral-500 hover:text-white transition-colors">
+          Terminos y condiciones
+        </a>
+      </div>
+    </div>
+  </Container>
+</footer>

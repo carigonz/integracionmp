@@ -1,0 +1,22 @@
+---
+import { Icon } from 'astro-icon/components';
+import { siteConfig } from '@/config/site.config';
+import Container from '@/components/common/Container.astro';
+import SectionWrapper from '@/components/common/SectionWrapper.astro';
+---
+
+<SectionWrapper background="dark">
+  <Container>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+      {siteConfig.stats.map((stat) => (
+        <div class="text-center">
+          {stat.icon && (
+            <Icon name={stat.icon} class="size-8 text-secondary-400 mx-auto" />
+          )}
+          <div class="text-4xl font-bold text-white mt-3">{stat.value}</div>
+          <div class="text-neutral-300 text-sm mt-1">{stat.label}</div>
+        </div>
+      ))}
+    </div>
+  </Container>
+</SectionWrapper>

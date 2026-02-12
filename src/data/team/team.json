@@ -1,0 +1,35 @@
+{
+  "items": [
+    {
+      "name": "Martín Ruiz",
+      "role": "Director Técnico",
+      "bio": "Ingeniero electricista con más de 20 años de experiencia. Especialista en instalaciones de media y baja tensión. Matriculado en el Colegio de Ingenieros de CABA.",
+      "email": "martin@electripro.com",
+      "certifications": ["Ingeniero Electricista UBA", "Matrícula COPIME", "Auditor Energético"],
+      "order": 1
+    },
+    {
+      "name": "Patricia López",
+      "role": "Coordinadora de Proyectos",
+      "bio": "Técnica en seguridad e higiene con experiencia en gestión de proyectos eléctricos. Coordina los equipos de trabajo y la logística de cada proyecto.",
+      "email": "patricia@electripro.com",
+      "certifications": ["Técnica en SyH", "Project Management"],
+      "order": 2
+    },
+    {
+      "name": "Diego Morales",
+      "role": "Jefe de Cuadrilla",
+      "bio": "Electricista matriculado con 15 años de experiencia en campo. Lidera nuestro equipo técnico en obras residenciales y comerciales.",
+      "certifications": ["Electricista Matriculado", "Trabajo en Altura", "Primeros Auxilios"],
+      "order": 3
+    },
+    {
+      "name": "Luciana Torres",
+      "role": "Atención al Cliente",
+      "bio": "Encargada de la comunicación con clientes, coordinación de visitas y seguimiento de presupuestos. Tu primer punto de contacto con ElectriPro.",
+      "email": "luciana@electripro.com",
+      "certifications": [],
+      "order": 4
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SchemaOrg from '@/components/seo/SchemaOrg.astro';
+import { buildLocalBusinessSchema } from '@/components/seo/schemas/localBusiness';
+import { siteConfig } from '@/config/site.config';
+
+import HeroCarousel from '@/components/sections/HeroCarousel.astro';
+import ServicesGrid from '@/components/sections/ServicesGrid.astro';
+import StatsCounter from '@/components/sections/StatsCounter.astro';
+import Testimonials from '@/components/sections/Testimonials.astro';
+import ProcessSteps from '@/components/sections/ProcessSteps.astro';
+import FaqAccordion from '@/components/sections/FaqAccordion.astro';
+import CtaBanner from '@/components/sections/CtaBanner.astro';
+import ContactFormSection from '@/components/sections/ContactFormSection.astro';
+
+const localBusinessSchema = buildLocalBusinessSchema();
+---
+
+<BaseLayout
+  title={siteConfig.seo.defaultTitle}
+  description={siteConfig.business.description}
+>
+  <SchemaOrg slot="head" schema={localBusinessSchema} />
+
+  <main id="main-content">
+    <HeroCarousel />
+    <ServicesGrid />
+    <StatsCounter />
+    <ProcessSteps />
+    <Testimonials />
+    <FaqAccordion />
+    <CtaBanner />
+    <ContactFormSection />
+  </main>
+</BaseLayout>

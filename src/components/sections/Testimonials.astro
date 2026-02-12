@@ -1,0 +1,32 @@
+---
+import { getCollection } from 'astro:content';
+import Container from '@/components/common/Container.astro';
+import SectionWrapper from '@/components/common/SectionWrapper.astro';
+import SectionHeader from '@/components/common/SectionHeader.astro';
+import TestimonialCard from '@/components/blocks/TestimonialCard.astro';
+
+const testimonialsEntries = await getCollection('testimonials');
+const testimonials = testimonialsEntries[0]?.data.items ?? [];
+---
+
+<SectionWrapper id="testimonios" background="alt">
+  <Container>
+    <SectionHeader
+      eyebrow="Testimonios"
+      title="Lo que dicen nuestros clientes"
+      subtitle="La satisfacción de nuestros clientes es nuestra mejor carta de presentación."
+    />
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+      {testimonials.map((t) => (
+        <TestimonialCard
+          name={t.name}
+          role={t.role}
+          company={t.company}
+          quote={t.quote}
+          rating={t.rating}
+        />
+      ))}
+    </div>
+  </Container>
+</SectionWrapper>

@@ -1,0 +1,113 @@
+---
+import { siteConfig } from '@/config/site.config';
+import Button from '@/components/common/Button.astro';
+
+const slides = [
+  {
+    heading: 'Soluciones Eléctricas Profesionales',
+    subtext:
+      'Más de 15 años de experiencia en instalaciones, mantenimiento y reparaciones eléctricas para hogares, comercios y edificios.',
+    cta: { label: 'Solicitar Presupuesto', href: '/contact' },
+    ctaSecondary: { label: 'Nuestros Servicios', href: '/services' },
+  },
+  {
+    heading: 'Emergencias 24 Horas',
+    subtext:
+      'Respuesta inmediata ante cortes, cortocircuitos y cualquier emergencia eléctrica. Llamanos y un profesional estará en camino.',
+    cta: { label: 'Llamar Ahora', href: `tel:${siteConfig.business.phone}` },
+    ctaSecondary: {
+      label: 'WhatsApp',
+      href: `https://wa.me/${siteConfig.business.whatsapp}`,
+    },
+  },
+  {
+    heading: 'Seguridad Garantizada',
+    subtext:
+      'Profesionales matriculados, materiales certificados y garantía escrita en todos nuestros trabajos. Tu tranquilidad es nuestra prioridad.',
+    cta: { label: 'Conocé al Equipo', href: '/team' },
+    ctaSecondary: { label: 'Ver Testimonios', href: '/#testimonios' },
+  },
+];
+---
+
+<section class="relative" aria-roledescription="carousel" aria-label="Presentación principal">
+  <div class="embla overflow-hidden">
+    <div class="embla__container flex">
+      {
+        slides.map((slide, index) => (
+          <div
+            class="min-w-0 flex-[0_0_100%]"
+            role="group"
+            aria-roledescription="slide"
+            aria-label={`Slide ${index + 1} de ${slides.length}`}
+          >
+            <div class="relative min-h-[600px] md:min-h-[700px] flex items-center bg-primary-900">
+              {/* Gradient overlay */}
+              <div class="absolute inset-0 bg-gradient-to-br from-primary-900/80 via-primary-800/60 to-primary-900/90" />
+
+              <div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 w-full">
+                <div class="max-w-3xl">
+                  <h2 class="text-4xl md:text-6xl font-bold text-white leading-tight">
+                    {slide.heading}
+                  </h2>
+                  <p class="mt-6 text-xl text-neutral-200 max-w-2xl">
+                    {slide.subtext}
+                  </p>
+                  <div class="mt-8 flex flex-wrap gap-4">
+                    <Button href={slide.cta.href} variant="secondary" size="lg">
+                      {slide.cta.label}
+                    </Button>
+                    <Button href={slide.ctaSecondary.href} variant="outline" size="lg" class="border-white text-white hover:bg-white/10">
+                      {slide.ctaSecondary.label}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  {/* Dot indicators */}
+  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 z-20">
+    {
+      slides.map((_, index) => (
+        <button
+          class:list={[
+            'embla-dot size-3 rounded-full transition-colors',
+            index === 0 ? 'bg-white' : 'bg-white/40',
+          ]}
+          aria-label={`Ir al slide ${index + 1}`}
+          type="button"
+        />
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  import EmblaCarousel from 'embla-carousel';
+  document.addEventListener('astro:page-load', () => {
+    const node = document.querySelector('.embla');
+    if (!node) return;
+    const embla = EmblaCarousel(node as HTMLElement, { loop: true });
+    // auto-play
+    const autoplay = setInterval(() => embla.scrollNext(), 5000);
+    node.addEventListener('pointerdown', () => clearInterval(autoplay));
+    // dot buttons
+    const dots = document.querySelectorAll('.embla-dot');
+    const updateDots = () => {
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('bg-white', i === embla.selectedScrollSnap());
+        dot.classList.toggle('bg-white/40', i !== embla.selectedScrollSnap());
+      });
+    };
+    embla.on('select', updateDots);
+    updateDots();
+    dots.forEach((dot, i) =>
+      dot.addEventListener('click', () => embla.scrollTo(i))
+    );
+  });
+</script>

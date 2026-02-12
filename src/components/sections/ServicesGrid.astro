@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+import Container from '@/components/common/Container.astro';
+import SectionWrapper from '@/components/common/SectionWrapper.astro';
+import SectionHeader from '@/components/common/SectionHeader.astro';
+import Button from '@/components/common/Button.astro';
+import ServiceCard from '@/components/blocks/ServiceCard.astro';
+
+const services = (await getCollection('services')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<SectionWrapper id="servicios">
+  <Container>
+    <SectionHeader
+      eyebrow="Nuestros Servicios"
+      title="Soluciones para cada necesidad"
+      subtitle="Ofrecemos un servicio integral que cubre todas las necesidades eléctricas de hogares, comercios y edificios."
+    />
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+      {services.map((service) => (
+        <ServiceCard
+          title={service.data.title}
+          excerpt={service.data.excerpt}
+          icon={service.data.icon}
+          href={`/services/${service.id}`}
+        />
+      ))}
+    </div>
+
+    <div class="text-center mt-10">
+      <Button href="/services" variant="outline">
+        Ver todos los servicios
+      </Button>
+    </div>
+  </Container>
+</SectionWrapper>

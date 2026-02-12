@@ -1,0 +1,168 @@
+---
+import { Icon } from 'astro-icon/components';
+import { siteConfig } from '@/config/site.config';
+import type { NavItem } from '@/types';
+
+const { navigation, business, features } = siteConfig;
+const currentPath = Astro.url.pathname;
+
+function isActive(href: string): boolean {
+  if (href === '/') return currentPath === '/';
+  return currentPath.startsWith(href);
+}
+
+function shouldShowItem(item: NavItem): boolean {
+  if (item.href === '/blog' && !features.blog) return false;
+  if (item.href === '/team' && !features.team) return false;
+  return true;
+}
+
+const filteredNav = navigation.filter(shouldShowItem);
+---
+
+<!-- Mobile Menu Overlay -->
+<div
+  id="mobile-menu-overlay"
+  class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm opacity-0 invisible transition-all duration-300 lg:hidden"
+  data-mobile-overlay
+>
+</div>
+
+<!-- Mobile Menu Panel -->
+<div
+  id="mobile-menu"
+  class="fixed inset-y-0 right-0 z-50 w-full max-w-sm bg-white shadow-xl translate-x-full transition-transform duration-300 ease-in-out lg:hidden"
+  data-mobile-menu
+  role="dialog"
+  aria-modal="true"
+  aria-label="Menu de navegacion"
+>
+  <div class="flex flex-col h-full">
+    <!-- Header -->
+    <div class="flex items-center justify-between px-4 h-16 border-b border-neutral-200">
+      <span class="text-lg font-bold text-primary-600">Menu</span>
+      <button
+        type="button"
+        id="mobile-menu-close"
+        class="inline-flex items-center justify-center p-2 rounded-lg text-neutral-700 hover:bg-neutral-100 transition-colors"
+        aria-label="Cerrar menu"
+      >
+        <Icon name="lucide:x" class="size-6" />
+      </button>
+    </div>
+
+    <!-- Navigation -->
+    <nav aria-label="Navegacion movil" class="flex-1 overflow-y-auto px-4 py-6">
+      <ul class="space-y-1">
+        {filteredNav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class:list={[
+                'block px-3 py-3 text-base font-medium rounded-lg transition-colors',
+                isActive(item.href)
+                  ? 'text-primary-600 bg-primary-50'
+                  : 'text-neutral-800 hover:text-primary-600 hover:bg-neutral-50',
+              ]}
+              aria-current={isActive(item.href) ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+            {item.children && item.children.length > 0 && (
+              <ul class="ml-4 mt-1 space-y-1 border-l-2 border-neutral-200 pl-3">
+                {item.children.map((child) => (
+                  <li>
+                    <a
+                      href={child.href}
+                      class:list={[
+                        'block px-3 py-2 text-sm rounded-lg transition-colors',
+                        isActive(child.href)
+                          ? 'text-primary-600 bg-primary-50 font-medium'
+                          : 'text-neutral-600 hover:text-primary-600 hover:bg-neutral-50',
+                      ]}
+                      aria-current={isActive(child.href) ? 'page' : undefined}
+                    >
+                      {child.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <!-- Contact Info -->
+    <div class="border-t border-neutral-200 px-4 py-6 space-y-4">
+      <a
+        href={`tel:${business.phone.replace(/\s/g, '')}`}
+        class="flex items-center gap-3 text-neutral-700 hover:text-primary-600 transition-colors"
+      >
+        <Icon name="lucide:phone" class="size-5 text-primary-600" />
+        <span class="text-sm font-medium">{business.phone}</span>
+      </a>
+      <a
+        href={`mailto:${business.email}`}
+        class="flex items-center gap-3 text-neutral-700 hover:text-primary-600 transition-colors"
+      >
+        <Icon name="lucide:mail" class="size-5 text-primary-600" />
+        <span class="text-sm font-medium">{business.email}</span>
+      </a>
+      {business.whatsapp && (
+        <a
+          href={`https://wa.me/${business.whatsapp}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center justify-center gap-2 w-full px-4 py-2.5 text-sm font-semibold text-white bg-green-600 rounded-lg hover:bg-green-700 transition-colors"
+        >
+          <Icon name="lucide:message-circle" class="size-5" />
+          <span>WhatsApp</span>
+        </a>
+      )}
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const toggle = document.getElementById('mobile-menu-toggle');
+    const close = document.getElementById('mobile-menu-close');
+    const menu = document.getElementById('mobile-menu');
+    const overlay = document.getElementById('mobile-menu-overlay');
+
+    if (!toggle || !close || !menu || !overlay) return;
+
+    function openMenu() {
+      menu!.classList.remove('translate-x-full');
+      menu!.classList.add('translate-x-0');
+      overlay!.classList.remove('opacity-0', 'invisible');
+      overlay!.classList.add('opacity-100', 'visible');
+      toggle!.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      menu!.classList.add('translate-x-full');
+      menu!.classList.remove('translate-x-0');
+      overlay!.classList.add('opacity-0', 'invisible');
+      overlay!.classList.remove('opacity-100', 'visible');
+      toggle!.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    toggle.addEventListener('click', openMenu);
+    close.addEventListener('click', closeMenu);
+    overlay.addEventListener('click', closeMenu);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMenu();
+    });
+
+    // Close menu when clicking on a navigation link
+    const menuLinks = menu.querySelectorAll('a');
+    menuLinks.forEach((link) => {
+      link.addEventListener('click', closeMenu);
+    });
+  });
+</script>

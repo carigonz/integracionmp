@@ -1,0 +1,32 @@
+---
+import { Icon } from 'astro-icon/components';
+import { siteConfig } from '@/config/site.config';
+import Container from '@/components/common/Container.astro';
+import SectionWrapper from '@/components/common/SectionWrapper.astro';
+import SectionHeader from '@/components/common/SectionHeader.astro';
+---
+
+<SectionWrapper background="alt">
+  <Container>
+    <SectionHeader
+      eyebrow="Cómo Trabajamos"
+      title="Simple, rápido y profesional"
+      subtitle="Nuestro proceso garantiza resultados de calidad en cada proyecto."
+    />
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
+      {siteConfig.process.map((step, index) => (
+        <div class="text-center">
+          <div class="text-5xl font-bold text-primary-100">
+            {String(index + 1).padStart(2, '0')}
+          </div>
+          <div class="bg-primary-100 text-primary-600 rounded-xl p-3 w-fit mx-auto mt-4">
+            <Icon name={step.icon} class="size-10" />
+          </div>
+          <h3 class="text-xl font-semibold mt-4">{step.title}</h3>
+          <p class="text-neutral-600 mt-2 text-sm">{step.description}</p>
+        </div>
+      ))}
+    </div>
+  </Container>
+</SectionWrapper>

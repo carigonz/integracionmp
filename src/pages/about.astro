@@ -1,0 +1,50 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro';
+import Container from '@/components/common/Container.astro';
+import SectionWrapper from '@/components/common/SectionWrapper.astro';
+import { siteConfig } from '@/config/site.config';
+---
+
+<PageLayout
+  title="Sobre Nosotros"
+  description="Conocé la historia, misión y valores de ElectriPro. Más de 15 años brindando soluciones eléctricas profesionales en Buenos Aires."
+  subtitle="Profesionales comprometidos con la excelencia eléctrica"
+>
+  <SectionWrapper>
+    <Container class="max-w-4xl">
+      <div class="prose prose-lg max-w-none">
+        <h2>Nuestra Historia</h2>
+        <p>
+          Desde {siteConfig.business.foundedYear}, <strong>{siteConfig.business.name}</strong> se dedica a brindar
+          soluciones eléctricas integrales para hogares, comercios y edificios en Buenos Aires
+          y alrededores. Lo que comenzó como un pequeño emprendimiento familiar se ha convertido
+          en una empresa de referencia en el sector eléctrico.
+        </p>
+
+        <h2>Nuestra Misión</h2>
+        <p>
+          Proveer servicios eléctricos de la más alta calidad, priorizando la seguridad
+          de las personas y el cumplimiento de las normativas vigentes. Creemos que cada
+          instalación eléctrica debe ser segura, eficiente y duradera.
+        </p>
+
+        <h2>Nuestros Valores</h2>
+        <ul>
+          <li><strong>Seguridad:</strong> Es nuestra prioridad absoluta en cada proyecto</li>
+          <li><strong>Profesionalismo:</strong> Equipo matriculado y en constante capacitación</li>
+          <li><strong>Transparencia:</strong> Presupuestos claros y detallados, sin sorpresas</li>
+          <li><strong>Compromiso:</strong> Cumplimos plazos y garantizamos nuestros trabajos</li>
+          <li><strong>Calidad:</strong> Utilizamos materiales de primera y técnicas actualizadas</li>
+        </ul>
+
+        <h2>¿Por qué elegirnos?</h2>
+        <p>
+          Contamos con un equipo de profesionales matriculados, respuesta rápida ante
+          emergencias, garantía escrita en todos nuestros trabajos y la confianza de más
+          de 1.200 clientes satisfechos. Trabajamos bajo las normas de la Asociación
+          Electrotécnica Argentina (AEA) y las reglamentaciones vigentes.
+        </p>
+      </div>
+    </Container>
+  </SectionWrapper>
+</PageLayout>

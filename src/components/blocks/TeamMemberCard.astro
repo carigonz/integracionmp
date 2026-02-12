@@ -1,0 +1,45 @@
+---
+interface Props {
+  name: string;
+  role: string;
+  bio: string;
+  email?: string;
+  certifications: string[];
+}
+
+const { name, role, bio, email, certifications } = Astro.props;
+
+const nameParts = name.trim().split(/\s+/);
+const initials = nameParts.length >= 2
+  ? `${nameParts[0][0]}${nameParts[nameParts.length - 1][0]}`.toUpperCase()
+  : name.slice(0, 2).toUpperCase();
+---
+
+<div class="bg-white rounded-xl p-6 border border-neutral-200 text-center">
+  <div class="bg-primary-100 text-primary-600 rounded-full size-20 mx-auto flex items-center justify-center">
+    <span class="text-2xl font-bold">{initials}</span>
+  </div>
+
+  <h3 class="font-semibold text-lg mt-4">{name}</h3>
+  <p class="text-primary-600 text-sm">{role}</p>
+  <p class="text-neutral-600 text-sm mt-3">{bio}</p>
+
+  {certifications.length > 0 && (
+    <div class="flex flex-wrap justify-center gap-2 mt-4">
+      {certifications.map((cert) => (
+        <span class="bg-neutral-100 text-neutral-600 text-xs rounded-full px-2 py-1">
+          {cert}
+        </span>
+      ))}
+    </div>
+  )}
+
+  {email && (
+    <a
+      href={`mailto:${email}`}
+      class="inline-block text-sm text-primary-600 hover:underline mt-3"
+    >
+      {email}
+    </a>
+  )}
+</div>

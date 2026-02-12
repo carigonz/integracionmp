@@ -1,0 +1,64 @@
+{
+  "items": [
+    {
+      "question": "¿Trabajan con urgencias y emergencias eléctricas?",
+      "answer": "Sí, ofrecemos servicio de emergencia las 24 horas para situaciones urgentes como cortes de luz, cortocircuitos, olores a quemado o cualquier situación que represente riesgo eléctrico.",
+      "category": "general",
+      "order": 1
+    },
+    {
+      "question": "¿Qué zonas cubren?",
+      "answer": "Cubrimos toda la Ciudad de Buenos Aires (CABA) y Gran Buenos Aires, incluyendo zona norte, sur y oeste. Para ubicaciones fuera de estas zonas, consultanos y evaluamos la viabilidad.",
+      "category": "general",
+      "order": 2
+    },
+    {
+      "question": "¿Sus electricistas están matriculados?",
+      "answer": "Sí, todo nuestro equipo técnico cuenta con matrícula habilitante vigente. Además, realizamos capacitaciones periódicas en seguridad y nuevas tecnologías.",
+      "category": "general",
+      "order": 3
+    },
+    {
+      "question": "¿Ofrecen presupuesto sin cargo?",
+      "answer": "Sí, realizamos la visita de diagnóstico y presupuesto sin cargo dentro de nuestra zona de cobertura. El presupuesto incluye detalle de materiales, mano de obra y plazos estimados.",
+      "category": "presupuesto",
+      "order": 4
+    },
+    {
+      "question": "¿Qué garantía ofrecen sobre los trabajos?",
+      "answer": "Todos nuestros trabajos incluyen garantía escrita. La garantía cubre tanto la mano de obra como los materiales provistos por ElectriPro. El período varía según el tipo de trabajo, con un mínimo de 6 meses.",
+      "category": "garantia",
+      "order": 5
+    },
+    {
+      "question": "¿Emiten factura?",
+      "answer": "Sí, emitimos factura A y B según corresponda. Somos una empresa formalmente constituida y cumplimos con todas las obligaciones fiscales.",
+      "category": "presupuesto",
+      "order": 6
+    },
+    {
+      "question": "¿Pueden ayudarme con la habilitación eléctrica de mi local?",
+      "answer": "Sí, gestionamos habilitaciones eléctricas para comercios, oficinas y locales gastronómicos. Nos encargamos de todo el proceso: relevamiento, adecuación de la instalación si es necesario, y trámite ante el ente regulador.",
+      "category": "comercial",
+      "order": 7
+    },
+    {
+      "question": "¿Qué medios de pago aceptan?",
+      "answer": "Aceptamos efectivo, transferencia bancaria, Mercado Pago y tarjetas de crédito/débito. Para trabajos de mayor envergadura ofrecemos planes de pago.",
+      "category": "presupuesto",
+      "order": 8
+    },
+    {
+      "question": "¿Trabajan con consorcios y administraciones de edificios?",
+      "answer": "Sí, ofrecemos contratos de mantenimiento preventivo para edificios y consorcios. Incluimos reportes periódicos, respuesta prioritaria ante emergencias y condiciones especiales de facturación.",
+      "category": "edificios",
+      "order": 9
+    },
+    {
+      "question": "¿Cuánto tiempo tarda una instalación típica?",
+      "answer": "Depende del tipo de trabajo. Una actualización de tablero puede llevar medio día, mientras que una instalación completa para un departamento puede tomar entre 3 y 5 días. En la visita de presupuesto te damos un cronograma detallado.",
+      "category": "general",
+      "order": 10
+    }
+  ]
+}

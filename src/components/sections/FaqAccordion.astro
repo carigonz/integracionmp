@@ -1,0 +1,34 @@
+---
+import { getCollection } from 'astro:content';
+import Container from '@/components/common/Container.astro';
+import SectionWrapper from '@/components/common/SectionWrapper.astro';
+import SectionHeader from '@/components/common/SectionHeader.astro';
+import FaqItem from '@/components/blocks/FaqItem.astro';
+import SchemaOrg from '@/components/seo/SchemaOrg.astro';
+import { buildFaqPageSchema } from '@/components/seo/schemas/faqPage';
+
+const faqEntries = await getCollection('faq');
+const faqItems = (faqEntries[0]?.data.items ?? []).sort(
+  (a, b) => a.order - b.order
+);
+
+const faqSchema = buildFaqPageSchema(faqItems);
+---
+
+<SectionWrapper id="faq">
+  <Container class="max-w-3xl">
+    <SectionHeader
+      eyebrow="Preguntas Frecuentes"
+      title="Resolvé tus dudas"
+      subtitle="Encontrá respuestas a las preguntas más comunes sobre nuestros servicios."
+    />
+
+    <div class="mt-12 divide-y divide-neutral-200">
+      {faqItems.map((item) => (
+        <FaqItem question={item.question} answer={item.answer} />
+      ))}
+    </div>
+  </Container>
+
+  <SchemaOrg schema={faqSchema} />
+</SectionWrapper>

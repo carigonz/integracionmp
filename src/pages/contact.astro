@@ -1,0 +1,90 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro';
+import Container from '@/components/common/Container.astro';
+import SectionWrapper from '@/components/common/SectionWrapper.astro';
+import ContactFormSection from '@/components/sections/ContactFormSection.astro';
+import { Icon } from 'astro-icon/components';
+import { siteConfig } from '@/config/site.config';
+
+const { business } = siteConfig;
+---
+
+<PageLayout
+  title="Contacto"
+  description="Contactá a ElectriPro para presupuestos, consultas y emergencias eléctricas. Atendemos en CABA y Gran Buenos Aires."
+  subtitle="Estamos para ayudarte"
+>
+  <SectionWrapper>
+    <Container>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <!-- Contact Info -->
+        <div class="space-y-8">
+          <div>
+            <h2 class="text-xl font-semibold text-neutral-900 mb-4">Información de contacto</h2>
+            <ul class="space-y-4">
+              <li>
+                <a href={`tel:${business.phone.replace(/\s/g, '')}`} class="flex items-start gap-3 text-neutral-700 hover:text-primary-600 transition-colors">
+                  <Icon name="lucide:phone" class="size-5 mt-0.5 text-primary-600 shrink-0" />
+                  <div>
+                    <div class="font-medium">Teléfono</div>
+                    <div class="text-sm text-neutral-500">{business.phone}</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href={`mailto:${business.email}`} class="flex items-start gap-3 text-neutral-700 hover:text-primary-600 transition-colors">
+                  <Icon name="lucide:mail" class="size-5 mt-0.5 text-primary-600 shrink-0" />
+                  <div>
+                    <div class="font-medium">Email</div>
+                    <div class="text-sm text-neutral-500">{business.email}</div>
+                  </div>
+                </a>
+              </li>
+              <li class="flex items-start gap-3 text-neutral-700">
+                <Icon name="lucide:map-pin" class="size-5 mt-0.5 text-primary-600 shrink-0" />
+                <div>
+                  <div class="font-medium">Dirección</div>
+                  <div class="text-sm text-neutral-500">
+                    {business.address.street}<br />
+                    {business.address.city}, {business.address.state}
+                  </div>
+                </div>
+              </li>
+              <li class="flex items-start gap-3 text-neutral-700">
+                <Icon name="lucide:clock" class="size-5 mt-0.5 text-primary-600 shrink-0" />
+                <div>
+                  <div class="font-medium">Horarios</div>
+                  <div class="text-sm text-neutral-500">
+                    <p>{business.hours.weekdays}</p>
+                    <p>{business.hours.saturday}</p>
+                    <p>{business.hours.sunday}</p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          {siteConfig.integrations.maps?.embedUrl && (
+            <div class="rounded-xl overflow-hidden border border-neutral-200">
+              <iframe
+                src={siteConfig.integrations.maps.embedUrl}
+                width="100%"
+                height="250"
+                style="border:0"
+                allowfullscreen={false}
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Ubicación de ElectriPro en el mapa"
+              ></iframe>
+            </div>
+          )}
+        </div>
+
+        <!-- Contact Form -->
+        <div class="lg:col-span-2">
+          <ContactFormSection />
+        </div>
+      </div>
+    </Container>
+  </SectionWrapper>
+</PageLayout>

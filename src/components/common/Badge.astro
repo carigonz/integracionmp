@@ -1,0 +1,18 @@
+---
+interface Props {
+  variant?: 'primary' | 'secondary' | 'neutral';
+  class?: string;
+}
+
+const { variant = 'primary', class: className } = Astro.props;
+
+const variantClasses: Record<string, string> = {
+  primary: 'bg-primary-100 text-primary-700',
+  secondary: 'bg-secondary-100 text-secondary-700',
+  neutral: 'bg-neutral-100 text-neutral-700',
+};
+---
+
+<span class:list={['inline-block rounded-full px-3 py-1 text-xs font-medium', variantClasses[variant], className]}>
+  <slot />
+</span>

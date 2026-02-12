@@ -1,0 +1,155 @@
+---
+import { siteConfig } from '@/config/site.config';
+import Container from '@/components/common/Container.astro';
+import SectionWrapper from '@/components/common/SectionWrapper.astro';
+import SectionHeader from '@/components/common/SectionHeader.astro';
+import Button from '@/components/common/Button.astro';
+
+const services = [
+  'Electricidad Residencial',
+  'Electricidad Comercial',
+  'Edificios',
+  'Seguridad e Higiene',
+  'Asesoría de Construcción',
+  'Otro',
+];
+---
+
+<SectionWrapper id="contacto">
+  <Container class="max-w-2xl">
+    <SectionHeader
+      eyebrow="Contacto"
+      title="Escribinos"
+      subtitle="Completá el formulario y nos pondremos en contacto con vos a la brevedad."
+    />
+
+    <form
+      action="https://api.web3forms.com/submit"
+      method="POST"
+      id="contact-form"
+      class="mt-12 space-y-6"
+    >
+      <input type="hidden" name="access_key" value={siteConfig.integrations.forms.accessKey} />
+      <input type="checkbox" name="botcheck" class="hidden" style="display:none" />
+
+      <div>
+        <label for="name" class="block text-sm font-medium text-neutral-700 mb-1">
+          Nombre completo *
+        </label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          required
+          class="w-full rounded-lg border border-neutral-300 px-4 py-3 text-neutral-900 placeholder:text-neutral-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 focus:outline-none transition-colors"
+          placeholder="Tu nombre"
+        />
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div>
+          <label for="email" class="block text-sm font-medium text-neutral-700 mb-1">
+            Email *
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            class="w-full rounded-lg border border-neutral-300 px-4 py-3 text-neutral-900 placeholder:text-neutral-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 focus:outline-none transition-colors"
+            placeholder="tu@email.com"
+          />
+        </div>
+        <div>
+          <label for="phone" class="block text-sm font-medium text-neutral-700 mb-1">
+            Teléfono
+          </label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            class="w-full rounded-lg border border-neutral-300 px-4 py-3 text-neutral-900 placeholder:text-neutral-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 focus:outline-none transition-colors"
+            placeholder="11 1234-5678"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label for="service" class="block text-sm font-medium text-neutral-700 mb-1">
+          Servicio de interés
+        </label>
+        <select
+          id="service"
+          name="service"
+          class="w-full rounded-lg border border-neutral-300 px-4 py-3 text-neutral-900 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 focus:outline-none transition-colors"
+        >
+          <option value="">Seleccioná un servicio</option>
+          {services.map((s) => (
+            <option value={s}>{s}</option>
+          ))}
+        </select>
+      </div>
+
+      <div>
+        <label for="message" class="block text-sm font-medium text-neutral-700 mb-1">
+          Mensaje *
+        </label>
+        <textarea
+          id="message"
+          name="message"
+          required
+          rows={5}
+          class="w-full rounded-lg border border-neutral-300 px-4 py-3 text-neutral-900 placeholder:text-neutral-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 focus:outline-none transition-colors resize-y"
+          placeholder="Contanos en qué podemos ayudarte..."
+        ></textarea>
+      </div>
+
+      <div>
+        <Button type="submit" variant="primary" size="lg" class="w-full">
+          Enviar mensaje
+        </Button>
+      </div>
+
+      <div id="form-result" class="hidden text-center py-4 rounded-lg"></div>
+    </form>
+  </Container>
+</SectionWrapper>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const form = document.getElementById('contact-form') as HTMLFormElement | null;
+    const result = document.getElementById('form-result');
+    if (!form || !result) return;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = 'Enviando...';
+      submitBtn.disabled = true;
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+        });
+        const data = await response.json();
+
+        if (data.success) {
+          result.textContent = '¡Mensaje enviado con éxito! Nos pondremos en contacto pronto.';
+          result.className = 'block text-center py-4 rounded-lg bg-accent-100 text-accent-700';
+          form.reset();
+        } else {
+          result.textContent = 'Hubo un error al enviar el mensaje. Por favor intentá nuevamente.';
+          result.className = 'block text-center py-4 rounded-lg bg-red-100 text-red-700';
+        }
+      } catch {
+        result.textContent = 'Error de conexión. Por favor intentá más tarde.';
+        result.className = 'block text-center py-4 rounded-lg bg-red-100 text-red-700';
+      } finally {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      }
+    });
+  });
+</script>
