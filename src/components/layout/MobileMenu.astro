@@ -125,29 +125,27 @@ const filteredNav = navigation.filter(shouldShowItem);
 </div>
 
 <script>
-  document.addEventListener('astro:page-load', () => {
-    const toggle = document.getElementById('mobile-menu-toggle');
-    const close = document.getElementById('mobile-menu-close');
-    const menu = document.getElementById('mobile-menu');
-    const overlay = document.getElementById('mobile-menu-overlay');
+  const toggle = document.getElementById('mobile-menu-toggle');
+  const close = document.getElementById('mobile-menu-close');
+  const menu = document.getElementById('mobile-menu');
+  const overlay = document.getElementById('mobile-menu-overlay');
 
-    if (!toggle || !close || !menu || !overlay) return;
-
+  if (toggle && close && menu && overlay) {
     function openMenu() {
-      menu!.classList.remove('translate-x-full');
-      menu!.classList.add('translate-x-0');
-      overlay!.classList.remove('opacity-0', 'invisible');
-      overlay!.classList.add('opacity-100', 'visible');
-      toggle!.setAttribute('aria-expanded', 'true');
+      menu.classList.remove('translate-x-full');
+      menu.classList.add('translate-x-0');
+      overlay.classList.remove('opacity-0', 'invisible');
+      overlay.classList.add('opacity-100', 'visible');
+      toggle.setAttribute('aria-expanded', 'true');
       document.body.style.overflow = 'hidden';
     }
 
     function closeMenu() {
-      menu!.classList.add('translate-x-full');
-      menu!.classList.remove('translate-x-0');
-      overlay!.classList.add('opacity-0', 'invisible');
-      overlay!.classList.remove('opacity-100', 'visible');
-      toggle!.setAttribute('aria-expanded', 'false');
+      menu.classList.add('translate-x-full');
+      menu.classList.remove('translate-x-0');
+      overlay.classList.add('opacity-0', 'invisible');
+      overlay.classList.remove('opacity-100', 'visible');
+      toggle.setAttribute('aria-expanded', 'false');
       document.body.style.overflow = '';
     }
 
@@ -159,10 +157,9 @@ const filteredNav = navigation.filter(shouldShowItem);
       if (e.key === 'Escape') closeMenu();
     });
 
-    // Close menu when clicking on a navigation link
     const menuLinks = menu.querySelectorAll('a');
     menuLinks.forEach((link) => {
       link.addEventListener('click', closeMenu);
     });
-  });
+  }
 </script>

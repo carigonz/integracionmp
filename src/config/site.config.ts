@@ -2,20 +2,20 @@ import type { SiteConfig } from '@/types';
 
 export const siteConfig: SiteConfig = {
   business: {
-    name: 'ElectriPro Servicios Integrales',
-    legalName: 'ElectriPro S.R.L.',
-    tagline: 'Soluciones eléctricas profesionales para hogares, comercios y edificios',
+    name: 'IntegracionMP Servicios Eléctricos',
+    legalName: 'IntegracionMP',
+    tagline: 'Soluciones eléctricas confiables para hogares, comercios y edificios',
     description:
-      'Servicio integral de reparaciones eléctricas con más de 15 años de experiencia. Electricidad residencial, comercial, edificios, seguridad e higiene y asesoría de construcción en Buenos Aires.',
-    foundedYear: 2010,
-    email: 'contacto@electripro.com',
-    phone: '+54 11 1234-5678',
-    whatsapp: '5491112345678',
+      'Servicio integral de reparaciones eléctricas con más de 10 años de experiencia. Electricidad residencial, comercial, edificios y emergencias 24/7 en Gran Buenos Aires.',
+    foundedYear: 2015,
+    email: 'meppugliese@gmail.com',
+    phone: '+54 11 7364-4604',
+    whatsapp: '5491173644604',
     address: {
-      street: 'Av. Corrientes 1234',
-      city: 'Buenos Aires',
-      state: 'CABA',
-      zip: 'C1043',
+      street: '',
+      city: 'Gran Buenos Aires',
+      state: 'Buenos Aires',
+      zip: '',
       country: 'AR',
     },
     geo: {
@@ -24,32 +24,30 @@ export const siteConfig: SiteConfig = {
     },
     hours: {
       weekdays: 'Lunes a Viernes: 08:00 - 18:00',
-      saturday: 'Sábados: 09:00 - 13:00',
-      sunday: 'Domingos: Cerrado',
+      saturday: 'Sábados: 09:00 - 14:00',
+      sunday: 'Emergencias 24/7',
     },
     socialMedia: [
-      { platform: 'instagram', url: 'https://instagram.com/electripro', label: 'Instagram' },
-      { platform: 'facebook', url: 'https://facebook.com/electripro', label: 'Facebook' },
-      { platform: 'linkedin', url: 'https://linkedin.com/company/electripro', label: 'LinkedIn' },
-      { platform: 'google', url: 'https://g.page/electripro', label: 'Google Business' },
+      { platform: 'instagram', url: 'https://instagram.com/integracionmp', label: 'Instagram' },
+      { platform: 'whatsapp', url: 'https://wa.me/5491173644604', label: 'WhatsApp' },
     ],
   },
 
   site: {
-    url: 'https://www.electripro.com',
+    url: 'https://www.integracionmp.com',
     locale: 'es-AR',
   },
 
   theme: {
-    logoText: 'ElectriPro',
+    logoText: 'IntegracionMP',
   },
 
   seo: {
-    defaultTitle: 'ElectriPro | Electricista Profesional en Buenos Aires',
-    titleTemplate: '%s | ElectriPro',
+    defaultTitle: 'IntegracionMP | Electricista Profesional en Gran Buenos Aires',
+    titleTemplate: '%s | IntegracionMP',
     defaultImage: '/og-default.jpg',
     schemaType: 'Electrician',
-    areaServed: ['Buenos Aires', 'CABA', 'GBA Norte', 'GBA Sur', 'GBA Oeste'],
+    areaServed: ['Gran Buenos Aires', 'GBA Norte', 'GBA Sur', 'GBA Oeste', 'GBA Este'],
   },
 
   navigation: [
@@ -61,41 +59,39 @@ export const siteConfig: SiteConfig = {
         { label: 'Electricidad Residencial', href: '/services/electricidad-residencial' },
         { label: 'Electricidad Comercial', href: '/services/electricidad-comercial' },
         { label: 'Edificios', href: '/services/edificios' },
-        { label: 'Seguridad e Higiene', href: '/services/seguridad-e-higiene' },
-        { label: 'Asesoría de Construcción', href: '/services/asesoria-de-construccion' },
+        { label: 'Emergencias 24/7', href: '/services/emergencias' },
       ],
     },
-    { label: 'Equipo', href: '/team' },
-    { label: 'Blog', href: '/blog' },
+    { label: 'Nosotros', href: '/about' },
     { label: 'Contacto', href: '/contact' },
   ],
 
   stats: [
-    { value: '15+', label: 'Años de experiencia', icon: 'lucide:calendar-check' },
-    { value: '2.500+', label: 'Proyectos completados', icon: 'lucide:check-circle' },
-    { value: '1.200+', label: 'Clientes satisfechos', icon: 'lucide:users' },
-    { value: '24hs', label: 'Respuesta de emergencia', icon: 'lucide:clock' },
+    { value: '10+', label: 'Años de experiencia', icon: 'lucide:calendar-check' },
+    { value: '1.500+', label: 'Proyectos completados', icon: 'lucide:check-circle' },
+    { value: '800+', label: 'Clientes satisfechos', icon: 'lucide:users' },
+    { value: '24/7', label: 'Emergencias disponibles', icon: 'lucide:clock' },
   ],
 
   process: [
     {
-      title: 'Consulta Inicial',
-      description: 'Nos contactás y evaluamos tu necesidad. Podés llamarnos, escribirnos por WhatsApp o completar el formulario.',
+      title: 'Contacto',
+      description: 'Comunicate por WhatsApp o email y contanos tu necesidad. Atención rápida y personalizada.',
       icon: 'lucide:phone-call',
     },
     {
-      title: 'Diagnóstico',
-      description: 'Visitamos tu ubicación, realizamos un relevamiento técnico completo y te presentamos un presupuesto detallado.',
-      icon: 'lucide:search',
+      title: 'Presupuesto',
+      description: 'Evaluamos tu caso y te enviamos un presupuesto sin cargo. Para trabajos complejos, visitamos el lugar.',
+      icon: 'lucide:file-text',
     },
     {
-      title: 'Ejecución',
-      description: 'Nuestro equipo de profesionales matriculados realiza el trabajo cumpliendo todas las normas de seguridad.',
+      title: 'Trabajo Profesional',
+      description: 'Realizamos el servicio con personal matriculado, cumpliendo todas las normas de seguridad eléctrica.',
       icon: 'lucide:wrench',
     },
     {
       title: 'Garantía',
-      description: 'Entregamos certificación de los trabajos realizados con garantía escrita. Seguimiento post-servicio incluido.',
+      description: 'Todos nuestros trabajos incluyen garantía escrita y seguimiento post-servicio.',
       icon: 'lucide:shield-check',
     },
   ],
@@ -114,9 +110,9 @@ export const siteConfig: SiteConfig = {
   },
 
   features: {
-    blog: true,
-    team: true,
-    testimonials: true,
+    blog: false,
+    team: false,
+    testimonials: false,
     faq: true,
     whatsappButton: true,
   },

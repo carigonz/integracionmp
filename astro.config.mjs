@@ -6,7 +6,7 @@ import tailwindcss from '@tailwindcss/vite';
 import icon from 'astro-icon';
 
 export default defineConfig({
-  site: 'https://www.electripro.com',
+  site: 'https://www.integracionmp.com',
   output: 'static',
   integrations: [
     mdx(),

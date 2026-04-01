@@ -1,0 +1,91 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro';
+import Container from '@/components/common/Container.astro';
+import SectionWrapper from '@/components/common/SectionWrapper.astro';
+import { siteConfig } from '@/config/site.config';
+
+const { business, site } = siteConfig;
+const currentYear = new Date().getFullYear();
+---
+
+<PageLayout
+  title="Política de Privacidad"
+  description={`Política de privacidad de ${business.name}. Información sobre el tratamiento de datos personales.`}
+  subtitle="Protección de tus datos personales"
+>
+  <SectionWrapper>
+    <Container class="max-w-3xl">
+      <div class="prose prose-lg max-w-none">
+        <p class="text-neutral-500 text-sm">Última actualización: {currentYear}</p>
+
+        <h2>1. Responsable del tratamiento</h2>
+        <p>
+          <strong>{business.legalName || business.name}</strong> es responsable del tratamiento de los datos
+          personales que se recopilan a través de este sitio web ({site.url}).
+        </p>
+        <p>
+          Podés contactarnos en: <a href={`mailto:${business.email}`}>{business.email}</a>
+        </p>
+
+        <h2>2. Datos que recopilamos</h2>
+        <p>A través del formulario de contacto recopilamos:</p>
+        <ul>
+          <li>Nombre completo</li>
+          <li>Dirección de correo electrónico</li>
+          <li>Número de teléfono (opcional)</li>
+          <li>Mensaje y tipo de servicio de interés</li>
+        </ul>
+        <p>
+          No recopilamos datos de pago, ni datos sensibles. No utilizamos cookies de seguimiento
+          de terceros.
+        </p>
+
+        <h2>3. Finalidad del tratamiento</h2>
+        <p>Los datos recopilados se utilizan exclusivamente para:</p>
+        <ul>
+          <li>Responder a tu consulta o solicitud de presupuesto</li>
+          <li>Coordinar la prestación del servicio solicitado</li>
+          <li>Comunicaciones relacionadas con el servicio contratado</li>
+        </ul>
+
+        <h2>4. Conservación de los datos</h2>
+        <p>
+          Los datos se conservan durante el tiempo necesario para gestionar tu consulta y, en caso
+          de contratación, durante la relación comercial y los plazos legales aplicables.
+        </p>
+
+        <h2>5. Compartición de datos</h2>
+        <p>
+          No compartimos tus datos personales con terceros, salvo obligación legal. El envío del
+          formulario utiliza el servicio Web3Forms para la transmisión del mensaje; podés consultar
+          su política de privacidad en <a href="https://web3forms.com/privacy" target="_blank" rel="noopener noreferrer">web3forms.com/privacy</a>.
+        </p>
+
+        <h2>6. Tus derechos</h2>
+        <p>Tenés derecho a:</p>
+        <ul>
+          <li>Acceder a tus datos personales</li>
+          <li>Solicitar la rectificación de datos incorrectos</li>
+          <li>Solicitar la supresión de tus datos</li>
+          <li>Oponerte al tratamiento de tus datos</li>
+        </ul>
+        <p>
+          Para ejercer estos derechos, contactanos en{' '}
+          <a href={`mailto:${business.email}`}>{business.email}</a>.
+        </p>
+
+        <h2>7. Seguridad</h2>
+        <p>
+          Implementamos medidas técnicas y organizativas para proteger tus datos contra acceso no
+          autorizado, pérdida o destrucción.
+        </p>
+
+        <h2>8. Cambios en esta política</h2>
+        <p>
+          Podemos actualizar esta política ocasionalmente. La versión actualizada estará siempre
+          disponible en esta página con la fecha de última actualización.
+        </p>
+      </div>
+    </Container>
+  </SectionWrapper>
+</PageLayout>

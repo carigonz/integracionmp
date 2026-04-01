@@ -1,23 +1,23 @@
 {
-  "name": "business-blueprint",
-  "type": "module",
-  "version": "1.0.0",
-  "description": "Reusable static website blueprint for businesses and professionals",
-  "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "check": "astro check",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "@astrojs/mdx": "^4.3.13",
-    "@astrojs/sitemap": "^3.7.0",
-    "@iconify-json/lucide": "^1.2.90",
-    "@tailwindcss/vite": "^4.1.18",
-    "astro": "^5.17.1",
-    "astro-icon": "^1.1.5",
-    "embla-carousel": "^8.6.0",
-    "tailwindcss": "^4.1.18"
-  }
+	"name": "business-blueprint",
+	"type": "module",
+	"version": "1.0.0",
+	"description": "Integracion MP - Sitio web de la empresa Integracion MP",
+	"scripts": {
+		"dev": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview",
+		"check": "astro check",
+		"astro": "astro"
+	},
+	"dependencies": {
+		"@astrojs/mdx": "^4.3.13",
+		"@astrojs/sitemap": "^3.7.0",
+		"@iconify-json/lucide": "^1.2.90",
+		"@tailwindcss/vite": "^4.1.18",
+		"astro": "^5.17.1",
+		"astro-icon": "^1.1.5",
+		"embla-carousel": "^8.6.0",
+		"tailwindcss": "^4.1.18"
+	}
 }

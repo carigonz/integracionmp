@@ -5,7 +5,7 @@ export interface NavItem {
 }
 
 export interface SocialLink {
-  platform: 'instagram' | 'facebook' | 'linkedin' | 'twitter' | 'youtube' | 'google';
+  platform: 'instagram' | 'facebook' | 'linkedin' | 'twitter' | 'youtube' | 'google' | 'whatsapp';
   url: string;
   label: string;
 }

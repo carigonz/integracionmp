@@ -110,17 +110,16 @@ const services = [
         </Button>
       </div>
 
-      <div id="form-result" class="hidden text-center py-4 rounded-lg"></div>
+      <div id="form-result" class="hidden text-center py-4 rounded-lg" role="status" aria-live="polite" aria-atomic="true"></div>
     </form>
   </Container>
 </SectionWrapper>
 
 <script>
-  document.addEventListener('astro:page-load', () => {
-    const form = document.getElementById('contact-form') as HTMLFormElement | null;
-    const result = document.getElementById('form-result');
-    if (!form || !result) return;
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const result = document.getElementById('form-result');
 
+  if (form && result) {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
@@ -151,5 +150,5 @@ const services = [
         submitBtn.disabled = false;
       }
     });
-  });
+  }
 </script>

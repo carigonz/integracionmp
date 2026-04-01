@@ -1,19 +1,24 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import SchemaOrg from '@/components/seo/SchemaOrg.astro';
 import { buildLocalBusinessSchema } from '@/components/seo/schemas/localBusiness';
 import { siteConfig } from '@/config/site.config';
 
-import HeroCarousel from '@/components/sections/HeroCarousel.astro';
+import Hero from '@/components/sections/Hero.astro';
 import ServicesGrid from '@/components/sections/ServicesGrid.astro';
-import StatsCounter from '@/components/sections/StatsCounter.astro';
-import Testimonials from '@/components/sections/Testimonials.astro';
-import ProcessSteps from '@/components/sections/ProcessSteps.astro';
 import FaqAccordion from '@/components/sections/FaqAccordion.astro';
 import CtaBanner from '@/components/sections/CtaBanner.astro';
 import ContactFormSection from '@/components/sections/ContactFormSection.astro';
+import SectionWrapper from '@/components/common/SectionWrapper.astro';
+import Container from '@/components/common/Container.astro';
+import SectionHeader from '@/components/common/SectionHeader.astro';
+import TeamMemberCard from '@/components/blocks/TeamMemberCard.astro';
 
 const localBusinessSchema = buildLocalBusinessSchema();
+
+const teamEntries = await getCollection('team');
+const members = (teamEntries[0]?.data.items ?? []).sort((a, b) => a.order - b.order);
 ---
 
 <BaseLayout
@@ -23,11 +28,32 @@ const localBusinessSchema = buildLocalBusinessSchema();
   <SchemaOrg slot="head" schema={localBusinessSchema} />
 
   <main id="main-content">
-    <HeroCarousel />
+    <Hero />
     <ServicesGrid />
-    <StatsCounter />
-    <ProcessSteps />
-    <Testimonials />
+
+    {siteConfig.features.team && (
+    <SectionWrapper id="nosotros" background="alt">
+      <Container>
+        <SectionHeader
+          eyebrow="El Equipo"
+          title="Profesionales a tu servicio"
+          subtitle="Electricistas y técnicos matriculados con experiencia en instalaciones residenciales, comerciales y de edificios."
+        />
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
+          {members.map((member) => (
+            <TeamMemberCard
+              name={member.name}
+              role={member.role}
+              bio={member.bio}
+              email={member.email}
+              certifications={member.certifications}
+            />
+          ))}
+        </div>
+      </Container>
+    </SectionWrapper>
+    )}
+
     <FaqAccordion />
     <CtaBanner />
     <ContactFormSection />

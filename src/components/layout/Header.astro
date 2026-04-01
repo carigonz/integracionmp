@@ -1,9 +1,11 @@
 ---
+import { Image } from 'astro:assets';
 import { Icon } from 'astro-icon/components';
 import { siteConfig } from '@/config/site.config';
 import type { NavItem } from '@/types';
 import Container from '@/components/common/Container.astro';
 import MobileMenu from '@/components/layout/MobileMenu.astro';
+import logo from '@/assets/logo.png';
 
 const { navigation, theme, business, features } = siteConfig;
 const currentPath = Astro.url.pathname;
@@ -26,8 +28,13 @@ const filteredNav = navigation.filter(shouldShowItem);
   <Container>
     <div class="flex items-center justify-between h-16 lg:h-20">
       <!-- Logo -->
-      <a href="/" class="text-xl lg:text-2xl font-bold text-primary-600 flex-shrink-0">
-        {theme.logoText || business.name}
+      <a href="/" class="flex items-center gap-2 flex-shrink-0">
+        <Image
+          src={logo}
+          alt={business.name}
+          height={48}
+          class="h-10 lg:h-12 w-auto"
+        />
       </a>
 
       <!-- Desktop Navigation -->
@@ -86,13 +93,15 @@ const filteredNav = navigation.filter(shouldShowItem);
 
       <!-- Desktop CTA & Mobile Toggle -->
       <div class="flex items-center gap-3">
-        <!-- Phone CTA (desktop) -->
+        <!-- WhatsApp CTA (desktop) -->
         <a
-          href={`tel:${business.phone.replace(/\s/g, '')}`}
+          href={`https://wa.me/${business.whatsapp}`}
+          target="_blank"
+          rel="noopener noreferrer"
           class="hidden lg:inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-primary-600 rounded-lg hover:bg-primary-700 transition-colors"
         >
-          <Icon name="lucide:phone" class="size-4" />
-          <span>{business.phone}</span>
+          <Icon name="lucide:message-circle" class="size-4" />
+          <span>WhatsApp</span>
         </a>
 
         <!-- Mobile Menu Toggle -->

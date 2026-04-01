@@ -9,25 +9,39 @@ interface Props {
 const { question, answer } = Astro.props;
 ---
 
-<details class="border-b border-neutral-200 py-4">
-  <summary class="flex justify-between items-center cursor-pointer">
-    <span class="font-medium text-neutral-900">{question}</span>
-    <Icon name="lucide:chevron-down" class="chevron size-5 text-neutral-500 transition-transform shrink-0 ml-4" />
+<details class="border-b border-neutral-200 py-4 group/faq">
+  <summary class="flex justify-between items-center cursor-pointer list-none select-none py-1">
+    <span class="font-medium text-neutral-900 pr-4">{question}</span>
+    <Icon
+      name="lucide:chevron-down"
+      class="chevron size-5 text-neutral-400 transition-transform duration-300 shrink-0 group-open/faq:rotate-180"
+    />
   </summary>
-  <div class="pt-3 text-neutral-600 prose prose-sm">
-    <p>{answer}</p>
+  <div class="faq-body overflow-hidden">
+    <p class="pt-3 pb-1 text-neutral-600 text-sm leading-relaxed">{answer}</p>
   </div>
 </details>
 
 <style>
-  details[open] .chevron {
-    transform: rotate(180deg);
-  }
   summary::-webkit-details-marker {
     display: none;
   }
   summary::marker {
     display: none;
     content: "";
+  }
+
+  .faq-body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease;
+  }
+
+  .faq-body > p {
+    overflow: hidden;
+  }
+
+  details[open] .faq-body {
+    grid-template-rows: 1fr;
   }
 </style>

@@ -1,14 +1,20 @@
 ---
+import { getCollection } from 'astro:content';
 import PageLayout from '@/layouts/PageLayout.astro';
 import Container from '@/components/common/Container.astro';
 import SectionWrapper from '@/components/common/SectionWrapper.astro';
+import SectionHeader from '@/components/common/SectionHeader.astro';
+import TeamMemberCard from '@/components/blocks/TeamMemberCard.astro';
 import { siteConfig } from '@/config/site.config';
+
+const teamEntries = await getCollection('team');
+const members = (teamEntries[0]?.data.items ?? []).sort((a, b) => a.order - b.order);
 ---
 
 <PageLayout
-  title="Sobre Nosotros"
-  description="Conocé la historia, misión y valores de ElectriPro. Más de 15 años brindando soluciones eléctricas profesionales en Buenos Aires."
-  subtitle="Profesionales comprometidos con la excelencia eléctrica"
+  title="Nosotros"
+  description="Conocé la historia, misión y valores de IntegracionMP. Soluciones en electricidad, Seguridad e Higiene y obras civiles en Gran Buenos Aires."
+  subtitle="Profesionales comprometidos con la excelencia"
 >
   <SectionWrapper>
     <Container class="max-w-4xl">
@@ -41,9 +47,30 @@ import { siteConfig } from '@/config/site.config';
         <p>
           Contamos con un equipo de profesionales matriculados, respuesta rápida ante
           emergencias, garantía escrita en todos nuestros trabajos y la confianza de más
-          de 1.200 clientes satisfechos. Trabajamos bajo las normas de la Asociación
+          de 800 clientes satisfechos. Trabajamos bajo las normas de la Asociación
           Electrotécnica Argentina (AEA) y las reglamentaciones vigentes.
         </p>
+      </div>
+    </Container>
+  </SectionWrapper>
+
+  <SectionWrapper background="alt">
+    <Container>
+      <SectionHeader
+        eyebrow="El Equipo"
+        title="Profesionales a tu servicio"
+        subtitle="Electricistas y técnicos matriculados con experiencia en instalaciones residenciales, comerciales y de edificios."
+      />
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
+        {members.map((member) => (
+          <TeamMemberCard
+            name={member.name}
+            role={member.role}
+            bio={member.bio}
+            email={member.email}
+            certifications={member.certifications}
+          />
+        ))}
       </div>
     </Container>
   </SectionWrapper>
