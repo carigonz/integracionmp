@@ -1,0 +1,65 @@
+{
+  "version": "2026-04-11",
+  "currency": "ARS",
+  "items": {
+    "bocaToma": {
+      "label": "Cambio/instalación boca de toma",
+      "price": 30000,
+      "unit": "unidad"
+    },
+    "bocaLuz": {
+      "label": "Boca de luz (punto de iluminación)",
+      "price": 20000,
+      "unit": "unidad"
+    },
+    "canalizacionSuperficial": {
+      "label": "Canalización superficial PVC",
+      "price": 10000,
+      "unit": "metro"
+    },
+    "canalizacionEmbutida": {
+      "label": "Canalización embutida",
+      "price": 20000,
+      "unit": "metro"
+    },
+    "tableroBase": {
+      "label": "Tablero seccional (1 térmica + 1 diferencial)",
+      "price": 40000,
+      "unit": "unidad"
+    },
+    "termicaAdicional": {
+      "label": "Térmica adicional",
+      "price": 15000,
+      "unit": "unidad"
+    },
+    "protectorTension": {
+      "label": "Protector de tensión",
+      "price": 40000,
+      "unit": "unidad"
+    },
+    "deteccionFalla": {
+      "label": "Detección de falla (hasta 3hs)",
+      "price": 120000,
+      "unit": "servicio"
+    },
+    "tendidoCable": {
+      "label": "Tendido de cable principal",
+      "price": 15000,
+      "unit": "metro"
+    }
+  },
+  "surcharges": {
+    "edificioAntiguo": {
+      "label": "Edificio +20 años antigüedad",
+      "factor": 0.15,
+      "condition": "tipo === 'depto' && antiguedad > 20"
+    },
+    "pisoAlto": {
+      "label": "Piso 5 o superior",
+      "factor": 0.10,
+      "condition": "tipo === 'depto' && piso >= 5"
+    }
+  },
+  "estimateMargin": 0.20,
+  "whatsapp": "5491173644604"
+}

@@ -1,0 +1,67 @@
+---
+---
+
+<button
+  id="budget-float-btn"
+  class="fixed bottom-24 right-6 z-50 hidden items-center gap-2 rounded-full px-5 py-3 shadow-lg transition-all font-semibold text-sm text-white"
+  style="background: linear-gradient(135deg, var(--color-secondary-500), var(--color-secondary-700));"
+  aria-label="Abrir presupuesto rápido"
+>
+  <span class="text-lg">⚡</span>
+  Presupuesto
+</button>
+
+<script>
+  (function () {
+    var btn = document.getElementById('budget-float-btn');
+    var hero = document.querySelector('[aria-label="Presentación principal"]');
+    if (!btn) return;
+
+    var heroVisible = true;
+    var isMinimized = false;
+
+    function show() {
+      btn.classList.remove('hidden');
+      btn.classList.add('flex');
+    }
+
+    function hide() {
+      btn.classList.add('hidden');
+      btn.classList.remove('flex');
+    }
+
+    function updateFloat() {
+      if (!heroVisible || isMinimized) {
+        show();
+      } else {
+        hide();
+      }
+    }
+
+    // Wizard minimizado → mostrar flotante
+    document.addEventListener('budget-wizard-minimize', function () {
+      isMinimized = true;
+      updateFloat();
+    });
+
+    // Click flotante → scroll al hero + restaurar wizard
+    btn.addEventListener('click', function () {
+      isMinimized = false;
+      if (hero) hero.scrollIntoView({ behavior: 'smooth' });
+      document.dispatchEvent(new CustomEvent('budget-wizard-restore'));
+      updateFloat();
+    });
+
+    // IntersectionObserver: muestra/oculta según visibilidad del Hero
+    if (hero && 'IntersectionObserver' in window) {
+      var observer = new IntersectionObserver(
+        function (entries) {
+          heroVisible = entries[0].isIntersecting;
+          updateFloat();
+        },
+        { threshold: 0.1 }
+      );
+      observer.observe(hero);
+    }
+  })();
+</script>

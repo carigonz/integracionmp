@@ -1,0 +1,269 @@
+- generic [active] [ref=e1]:
+  - link "Saltar al contenido principal" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=e3]:
+    - generic [ref=e5]:
+      - link "IntegracionMP Servicios Eléctricos" [ref=e6] [cursor=pointer]:
+        - /url: /
+        - img "IntegracionMP Servicios Eléctricos" [ref=e7]
+      - navigation "Navegacion principal" [ref=e8]:
+        - link "Inicio" [ref=e9] [cursor=pointer]:
+          - /url: /
+        - link "Servicios" [ref=e11] [cursor=pointer]:
+          - /url: /services
+          - text: Servicios
+          - img [ref=e12]
+        - link "Nosotros" [ref=e14] [cursor=pointer]:
+          - /url: /about
+        - link "Contacto" [ref=e15] [cursor=pointer]:
+          - /url: /contact
+      - link "WhatsApp" [ref=e17] [cursor=pointer]:
+        - /url: https://wa.me/5491173644604
+        - img [ref=e18]
+        - generic [ref=e20]: WhatsApp
+  - main [ref=e21]:
+    - region "Presentación principal" [ref=e22]:
+      - generic [ref=e26]:
+        - generic [ref=e27]:
+          - heading "IntegracionMP Servicios Eléctricos" [level=1] [ref=e28]
+          - paragraph [ref=e29]: Soluciones eléctricas confiables para hogares, comercios y edificios
+          - paragraph [ref=e30]: Servicio integral de reparaciones eléctricas con más de 10 años de experiencia. Electricidad residencial, comercial, edificios y emergencias 24/7 en Gran Buenos Aires.
+          - link "Nuestros Servicios" [ref=e32] [cursor=pointer]:
+            - /url: /services
+          - generic [ref=e33]:
+            - link "WhatsApp directo" [ref=e34] [cursor=pointer]:
+              - /url: https://wa.me/5491173644604
+              - img [ref=e36]
+              - generic [ref=e39]: WhatsApp directo
+            - link "+54 11 7364-4604" [ref=e40] [cursor=pointer]:
+              - /url: tel:+54117364-4604
+              - img [ref=e41]
+              - generic [ref=e43]: +54 11 7364-4604
+        - generic [ref=e46]:
+          - generic [ref=e47]:
+            - heading "⚡ Presupuesto rápido" [level=3] [ref=e48]
+            - paragraph [ref=e49]: Estimá el costo de tu proyecto en segundos
+          - paragraph [ref=e55]: ¿Qué tipo de propiedad es?
+          - generic [ref=e56]:
+            - button "🏠 Casa Vivienda particular" [ref=e57] [cursor=pointer]:
+              - generic [ref=e58]: 🏠
+              - generic [ref=e59]:
+                - generic [ref=e60]: Casa
+                - generic [ref=e61]: Vivienda particular
+            - button "🏢 Departamento En edificio" [ref=e62] [cursor=pointer]:
+              - generic [ref=e63]: 🏢
+              - generic [ref=e64]:
+                - generic [ref=e65]: Departamento
+                - generic [ref=e66]: En edificio
+            - button "🏘️ PH Propiedad horizontal" [ref=e67] [cursor=pointer]:
+              - generic [ref=e68]: 🏘️
+              - generic [ref=e69]:
+                - generic [ref=e70]: PH
+                - generic [ref=e71]: Propiedad horizontal
+          - button "Siguiente →" [disabled] [ref=e73]
+          - button "Minimizar" [ref=e74] [cursor=pointer]: ×
+    - generic [ref=e76]:
+      - generic [ref=e77]:
+        - paragraph [ref=e78]: Nuestros Servicios
+        - heading "Soluciones para cada necesidad" [level=2] [ref=e79]
+        - paragraph [ref=e80]: Ofrecemos un servicio integral que cubre todas las necesidades eléctricas de hogares, comercios y edificios.
+      - generic [ref=e81]:
+        - link "Electricidad Residencial Instalaciones, reparaciones y mantenimiento eléctrico para tu hogar con certificación profesional. Más información →" [ref=e82] [cursor=pointer]:
+          - /url: /services/electricidad-residencial
+          - img [ref=e84]
+          - heading "Electricidad Residencial" [level=3] [ref=e86]
+          - paragraph [ref=e87]: Instalaciones, reparaciones y mantenimiento eléctrico para tu hogar con certificación profesional.
+          - generic [ref=e88]: Más información →
+        - link "Electricidad Comercial Instalaciones eléctricas para comercios y oficinas con habilitación y eficiencia energética. Más información →" [ref=e89] [cursor=pointer]:
+          - /url: /services/electricidad-comercial
+          - img [ref=e91]
+          - heading "Electricidad Comercial" [level=3] [ref=e93]
+          - paragraph [ref=e94]: Instalaciones eléctricas para comercios y oficinas con habilitación y eficiencia energética.
+          - generic [ref=e95]: Más información →
+        - link "Edificios Mantenimiento eléctrico integral para edificios, consorcios y áreas comunes. Más información →" [ref=e96] [cursor=pointer]:
+          - /url: /services/edificios
+          - img [ref=e98]
+          - heading "Edificios" [level=3] [ref=e100]
+          - paragraph [ref=e101]: Mantenimiento eléctrico integral para edificios, consorcios y áreas comunes.
+          - generic [ref=e102]: Más información →
+        - link "Seguridad e Higiene Gestión integral de seguridad e higiene eléctrica con certificaciones y capacitaciones. Más información →" [ref=e103] [cursor=pointer]:
+          - /url: /services/seguridad-e-higiene
+          - img [ref=e105]
+          - heading "Seguridad e Higiene" [level=3] [ref=e107]
+          - paragraph [ref=e108]: Gestión integral de seguridad e higiene eléctrica con certificaciones y capacitaciones.
+          - generic [ref=e109]: Más información →
+        - link "Asesoría de Construcción Consultoría y planificación eléctrica para obras nuevas, reformas y ampliaciones. Más información →" [ref=e110] [cursor=pointer]:
+          - /url: /services/asesoria-de-construccion
+          - img [ref=e112]
+          - heading "Asesoría de Construcción" [level=3] [ref=e114]
+          - paragraph [ref=e115]: Consultoría y planificación eléctrica para obras nuevas, reformas y ampliaciones.
+          - generic [ref=e116]: Más información →
+      - link "Ver todos los servicios" [ref=e118] [cursor=pointer]:
+        - /url: /services
+    - generic [ref=e120]:
+      - generic [ref=e121]:
+        - paragraph [ref=e122]: Preguntas Frecuentes
+        - heading "Resolvé tus dudas" [level=2] [ref=e123]
+        - paragraph [ref=e124]: Encontrá respuestas a las preguntas más comunes sobre nuestros servicios.
+      - generic [ref=e125]:
+        - group [ref=e126]:
+          - generic "¿Trabajan con urgencias y emergencias eléctricas?" [ref=e127] [cursor=pointer]:
+            - generic [ref=e128]: ¿Trabajan con urgencias y emergencias eléctricas?
+            - img [ref=e129]
+        - group [ref=e131]:
+          - generic "¿Qué zonas cubren?" [ref=e132] [cursor=pointer]:
+            - generic [ref=e133]: ¿Qué zonas cubren?
+            - img [ref=e134]
+        - group [ref=e136]:
+          - generic "¿Sus electricistas están matriculados?" [ref=e137] [cursor=pointer]:
+            - generic [ref=e138]: ¿Sus electricistas están matriculados?
+            - img [ref=e139]
+        - group [ref=e141]:
+          - generic "¿Ofrecen presupuesto sin cargo?" [ref=e142] [cursor=pointer]:
+            - generic [ref=e143]: ¿Ofrecen presupuesto sin cargo?
+            - img [ref=e144]
+        - group [ref=e146]:
+          - generic "¿Qué garantía ofrecen sobre los trabajos?" [ref=e147] [cursor=pointer]:
+            - generic [ref=e148]: ¿Qué garantía ofrecen sobre los trabajos?
+            - img [ref=e149]
+        - group [ref=e151]:
+          - generic "¿Emiten factura?" [ref=e152] [cursor=pointer]:
+            - generic [ref=e153]: ¿Emiten factura?
+            - img [ref=e154]
+        - group [ref=e156]:
+          - generic "¿Pueden ayudarme con la habilitación eléctrica de mi local?" [ref=e157] [cursor=pointer]:
+            - generic [ref=e158]: ¿Pueden ayudarme con la habilitación eléctrica de mi local?
+            - img [ref=e159]
+        - group [ref=e161]:
+          - generic "¿Qué medios de pago aceptan?" [ref=e162] [cursor=pointer]:
+            - generic [ref=e163]: ¿Qué medios de pago aceptan?
+            - img [ref=e164]
+        - group [ref=e166]:
+          - generic "¿Trabajan con consorcios y administraciones de edificios?" [ref=e167] [cursor=pointer]:
+            - generic [ref=e168]: ¿Trabajan con consorcios y administraciones de edificios?
+            - img [ref=e169]
+        - group [ref=e171]:
+          - generic "¿Cuánto tiempo tarda una instalación típica?" [ref=e172] [cursor=pointer]:
+            - generic [ref=e173]: ¿Cuánto tiempo tarda una instalación típica?
+            - img [ref=e174]
+    - generic [ref=e178]:
+      - heading "¿Necesitás un electricista profesional?" [level=2] [ref=e179]
+      - paragraph [ref=e180]: Contactanos hoy para un presupuesto sin cargo. Respuesta en menos de 24 horas.
+      - generic [ref=e181]:
+        - link "Solicitar Presupuesto" [ref=e182] [cursor=pointer]:
+          - /url: /contact
+        - link "WhatsApp" [ref=e183] [cursor=pointer]:
+          - /url: https://wa.me/5491173644604
+    - generic [ref=e185]:
+      - generic [ref=e186]:
+        - paragraph [ref=e187]: Contacto
+        - heading "Escribinos" [level=2] [ref=e188]
+        - paragraph [ref=e189]: Completá el formulario y nos pondremos en contacto con vos a la brevedad.
+      - generic [ref=e190]:
+        - generic [ref=e191]:
+          - generic [ref=e192]: Nombre completo *
+          - textbox "Nombre completo *" [ref=e193]:
+            - /placeholder: Tu nombre
+        - generic [ref=e194]:
+          - generic [ref=e195]:
+            - generic [ref=e196]: Email *
+            - textbox "Email *" [ref=e197]:
+              - /placeholder: tu@email.com
+          - generic [ref=e198]:
+            - generic [ref=e199]: Teléfono
+            - textbox "Teléfono" [ref=e200]:
+              - /placeholder: 11 1234-5678
+        - generic [ref=e201]:
+          - generic [ref=e202]: Servicio de interés
+          - combobox "Servicio de interés" [ref=e203]:
+            - option "Seleccioná un servicio" [selected]
+            - option "Electricidad Residencial"
+            - option "Electricidad Comercial"
+            - option "Edificios"
+            - option "Seguridad e Higiene"
+            - option "Asesoría de Construcción"
+            - option "Otro"
+        - generic [ref=e204]:
+          - generic [ref=e205]: Mensaje *
+          - textbox "Mensaje *" [ref=e206]:
+            - /placeholder: Contanos en qué podemos ayudarte...
+        - button "Enviar mensaje" [ref=e208]
+  - contentinfo [ref=e209]:
+    - generic [ref=e210]:
+      - generic [ref=e211]:
+        - generic [ref=e212]:
+          - link "IntegracionMP" [ref=e213] [cursor=pointer]:
+            - /url: /
+          - paragraph [ref=e214]: Soluciones eléctricas confiables para hogares, comercios y edificios
+          - generic [ref=e215]:
+            - link "Instagram" [ref=e216] [cursor=pointer]:
+              - /url: https://instagram.com/integracionmp
+              - img [ref=e217]
+            - link "WhatsApp" [ref=e219] [cursor=pointer]:
+              - /url: https://wa.me/5491173644604
+              - img [ref=e220]
+        - generic [ref=e222]:
+          - heading "Enlaces rapidos" [level=3] [ref=e223]
+          - list [ref=e224]:
+            - listitem [ref=e225]:
+              - link "Inicio" [ref=e226] [cursor=pointer]:
+                - /url: /
+            - listitem [ref=e227]:
+              - link "Servicios" [ref=e228] [cursor=pointer]:
+                - /url: /services
+            - listitem [ref=e229]:
+              - link "Nosotros" [ref=e230] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=e231]:
+              - link "Contacto" [ref=e232] [cursor=pointer]:
+                - /url: /contact
+        - generic [ref=e233]:
+          - heading "Servicios" [level=3] [ref=e234]
+          - list [ref=e235]:
+            - listitem [ref=e236]:
+              - link "Electricidad Residencial" [ref=e237] [cursor=pointer]:
+                - /url: /services/electricidad-residencial
+            - listitem [ref=e238]:
+              - link "Electricidad Comercial" [ref=e239] [cursor=pointer]:
+                - /url: /services/electricidad-comercial
+            - listitem [ref=e240]:
+              - link "Edificios" [ref=e241] [cursor=pointer]:
+                - /url: /services/edificios
+            - listitem [ref=e242]:
+              - link "Emergencias 24/7" [ref=e243] [cursor=pointer]:
+                - /url: /services/emergencias
+        - generic [ref=e244]:
+          - heading "Contacto" [level=3] [ref=e245]
+          - list [ref=e246]:
+            - listitem [ref=e247]:
+              - link "Gran Buenos Aires, Buenos Aires" [ref=e248] [cursor=pointer]:
+                - /url: https://maps.google.com/?q=%2C%20Gran%20Buenos%20Aires%2C%20Buenos%20Aires
+                - img [ref=e249]
+                - generic [ref=e251]: Gran Buenos Aires, Buenos Aires
+            - listitem [ref=e252]:
+              - link "+54 11 7364-4604" [ref=e253] [cursor=pointer]:
+                - /url: tel:+54117364-4604
+                - img [ref=e254]
+                - generic [ref=e256]: +54 11 7364-4604
+            - listitem [ref=e257]:
+              - link "meppugliese@gmail.com" [ref=e258] [cursor=pointer]:
+                - /url: mailto:meppugliese@gmail.com
+                - img [ref=e259]
+                - generic [ref=e261]: meppugliese@gmail.com
+            - listitem [ref=e262]:
+              - img [ref=e263]
+              - generic [ref=e265]:
+                - paragraph [ref=e266]: "Lunes a Viernes: 08:00 - 18:00"
+                - paragraph [ref=e267]: "Sábados: 09:00 - 14:00"
+                - paragraph [ref=e268]: Emergencias 24/7
+      - generic [ref=e269]:
+        - paragraph [ref=e270]: © 2026 IntegracionMP. Todos los derechos reservados.
+        - generic [ref=e271]:
+          - link "Politica de privacidad" [ref=e272] [cursor=pointer]:
+            - /url: /privacy
+          - link "Terminos y condiciones" [ref=e273] [cursor=pointer]:
+            - /url: /terms
+  - link "Contactar por WhatsApp" [ref=e274] [cursor=pointer]:
+    - /url: https://wa.me/5491173644604?text=Hola%2C%20me%20gustar%C3%ADa%20solicitar%20un%20presupuesto.
+    - img [ref=e276]
+    - generic: ¡Escribinos!
