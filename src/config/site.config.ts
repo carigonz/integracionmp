@@ -99,7 +99,7 @@ export const siteConfig: SiteConfig = {
   integrations: {
     forms: {
       provider: 'web3forms',
-      accessKey: import.meta.env.PUBLIC_WEB3FORMS_KEY ?? 'YOUR_WEB3FORMS_ACCESS_KEY',
+      accessKey: 'e4b03d0b-641c-4711-b778-12dd1b5113f4',
     },
     analytics: {
       provider: 'none',
