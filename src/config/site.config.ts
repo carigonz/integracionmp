@@ -6,7 +6,7 @@ export const siteConfig: SiteConfig = {
     legalName: 'IntegracionMP',
     tagline: 'Soluciones eléctricas confiables para hogares, comercios y edificios',
     description:
-      'Servicio integral de reparaciones eléctricas con más de 10 años de experiencia. Electricidad residencial, comercial, edificios y emergencias 24/7 en Gran Buenos Aires.',
+      'Servicio integral de reparaciones eléctricas con más de 10 años de experiencia. Electricidad residencial, comercial y edificios en Gran Buenos Aires.',
     foundedYear: 2015,
     email: 'info@integracionmp.com.ar',
     phone: '+54 11 7364-4604',
@@ -25,7 +25,7 @@ export const siteConfig: SiteConfig = {
     hours: {
       weekdays: 'Lunes a Viernes: 08:00 - 18:00',
       saturday: 'Sábados: 09:00 - 14:00',
-      sunday: 'Emergencias 24/7',
+      sunday: 'Domingos: Cerrado',
     },
     socialMedia: [
       { platform: 'instagram', url: 'https://instagram.com/integracionmp', label: 'Instagram' },
@@ -54,23 +54,21 @@ export const siteConfig: SiteConfig = {
     { label: 'Inicio', href: '/' },
     {
       label: 'Servicios',
-      href: '/services',
+      href: '/#servicios',
       children: [
         { label: 'Electricidad Residencial', href: '/services/electricidad-residencial' },
         { label: 'Electricidad Comercial', href: '/services/electricidad-comercial' },
         { label: 'Edificios', href: '/services/edificios' },
-        { label: 'Emergencias 24/7', href: '/services/emergencias' },
       ],
     },
     { label: 'Nosotros', href: '/about' },
-    { label: 'Contacto', href: '/contact' },
+    { label: 'Contacto', href: '/#contacto' },
   ],
 
   stats: [
     { value: '10+', label: 'Años de experiencia', icon: 'lucide:calendar-check' },
     { value: '1.500+', label: 'Proyectos completados', icon: 'lucide:check-circle' },
     { value: '800+', label: 'Clientes satisfechos', icon: 'lucide:users' },
-    { value: '24/7', label: 'Emergencias disponibles', icon: 'lucide:clock' },
   ],
 
   process: [

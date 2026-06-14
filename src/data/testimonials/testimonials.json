@@ -18,7 +18,7 @@
       "name": "Laura Fernández",
       "role": "Administradora",
       "company": "Consorcio Av. Santa Fe 2200",
-      "quote": "Mantienen nuestro edificio desde hace 3 años. Siempre puntuales, con reportes claros y respuesta inmediata ante emergencias.",
+      "quote": "Mantienen nuestro edificio desde hace 3 años. Siempre puntuales, con reportes claros y respuesta inmediata.",
       "rating": 5
     },
     {
@@ -27,13 +27,6 @@
       "company": "Constructora RSA",
       "quote": "Trabajamos juntos en varios proyectos. Su planificación eléctrica es impecable y siempre encuentran la solución más eficiente.",
       "rating": 4
-    },
-    {
-      "name": "Ana Martínez",
-      "role": "Propietaria",
-      "company": "Casa en Vicente López",
-      "quote": "Vinieron de emergencia un domingo porque se cortó la luz. En dos horas teníamos todo funcionando. Servicio de primera.",
-      "rating": 5
     }
   ]
 }

@@ -1,12 +1,6 @@
 {
   "items": [
     {
-      "question": "¿Trabajan con urgencias y emergencias eléctricas?",
-      "answer": "Sí, ofrecemos servicio de emergencia las 24 horas para situaciones urgentes como cortes de luz, cortocircuitos, olores a quemado o cualquier situación que represente riesgo eléctrico.",
-      "category": "general",
-      "order": 1
-    },
-    {
       "question": "¿Qué zonas cubren?",
       "answer": "Cubrimos toda la Ciudad de Buenos Aires (CABA) y Gran Buenos Aires, incluyendo zona norte, sur y oeste. Para ubicaciones fuera de estas zonas, consultanos y evaluamos la viabilidad.",
       "category": "general",
@@ -50,7 +44,7 @@
     },
     {
       "question": "¿Trabajan con consorcios y administraciones de edificios?",
-      "answer": "Sí, ofrecemos contratos de mantenimiento preventivo para edificios y consorcios. Incluimos reportes periódicos, respuesta prioritaria ante emergencias y condiciones especiales de facturación.",
+      "answer": "Sí, ofrecemos contratos de mantenimiento preventivo para edificios y consorcios. Incluimos reportes periódicos, atención prioritaria y condiciones especiales de facturación.",
       "category": "edificios",
       "order": 9
     },

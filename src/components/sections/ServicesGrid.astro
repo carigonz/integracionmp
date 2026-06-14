@@ -3,7 +3,6 @@ import { getCollection } from 'astro:content';
 import Container from '@/components/common/Container.astro';
 import SectionWrapper from '@/components/common/SectionWrapper.astro';
 import SectionHeader from '@/components/common/SectionHeader.astro';
-import Button from '@/components/common/Button.astro';
 import ServiceCard from '@/components/blocks/ServiceCard.astro';
 
 const services = (await getCollection('services')).sort(
@@ -28,12 +27,6 @@ const services = (await getCollection('services')).sort(
           href={`/services/${service.id}`}
         />
       ))}
-    </div>
-
-    <div class="text-center mt-10">
-      <Button href="/services" variant="outline">
-        Ver todos los servicios
-      </Button>
     </div>
   </Container>
 </SectionWrapper>
