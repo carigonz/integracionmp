@@ -9,11 +9,11 @@ const { id, background = 'default', class: className } = Astro.props;
 
 const backgroundClasses: Record<string, string> = {
   default: 'bg-white',
-  alt: 'bg-neutral-50',
-  dark: 'bg-neutral-900 text-white',
+  alt: 'bg-gradient-to-b from-neutral-50 to-white',
+  dark: 'bg-gradient-to-br from-neutral-900 via-primary-900 to-neutral-900 text-white',
 };
 ---
 
-<section id={id} class:list={['py-16 md:py-24', backgroundClasses[background], className]}>
+<section id={id} class:list={['py-20 md:py-28', backgroundClasses[background], className]}>
   <slot />
 </section>

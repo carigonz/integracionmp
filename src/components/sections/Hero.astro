@@ -6,13 +6,17 @@ import Button from '@/components/common/Button.astro';
 const { business } = siteConfig;
 ---
 
-<section class="relative" aria-label="Presentación principal">
-  <div class="relative min-h-[65vh] md:min-h-screen flex items-center bg-primary-900">
-    <div class="absolute inset-0 bg-gradient-to-br from-primary-900/80 via-primary-800/60 to-primary-900/90" />
+<section class="relative overflow-hidden" aria-label="Presentación principal">
+  <div class="relative min-h-[70vh] md:min-h-screen flex items-center bg-gradient-to-br from-primary-900 via-primary-800 to-neutral-900">
+    <div class="absolute inset-0 bg-gradient-to-br from-primary-900/80 via-primary-800/50 to-primary-900/90" />
+
+    <!-- Destellos de luz difusos para dar profundidad -->
+    <div class="absolute -top-20 -left-16 size-[28rem] rounded-full bg-primary-500/25 blur-3xl" aria-hidden="true"></div>
+    <div class="absolute bottom-0 right-0 size-[32rem] rounded-full bg-secondary-500/15 blur-3xl" aria-hidden="true"></div>
 
     <div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 w-full">
       <div class="max-w-3xl">
-        <h1 class="text-4xl md:text-6xl font-bold text-white leading-tight">
+        <h1 class="text-4xl md:text-6xl font-bold leading-tight tracking-tight text-balance bg-gradient-to-br from-white via-white to-primary-200 bg-clip-text text-transparent">
           {business.name}
         </h1>
         <p class="mt-4 text-lg md:text-xl text-primary-200 font-medium">

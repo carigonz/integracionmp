@@ -4,13 +4,15 @@ import Container from '@/components/common/Container.astro';
 import Button from '@/components/common/Button.astro';
 ---
 
-<section class="bg-primary-700 py-16 md:py-20">
-  <Container>
+<section class="relative overflow-hidden bg-gradient-to-br from-primary-700 via-primary-800 to-primary-900 py-20 md:py-24">
+  <div class="absolute -top-24 -right-24 size-96 rounded-full bg-secondary-400/20 blur-3xl" aria-hidden="true"></div>
+  <div class="absolute -bottom-32 -left-24 size-96 rounded-full bg-primary-400/20 blur-3xl" aria-hidden="true"></div>
+  <Container class="relative">
     <div class="text-center">
-      <h2 class="text-3xl md:text-4xl font-bold text-white">
+      <h2 class="text-3xl md:text-5xl font-bold text-white tracking-tight text-balance">
         ¿Necesitás un electricista profesional?
       </h2>
-      <p class="mt-4 text-lg text-primary-100 max-w-2xl mx-auto">
+      <p class="mt-5 text-lg text-primary-100 max-w-2xl mx-auto leading-relaxed">
         Contactanos hoy para un presupuesto sin cargo. Respuesta en menos de 24 horas.
       </p>
       <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
