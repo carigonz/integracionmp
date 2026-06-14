@@ -8,7 +8,7 @@ export const siteConfig: SiteConfig = {
     description:
       'Servicio integral de reparaciones eléctricas con más de 10 años de experiencia. Electricidad residencial, comercial, edificios y emergencias 24/7 en Gran Buenos Aires.',
     foundedYear: 2015,
-    email: 'meppugliese@gmail.com',
+    email: 'info@integracionmp.com.ar',
     phone: '+54 11 7364-4604',
     whatsapp: '5491173644604',
     address: {
@@ -99,7 +99,7 @@ export const siteConfig: SiteConfig = {
   integrations: {
     forms: {
       provider: 'web3forms',
-      accessKey: 'YOUR_WEB3FORMS_ACCESS_KEY',
+      accessKey: import.meta.env.PUBLIC_WEB3FORMS_KEY ?? 'YOUR_WEB3FORMS_ACCESS_KEY',
     },
     analytics: {
       provider: 'none',
