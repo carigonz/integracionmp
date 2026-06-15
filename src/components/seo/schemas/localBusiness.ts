@@ -10,7 +10,6 @@ export function buildLocalBusinessSchema(): Record<string, any> {
     legalName: business.legalName,
     description: business.description,
     url: site.url,
-    telephone: business.phone,
     email: business.email,
     foundingDate: String(business.foundedYear),
     image: `${site.url}${seo.defaultImage}`,

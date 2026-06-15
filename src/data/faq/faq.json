@@ -43,9 +43,9 @@
       "order": 8
     },
     {
-      "question": "¿Trabajan con consorcios y administraciones de edificios?",
-      "answer": "Sí, ofrecemos contratos de mantenimiento preventivo para edificios y consorcios. Incluimos reportes periódicos, atención prioritaria y condiciones especiales de facturación.",
-      "category": "edificios",
+      "question": "¿Trabajan con industrias y plantas?",
+      "answer": "Sí, ofrecemos contratos de mantenimiento preventivo para industrias y establecimientos productivos. Incluimos reportes técnicos, atención prioritaria y condiciones especiales de facturación.",
+      "category": "industrial",
       "order": 9
     },
     {

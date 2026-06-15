@@ -23,15 +23,6 @@ const { business } = siteConfig;
             <h2 class="text-xl font-semibold text-neutral-900 mb-4">Información de contacto</h2>
             <ul class="space-y-4">
               <li>
-                <a href={`tel:${business.phone.replace(/\s/g, '')}`} class="flex items-start gap-3 text-neutral-700 hover:text-primary-600 transition-colors">
-                  <Icon name="lucide:phone" class="size-5 mt-0.5 text-primary-600 shrink-0" />
-                  <div>
-                    <div class="font-medium">Teléfono</div>
-                    <div class="text-sm text-neutral-500">{business.phone}</div>
-                  </div>
-                </a>
-              </li>
-              <li>
                 <a href={`mailto:${business.email}`} class="flex items-start gap-3 text-neutral-700 hover:text-primary-600 transition-colors">
                   <Icon name="lucide:mail" class="size-5 mt-0.5 text-primary-600 shrink-0" />
                   <div>

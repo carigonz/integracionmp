@@ -4,9 +4,9 @@ export const siteConfig: SiteConfig = {
   business: {
     name: 'IntegracionMP Servicios Eléctricos',
     legalName: 'IntegracionMP',
-    tagline: 'Soluciones eléctricas confiables para hogares, comercios y edificios',
+    tagline: 'Soluciones eléctricas confiables para viviendas, comercios e industria',
     description:
-      'Servicio integral de reparaciones eléctricas con más de 10 años de experiencia. Electricidad residencial, comercial y edificios en Gran Buenos Aires.',
+      'Servicios eléctricos integrales para soluciones domiciliarias, comerciales o industriales. Desarrollamos y ejecutamos tu proyecto bajo normativa y con la calidad que merece.',
     foundedYear: 2015,
     email: 'info@integracionmp.com.ar',
     phone: '+54 11 7364-4604',
@@ -58,7 +58,7 @@ export const siteConfig: SiteConfig = {
       children: [
         { label: 'Electricidad Residencial', href: '/services/electricidad-residencial' },
         { label: 'Electricidad Comercial', href: '/services/electricidad-comercial' },
-        { label: 'Edificios', href: '/services/edificios' },
+        { label: 'Industrial', href: '/services/industrial' },
       ],
     },
     { label: 'Nosotros', href: '/about' },
