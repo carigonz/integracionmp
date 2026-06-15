@@ -29,6 +29,7 @@ export const siteConfig: SiteConfig = {
     },
     socialMedia: [
       { platform: 'instagram', url: 'https://instagram.com/integracionmp', label: 'Instagram' },
+      { platform: 'tiktok', url: 'https://www.tiktok.com/@integracionmp', label: 'TikTok' },
       { platform: 'whatsapp', url: 'https://wa.me/5491173644604', label: 'WhatsApp' },
     ],
   },
