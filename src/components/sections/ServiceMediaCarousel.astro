@@ -1,0 +1,138 @@
+---
+interface Props {
+  media: string[];
+}
+const { media = [] } = Astro.props;
+
+const items = media.map((raw) => {
+  const src = `/${raw}`;
+  const isVideo = /\.(mp4|webm|mov)$/i.test(raw);
+  return {
+    src,
+    type: isVideo ? 'video' : 'image',
+    poster: isVideo ? `/${raw.replace(/\.(mp4|webm|mov)$/i, '.jpg')}` : undefined,
+  };
+});
+---
+
+<div
+  class="service-carousel relative w-full overflow-hidden rounded-2xl shadow-lift ring-1 ring-neutral-200 bg-neutral-900 aspect-[3/4]"
+  data-carousel
+>
+  {
+    items.map((it, i) => (
+      <div
+        class="carousel-slide absolute inset-0 opacity-0 transition-opacity duration-500"
+        data-index={i}
+      >
+        {it.type === 'image' ? (
+          <img
+            src={it.src}
+            alt="Trabajo de electricidad residencial"
+            loading="lazy"
+            class="h-full w-full object-cover"
+          />
+        ) : (
+          <video
+            class="h-full w-full object-cover"
+            muted
+            playsinline
+            preload="none"
+            poster={it.poster}
+            data-src={it.src}
+          />
+        )}
+      </div>
+    ))
+  }
+
+  <!-- Flechas -->
+  <button
+    type="button"
+    data-prev
+    aria-label="Anterior"
+    class="absolute left-2 top-1/2 -translate-y-1/2 z-10 inline-flex items-center justify-center size-9 rounded-full bg-black/40 text-white text-2xl leading-none hover:bg-black/60 transition-colors"
+  >&lsaquo;</button>
+  <button
+    type="button"
+    data-next
+    aria-label="Siguiente"
+    class="absolute right-2 top-1/2 -translate-y-1/2 z-10 inline-flex items-center justify-center size-9 rounded-full bg-black/40 text-white text-2xl leading-none hover:bg-black/60 transition-colors"
+  >&rsaquo;</button>
+
+  <!-- Puntos -->
+  <div data-dots class="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 flex flex-wrap justify-center gap-1.5 max-w-[80%]"></div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
+    const slides = Array.from(root.querySelectorAll<HTMLElement>('.carousel-slide'));
+    const dotsWrap = root.querySelector<HTMLElement>('[data-dots]');
+    if (!slides.length || !dotsWrap) return;
+
+    let idx = 0;
+    let timer: number | null = null;
+
+    slides.forEach((_, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-label', `Ir a la imagen ${i + 1}`);
+      b.className = 'size-2 rounded-full bg-white/50 transition-opacity';
+      b.addEventListener('click', () => go(i));
+      dotsWrap.appendChild(b);
+    });
+    const dots = Array.from(dotsWrap.children) as HTMLElement[];
+
+    function clearTimer() {
+      if (timer) {
+        clearTimeout(timer);
+        timer = null;
+      }
+    }
+
+    function schedule() {
+      clearTimer();
+      const v = slides[idx].querySelector('video');
+      if (v) {
+        v.onended = () => next();
+        timer = window.setTimeout(next, 9000); // vista previa ~9s para videos largos
+      } else {
+        timer = window.setTimeout(next, 4500);
+      }
+    }
+
+    function show(i: number) {
+      slides.forEach((s, j) => {
+        const active = j === i;
+        s.style.opacity = active ? '1' : '0';
+        s.style.zIndex = active ? '1' : '0';
+        const v = s.querySelector('video');
+        if (v) {
+          if (active) {
+            if (!v.src) v.src = v.dataset.src || '';
+            v.currentTime = 0;
+            v.play().catch(() => {});
+          } else {
+            v.pause();
+          }
+        }
+      });
+      dots.forEach((d, j) => (d.style.opacity = j === i ? '1' : '0.45'));
+    }
+
+    function go(i: number) {
+      idx = (i + slides.length) % slides.length;
+      show(idx);
+      schedule();
+    }
+    function next() {
+      go(idx + 1);
+    }
+
+    root.querySelector('[data-next]')?.addEventListener('click', () => go(idx + 1));
+    root.querySelector('[data-prev]')?.addEventListener('click', () => go(idx - 1));
+
+    show(0);
+    schedule();
+  });
+</script>
