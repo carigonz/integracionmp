@@ -1,4 +1,5 @@
 ---
+import { Icon } from 'astro-icon/components';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { siteConfig } from '@/config/site.config';
 import ServiceMediaCarousel from '@/components/sections/ServiceMediaCarousel.astro';
@@ -9,22 +10,29 @@ interface Props {
   excerpt: string;
   sideImage?: string;
   gallery?: string[];
+  emoji?: string;
+  comingSoon?: boolean;
 }
 
-const { title, description, excerpt, sideImage, gallery } = Astro.props;
+const { title, description, excerpt, sideImage, gallery, emoji, comingSoon } = Astro.props;
 ---
 
 <BaseLayout title={title} description={description}>
   <main id="main-content">
     <!-- Service Header -->
-    <section class="bg-primary-700 py-16 md:py-24">
+    <section class="bg-primary-700 py-8 md:py-12">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <!-- Titulo (a la izquierda en desktop) -->
           <div class="lg:order-1 text-center lg:text-left">
-            <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white">
-              {title}
-            </h1>
+            <div class="flex items-center justify-center lg:justify-start gap-3">
+              <h1 class:list={['text-3xl md:text-4xl lg:text-5xl font-bold text-white', emoji ? 'w-min' : '']}>
+                {title}
+              </h1>
+              {emoji && (
+                <span class="text-6xl lg:text-8xl leading-none shrink-0" aria-hidden="true">{emoji}</span>
+              )}
+            </div>
             <p class="mt-4 text-lg md:text-xl text-primary-100 max-w-2xl mx-auto lg:mx-0">
               {excerpt}
             </p>
@@ -50,33 +58,52 @@ const { title, description, excerpt, sideImage, gallery } = Astro.props;
     </section>
 
     <!-- Contenido -->
-    <section class="py-12 md:py-20">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="lg:flex lg:items-start lg:gap-12">
-          <!-- Texto (izquierda, alineado con el titulo) -->
-          <div class="min-[1640px]:relative lg:flex-1">
-            {sideImage && (
-              <!-- Imagen de referencia: arriba en pantallas chicas, al margen izquierdo en anchas -->
-              <img
-                src={sideImage}
-                alt={`Referencia normativa - ${title}`}
-                class="w-28 sm:w-36 mb-6 rounded-lg shadow-soft ring-1 ring-neutral-200 min-[1640px]:absolute min-[1640px]:top-0 min-[1640px]:right-full min-[1640px]:mr-10 min-[1640px]:mb-0 min-[1640px]:w-44"
-              />
-            )}
-            <div class="prose prose-lg max-w-3xl text-justify">
-              <slot />
-            </div>
+    {comingSoon ? (
+      <section class="py-20 md:py-28">
+        <div class="max-w-xl mx-auto px-4 sm:px-6 text-center">
+          <div class="inline-flex items-center justify-center size-20 rounded-2xl bg-secondary-100 text-secondary-600 mb-6 shadow-soft">
+            <Icon name="lucide:construction" class="size-10" />
           </div>
-
-          <!-- Carrusel de fotos/videos a la derecha -->
-          {gallery && gallery.length > 0 && (
-            <div class="mt-12 lg:mt-0 w-full max-w-sm mx-auto lg:mx-0 lg:w-80 xl:w-96 shrink-0">
-              <ServiceMediaCarousel media={gallery} />
-            </div>
-          )}
+          <h2 class="text-2xl md:text-3xl font-bold text-neutral-900 tracking-tight">
+            Sección en construcción
+          </h2>
+          <p class="mt-4 text-lg text-neutral-600 leading-relaxed">
+            Estamos preparando el contenido de este servicio. ¡Próximamente disponible!
+          </p>
+          <p class="mt-2 text-neutral-500">
+            Mientras tanto, escribinos y te asesoramos sin compromiso.
+          </p>
         </div>
-      </div>
-    </section>
+      </section>
+    ) : (
+      <section class="py-12 md:py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="lg:flex lg:items-start lg:gap-12">
+            <!-- Texto (izquierda, alineado con el titulo) -->
+            <div class="min-[1640px]:relative lg:flex-1">
+              {sideImage && (
+                <!-- Imagen de referencia: arriba en pantallas chicas, al margen izquierdo en anchas -->
+                <img
+                  src={sideImage}
+                  alt={`Referencia normativa - ${title}`}
+                  class="w-28 sm:w-36 mb-6 rounded-lg shadow-soft ring-1 ring-neutral-200 min-[1640px]:absolute min-[1640px]:top-0 min-[1640px]:right-full min-[1640px]:mr-10 min-[1640px]:mb-0 min-[1640px]:w-44"
+                />
+              )}
+              <div class="prose prose-lg max-w-3xl text-justify">
+                <slot />
+              </div>
+            </div>
+
+            <!-- Carrusel de fotos/videos a la derecha -->
+            {gallery && gallery.length > 0 && (
+              <div class="mt-12 lg:mt-0 w-full max-w-sm mx-auto lg:mx-0 lg:w-80 xl:w-96 shrink-0">
+                <ServiceMediaCarousel media={gallery} />
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+    )}
 
     <!-- CTA Section -->
     <section class="bg-primary-700 py-16">
@@ -85,7 +112,7 @@ const { title, description, excerpt, sideImage, gallery } = Astro.props;
           Listo para comenzar tu proyecto?
         </h2>
         <p class="text-lg text-primary-100 mb-8 max-w-2xl mx-auto">
-          Nuestro equipo de profesionales matriculados esta listo para ayudarte. Contactanos hoy para una consulta gratuita.
+          Nuestro equipo está listo para ayudarte. Contactanos hoy para una consulta.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <a
