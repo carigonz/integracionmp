@@ -2,6 +2,7 @@
 import { Icon } from 'astro-icon/components';
 import { siteConfig } from '@/config/site.config';
 import Button from '@/components/common/Button.astro';
+import HeroGallery from '@/components/sections/HeroGallery.astro';
 
 const { business } = siteConfig;
 ---
@@ -63,17 +64,23 @@ const { business } = siteConfig;
         </div>
         </div>
 
-        <!-- Foto del titular -->
-        <div class="relative mx-auto lg:mx-0 w-full max-w-xs sm:max-w-sm">
-          <div class="absolute -inset-3 bg-gradient-to-tr from-primary-500/40 via-secondary-500/20 to-transparent blur-2xl rounded-[2.5rem]" aria-hidden="true"></div>
-          <img
-            src="/equipo-integracionmp.jpg"
-            alt={`${business.name} - electricista profesional`}
-            width="825"
-            height="1100"
-            loading="eager"
-            class="relative w-full rounded-3xl object-cover aspect-[3/4] ring-1 ring-white/15 shadow-2xl"
-          />
+        <!-- Foto del titular + galeria de obra -->
+        <div class="flex items-stretch gap-3 mx-auto lg:mx-0 w-full max-w-sm sm:max-w-md">
+          <!-- Retrato -->
+          <div class="relative flex-1">
+            <div class="absolute -inset-3 bg-gradient-to-tr from-primary-500/40 via-secondary-500/20 to-transparent blur-2xl rounded-[2.5rem]" aria-hidden="true"></div>
+            <img
+              src="/equipo-integracionmp.jpg"
+              alt={`${business.name} - electricista profesional`}
+              width="825"
+              height="1100"
+              loading="eager"
+              class="relative w-full rounded-3xl object-cover aspect-[3/4] ring-1 ring-white/15 shadow-2xl"
+            />
+          </div>
+
+          <!-- Galeria de cuadraditos rotativos -->
+          <HeroGallery />
         </div>
       </div>
     </div>

@@ -1,5 +1,7 @@
 # build output
 dist/
+# fotos originales pesadas (solo locales, las versiones web estan en public/hero)
+.originales-fotos/
 # generated types
 .astro/
 .cursor/

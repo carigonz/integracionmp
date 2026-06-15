@@ -1,0 +1,63 @@
+---
+// Galeria de cuadraditos de obra que rotan solos al lado del retrato.
+const images = Array.from(
+  { length: 12 },
+  (_, i) => `/hero/hero-${String(i + 1).padStart(2, '0')}.jpg`
+);
+const SLOTS = 6;
+const initial = images.slice(0, SLOTS);
+---
+
+<div
+  id="hero-gallery"
+  class="flex flex-col gap-2.5 w-16 sm:w-20 shrink-0"
+  data-images={JSON.stringify(images)}
+>
+  {
+    initial.map((src, i) => (
+      <div class="relative flex-1 overflow-hidden rounded-xl ring-1 ring-white/15 shadow-lg">
+        <img
+          src={src}
+          alt="Trabajo realizado por IntegracionMP"
+          loading="lazy"
+          data-slot={i}
+          class="hero-thumb absolute inset-0 h-full w-full object-cover transition-opacity duration-700"
+        />
+      </div>
+    ))
+  }
+</div>
+
+<script>
+  const gallery = document.getElementById('hero-gallery');
+  if (gallery && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const all: string[] = JSON.parse(gallery.dataset.images || '[]');
+    const thumbs = Array.from(
+      gallery.querySelectorAll<HTMLImageElement>('.hero-thumb')
+    );
+    const current = thumbs.map((t) => t.getAttribute('src') || '');
+
+    // precargar todas para que el cambio sea instantaneo
+    all.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+
+    function swap() {
+      const slot = Math.floor(Math.random() * thumbs.length);
+      const visible = new Set(current);
+      const candidates = all.filter((s) => !visible.has(s));
+      if (candidates.length === 0) return;
+      const next = candidates[Math.floor(Math.random() * candidates.length)];
+      const img = thumbs[slot];
+      img.style.opacity = '0';
+      setTimeout(() => {
+        img.setAttribute('src', next);
+        current[slot] = next;
+        img.style.opacity = '1';
+      }, 700);
+    }
+
+    setInterval(swap, 2200);
+  }
+</script>
