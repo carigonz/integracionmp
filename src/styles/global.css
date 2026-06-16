@@ -84,3 +84,27 @@
     outline-offset: 2px;
   }
 }
+
+/* Vinetas personalizadas para listas dentro del contenido (markdown) */
+.prose ul {
+  list-style: none;
+  margin: 1rem 0;
+  padding: 0;
+}
+
+.prose ul li {
+  position: relative;
+  padding-left: 1.75rem;
+  margin: 0.4rem 0;
+}
+
+.prose ul li::before {
+  content: "";
+  position: absolute;
+  left: 0.3rem;
+  top: 0.62em;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 9999px;
+  background-color: var(--color-primary-600);
+}
