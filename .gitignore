@@ -2,6 +2,8 @@
 dist/
 # fotos originales pesadas (solo locales, las versiones web estan en public/hero)
 .originales-fotos/
+# panel de administracion (proyecto aparte, no se publica con la web)
+panel/
 # generated types
 .astro/
 .cursor/
