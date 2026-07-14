@@ -1,35 +1,25 @@
 {
   "items": [
     {
-      "name": "Martín Ruiz",
+      "name": "Mario Pugliese",
       "role": "Director Técnico",
-      "bio": "Ingeniero electricista con más de 20 años de experiencia. Especialista en instalaciones de media y baja tensión. Matriculado en el Colegio de Ingenieros de CABA.",
-      "email": "martin@electripro.com",
-      "certifications": ["Ingeniero Electricista UBA", "Matrícula COPIME", "Auditor Energético"],
+      "bio": "Responsable del área comercial, presupuestos y visitas técnicas con clientes.",
+      "certifications": [],
       "order": 1
     },
     {
-      "name": "Patricia López",
-      "role": "Coordinadora de Proyectos",
-      "bio": "Técnica en seguridad e higiene con experiencia en gestión de proyectos eléctricos. Coordina los equipos de trabajo y la logística de cada proyecto.",
-      "email": "patricia@electripro.com",
-      "certifications": ["Técnica en SyH", "Project Management"],
+      "name": "Mario J. Pugliese",
+      "role": "Responsable de Obra Civil",
+      "bio": "Responsable del área de construcción y obra civil relacionada con las instalaciones y montajes. Responsable de logística.",
+      "certifications": [],
       "order": 2
     },
     {
-      "name": "Diego Morales",
-      "role": "Jefe de Cuadrilla",
-      "bio": "Electricista matriculado con 15 años de experiencia en campo. Lidera nuestro equipo técnico en obras residenciales y comerciales.",
-      "certifications": ["Electricista Matriculado", "Trabajo en Altura", "Primeros Auxilios"],
-      "order": 3
-    },
-    {
-      "name": "Luciana Torres",
-      "role": "Atención al Cliente",
-      "bio": "Encargada de la comunicación con clientes, coordinación de visitas y seguimiento de presupuestos. Tu primer punto de contacto con ElectriPro.",
-      "email": "luciana@electripro.com",
+      "name": "Ramiro Pugliese",
+      "role": "Responsable Técnico de Obra",
+      "bio": "Encargado de obra y montaje. Responsable de llevar a cabo las obras e instalaciones eléctricas en campo.",
       "certifications": [],
-      "order": 4
+      "order": 3
     }
   ]
 }
