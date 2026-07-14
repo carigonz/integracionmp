@@ -20,6 +20,13 @@
       "bio": "Encargado de obra y montaje. Responsable de llevar a cabo las obras e instalaciones eléctricas en campo.",
       "certifications": [],
       "order": 3
+    },
+    {
+      "name": "Carolina González",
+      "role": "Directora Financiera",
+      "bio": "Responsable del área contable y financiera. Administración de recursos.",
+      "certifications": [],
+      "order": 4
     }
   ]
 }
