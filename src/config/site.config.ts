@@ -59,7 +59,7 @@ export const siteConfig: SiteConfig = {
       children: [
         { label: 'Electricidad Residencial', href: '/services/electricidad-residencial' },
         { label: 'Electricidad Comercial', href: '/services/electricidad-comercial' },
-        { label: 'Industrial', href: '/services/industrial' },
+        { label: 'Electricidad Industrial', href: '/services/industrial' },
       ],
     },
     { label: 'Nosotros', href: '/about' },
