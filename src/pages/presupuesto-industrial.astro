@@ -32,7 +32,15 @@ import PresupuestoForm from '@/components/sections/PresupuestoForm.astro';
         potenciaLabel="¿Qué potencia tenés contratada o necesitás?"
         potenciaPlaceholder="Ej: 50 kW / no sé"
         tramitesLabel="¿Necesitás trámites o gestiones?"
-        tramitesOpciones={['Con la distribuidora (EDENOR / EDESUR)', 'Ninguno', 'No sé']}
+        tramitesOpciones={[
+          'Con la distribuidora (EDENOR / EDESUR)',
+          'Planos electromecánicos (visado Colegio)',
+          'SRT 900/15 Puesta a tierra',
+          'Ensayos de calidad de energía',
+          'Ahorro de energía con paneles solares',
+          'Ninguno',
+          'No sé',
+        ]}
         mensajePlaceholder="Describí tu proyecto: qué produce la planta, estado de la instalación, qué necesitás hacer…"
       />
     </Container>
