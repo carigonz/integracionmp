@@ -27,6 +27,8 @@ const lbl = 'block text-sm font-medium text-neutral-700 mb-1';
           <div>
             <label for="email" class={lbl}>Email *</label>
             <input type="email" id="email" name="email" required class={inp} placeholder="tu@email.com" />
+            <p id="email-error" class="hidden text-xs text-red-600 mt-1"></p>
+            <p id="email-sugerencia" class="hidden text-xs text-amber-700 mt-1"></p>
           </div>
           <div>
             <label for="telefono" class={lbl}>Teléfono</label>
@@ -171,6 +173,58 @@ const lbl = 'block text-sm font-medium text-neutral-700 mb-1';
   const form = document.getElementById('presupuesto-form');
   const result = document.getElementById('form-result');
 
+  // --- Validación de email ---
+  const emailInput = document.getElementById('email');
+  const emailError = document.getElementById('email-error');
+  const emailSugerencia = document.getElementById('email-sugerencia');
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
+  const DOMINIOS = [
+    'gmail.com', 'hotmail.com', 'outlook.com', 'yahoo.com', 'yahoo.com.ar',
+    'icloud.com', 'live.com', 'hotmail.com.ar', 'outlook.com.ar',
+  ];
+
+  function distancia(a, b) {
+    const m = Array.from({ length: a.length + 1 }, (_, i) => [i, ...Array(b.length).fill(0)]);
+    for (let j = 0; j <= b.length; j++) m[0][j] = j;
+    for (let i = 1; i <= a.length; i++)
+      for (let j = 1; j <= b.length; j++)
+        m[i][j] = Math.min(m[i - 1][j] + 1, m[i][j - 1] + 1, m[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    return m[a.length][b.length];
+  }
+
+  function validarEmail() {
+    const valor = emailInput.value.trim().toLowerCase();
+    emailError.classList.add('hidden');
+    emailSugerencia.classList.add('hidden');
+    if (!valor) return false;
+
+    if (!EMAIL_RE.test(valor)) {
+      emailError.textContent = 'Revisá el email: tiene que tener la forma nombre@dominio.com';
+      emailError.classList.remove('hidden');
+      return false;
+    }
+
+    const dominio = valor.split('@')[1];
+    if (!DOMINIOS.includes(dominio)) {
+      const cercano = DOMINIOS.find((d) => distancia(dominio, d) > 0 && distancia(dominio, d) <= 2);
+      if (cercano) {
+        emailSugerencia.textContent = `¿Quisiste decir @${cercano}? Tocá acá para corregirlo.`;
+        emailSugerencia.classList.remove('hidden');
+        emailSugerencia.onclick = () => {
+          emailInput.value = valor.split('@')[0] + '@' + cercano;
+          emailSugerencia.classList.add('hidden');
+        };
+        emailSugerencia.style.cursor = 'pointer';
+      }
+    }
+    return true;
+  }
+
+  emailInput?.addEventListener('blur', validarEmail);
+  emailInput?.addEventListener('input', () => {
+    emailError.classList.add('hidden');
+  });
+
   // --- Manejo de archivos adjuntos (de a uno, hasta 5) ---
   const MAX_ARCHIVOS = 5;
   const MAX_MB = 15;
@@ -239,6 +293,10 @@ const lbl = 'block text-sm font-medium text-neutral-700 mb-1';
   if (form && result) {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      if (!validarEmail()) {
+        emailInput.focus();
+        return;
+      }
       const submitBtn = form.querySelector('button[type="submit"]');
       const originalText = submitBtn.textContent;
       submitBtn.textContent = 'Enviando...';
