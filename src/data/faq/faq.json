@@ -26,7 +26,7 @@
     },
     {
       "question": "¿Emiten factura?",
-      "answer": "Sí, emitimos factura A y B según corresponda. Somos una empresa formalmente constituida y cumplimos con todas las obligaciones fiscales.",
+      "answer": "Sí, podemos emitir Factura A y Factura C. Esto va a depender del contrato (escrito o verbal) que se establezca con el cliente.",
       "category": "presupuesto",
       "order": 6
     },
@@ -38,19 +38,19 @@
     },
     {
       "question": "¿Qué medios de pago aceptan?",
-      "answer": "Aceptamos efectivo, transferencia bancaria, Mercado Pago y tarjetas de crédito/débito. Para trabajos de mayor envergadura ofrecemos planes de pago.",
+      "answer": "Nuestros principales medios de pago actualmente son efectivo o transferencia. Dependiendo de la envergadura del proyecto, podemos pactar en el contrato o presupuesto planes de pago, previo acuerdo entre partes.",
       "category": "presupuesto",
       "order": 8
     },
     {
-      "question": "¿Trabajan con industrias y plantas?",
-      "answer": "Sí, ofrecemos contratos de mantenimiento preventivo para industrias y establecimientos productivos. Incluimos reportes técnicos, atención prioritaria y condiciones especiales de facturación.",
+      "question": "¿Trabajan con servicios de mantenimiento mensual?",
+      "answer": "Brindamos un servicio de mantenimiento preventivo o correctivo mensualizado, solamente a industrias y comercios donde nosotros hayamos realizado la instalación eléctrica, o la hayamos comprobado y expresado la conformidad de poder brindar un servicio mensual de mantenimiento y emergencia. Realizamos un contrato personalizado con el cliente, aclarando los términos y condiciones del servicio prestado.",
       "category": "industrial",
       "order": 9
     },
     {
       "question": "¿Cuánto tiempo tarda una instalación típica?",
-      "answer": "Depende del tipo de trabajo. Una actualización de tablero puede llevar medio día, mientras que una instalación completa para un departamento puede tomar entre 3 y 5 días. En la visita de presupuesto te damos un cronograma detallado.",
+      "answer": "Podemos decirte, en base a nuestra experiencia:\n• Departamento en CABA de entre 50 y 100 m² donde haya que readecuar la instalación de forma íntegra: los tiempos estimados son entre 5 y 7 días de trabajo efectivos.\n• Vivienda o casa de 100 a 300 m² donde haya que realizar la instalación eléctrica de cero, con proyecto incluido: puede demorar entre 15 y 30 días efectivos de trabajo.\nEstos datos son aproximados y estadísticos según nuestra experiencia.",
       "category": "general",
       "order": 10
     }
