@@ -31,8 +31,10 @@ const lbl = 'block text-sm font-medium text-neutral-700 mb-1';
             <p id="email-sugerencia" class="hidden text-xs text-amber-700 mt-1"></p>
           </div>
           <div>
-            <label for="telefono" class={lbl}>Teléfono</label>
-            <input type="tel" id="telefono" name="telefono" class={inp} placeholder="11 1234-5678" />
+            <label for="telefono" class={lbl}>Teléfono / celular</label>
+            <input type="tel" id="telefono" name="telefono" class={inp} placeholder="Ej: 11 6606 0403 o 351 234 5678" />
+            <p class="text-xs text-neutral-400 mt-1">Código de área sin el 0 y número sin el 15.</p>
+            <p id="telefono-error" class="hidden text-xs text-red-600 mt-1"></p>
           </div>
         </div>
 
@@ -226,6 +228,46 @@ const lbl = 'block text-sm font-medium text-neutral-700 mb-1';
     emailError.classList.add('hidden');
   });
 
+  // --- Validación de teléfono argentino (10 dígitos: característica + número) ---
+  const telInput = document.getElementById('telefono');
+  const telError = document.getElementById('telefono-error');
+
+  function normalizarTelefono(valor) {
+    let d = valor.replace(/\D/g, ''); // solo dígitos
+    if (d.startsWith('549')) d = d.slice(3);
+    else if (d.startsWith('54') && d.length > 10) d = d.slice(2);
+    if (d.startsWith('0')) d = d.slice(1);
+    // Sacar el "15" después de la característica (2 a 4 dígitos)
+    if (d.length === 12) {
+      for (const corte of [2, 3, 4]) {
+        if (d.slice(corte, corte + 2) === '15') {
+          d = d.slice(0, corte) + d.slice(corte + 2);
+          break;
+        }
+      }
+    }
+    return d;
+  }
+
+  function validarTelefono() {
+    const valor = telInput.value.trim();
+    telError.classList.add('hidden');
+    if (!valor) return true; // es opcional
+    const d = normalizarTelefono(valor);
+    if (d.length === 10) {
+      telInput.value = d; // se corrige solo, limpio
+      return true;
+    }
+    telError.textContent = 'Revisá el número: tienen que ser 10 dígitos en total (código de área sin 0 y número sin 15). Ej: 1166060403';
+    telError.classList.remove('hidden');
+    return false;
+  }
+
+  telInput?.addEventListener('blur', validarTelefono);
+  telInput?.addEventListener('input', () => {
+    telError.classList.add('hidden');
+  });
+
   // --- Manejo de archivos adjuntos (de a uno, hasta 5) ---
   const MAX_ARCHIVOS = 5;
   const MAX_MB = 15;
@@ -296,6 +338,10 @@ const lbl = 'block text-sm font-medium text-neutral-700 mb-1';
       e.preventDefault();
       if (!validarEmail()) {
         emailInput.focus();
+        return;
+      }
+      if (!validarTelefono()) {
+        telInput.focus();
         return;
       }
       const submitBtn = form.querySelector('button[type="submit"]');
