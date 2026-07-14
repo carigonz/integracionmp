@@ -12,9 +12,23 @@ interface Props {
   gallery?: string[];
   emoji?: string;
   comingSoon?: boolean;
+  ctaLabel?: string;
+  ctaText?: string;
+  ctaHref?: string;
 }
 
-const { title, description, excerpt, sideImage, gallery, emoji, comingSoon } = Astro.props;
+const {
+  title,
+  description,
+  excerpt,
+  sideImage,
+  gallery,
+  emoji,
+  comingSoon,
+  ctaLabel = 'Solicitar presupuesto',
+  ctaText = 'Contactanos para solicitar tu presupuesto.',
+  ctaHref = '/#contacto',
+} = Astro.props;
 ---
 
 <BaseLayout title={title} description={description}>
@@ -44,13 +58,13 @@ const { title, description, excerpt, sideImage, gallery, emoji, comingSoon } = A
               ¿Necesitás este servicio?
             </h3>
             <p class="text-sm text-primary-100 mb-5">
-              Contactanos para solicitar tu presupuesto.
+              {ctaText}
             </p>
             <a
-              href="/#contacto"
+              href={ctaHref}
               class="inline-flex items-center justify-center w-full px-6 py-3 bg-gradient-to-r from-secondary-500 to-secondary-400 text-white font-semibold rounded-xl shadow-soft hover:shadow-lift hover:-translate-y-0.5 transition-all duration-200"
             >
-              Solicitar presupuesto
+              {ctaLabel}
             </a>
           </div>
         </div>

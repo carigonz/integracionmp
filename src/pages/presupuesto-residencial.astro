@@ -1,0 +1,212 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro';
+import Container from '@/components/common/Container.astro';
+import SectionWrapper from '@/components/common/SectionWrapper.astro';
+import Button from '@/components/common/Button.astro';
+import { siteConfig } from '@/config/site.config';
+
+const inp =
+  'w-full rounded-lg border border-neutral-300 px-4 py-3 text-neutral-900 placeholder:text-neutral-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 focus:outline-none transition-colors';
+const lbl = 'block text-sm font-medium text-neutral-700 mb-1';
+---
+
+<PageLayout
+  title="Presupuesto de Instalación Residencial"
+  description="Solicitá un presupuesto detallado para tu instalación eléctrica residencial. Contanos tu proyecto y te asesoramos de forma personalizada."
+  subtitle="Contanos tu idea o proyecto con el mayor detalle posible, así te brindamos un asesoramiento personalizado."
+>
+  <SectionWrapper>
+    <Container class="max-w-2xl">
+      <form id="presupuesto-form" class="space-y-6">
+        <div>
+          <label for="nombre" class={lbl}>Nombre completo *</label>
+          <input type="text" id="nombre" name="nombre" required class={inp} placeholder="Tu nombre" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div>
+            <label for="email" class={lbl}>Email *</label>
+            <input type="email" id="email" name="email" required class={inp} placeholder="tu@email.com" />
+          </div>
+          <div>
+            <label for="telefono" class={lbl}>Teléfono</label>
+            <input type="tel" id="telefono" name="telefono" class={inp} placeholder="11 1234-5678" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div>
+            <label for="localidad" class={lbl}>Localidad / zona *</label>
+            <input type="text" id="localidad" name="localidad" required class={inp} placeholder="Ej: San Miguel, CABA…" />
+          </div>
+          <div>
+            <label for="tipo_propiedad" class={lbl}>Tipo de propiedad *</label>
+            <select id="tipo_propiedad" name="tipo_propiedad" required class={inp}>
+              <option value="">Seleccioná…</option>
+              <option>Departamento</option>
+              <option>Casa</option>
+              <option>PH</option>
+              <option>Otro</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div>
+            <label for="superficie_m2" class={lbl}>Superficie aproximada (m²)</label>
+            <input type="number" id="superficie_m2" name="superficie_m2" min="1" class={inp} placeholder="Ej: 80" />
+          </div>
+          <div>
+            <label for="ambientes" class={lbl}>Cantidad de ambientes</label>
+            <input type="number" id="ambientes" name="ambientes" min="1" class={inp} placeholder="Ej: 3" />
+          </div>
+        </div>
+
+        <div>
+          <label for="tipo_trabajo" class={lbl}>Tipo de trabajo *</label>
+          <select id="tipo_trabajo" name="tipo_trabajo" required class={inp}>
+            <option value="">Seleccioná…</option>
+            <option>Instalación nueva (de cero, con proyecto)</option>
+            <option>Readecuación integral de instalación existente</option>
+            <option>Ampliación de instalación</option>
+            <option>Reparación puntual</option>
+          </select>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div>
+            <label for="tiene_planos" class={lbl}>¿Tenés planos del lugar?</label>
+            <select id="tiene_planos" name="tiene_planos" class={inp}>
+              <option value="">Seleccioná…</option>
+              <option>Sí</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div>
+            <label for="tramites" class={lbl}>¿Necesitás trámites con la distribuidora?</label>
+            <select id="tramites" name="tramites" class={inp}>
+              <option value="">Seleccioná…</option>
+              <option>Medidor nuevo</option>
+              <option>Aumento de potencia</option>
+              <option>Ninguno</option>
+              <option>No sé</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label for="plazo" class={lbl}>¿Para cuándo lo necesitás?</label>
+          <select id="plazo" name="plazo" class={inp}>
+            <option value="">Seleccioná…</option>
+            <option>Lo antes posible</option>
+            <option>En 1 a 3 meses</option>
+            <option>En más de 3 meses</option>
+            <option>Sin definir</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="mensaje" class={lbl}>Contanos tu proyecto *</label>
+          <textarea
+            id="mensaje"
+            name="mensaje"
+            required
+            rows={5}
+            class={`${inp} resize-y`}
+            placeholder="Describí tu idea o proyecto: estado actual de la instalación, qué querés hacer, detalles del lugar…"></textarea>
+        </div>
+
+        <div>
+          <Button type="submit" variant="primary" size="lg" class="w-full">Enviar solicitud</Button>
+        </div>
+
+        <div id="form-result" class="hidden text-center py-4 rounded-lg" role="status" aria-live="polite" aria-atomic="true"></div>
+      </form>
+    </Container>
+  </SectionWrapper>
+</PageLayout>
+
+<script
+  define:vars={{
+    supabaseUrl: siteConfig.integrations.supabase.url,
+    supabaseKey: siteConfig.integrations.supabase.anonKey,
+    formsKey: siteConfig.integrations.forms.accessKey,
+  }}
+>
+  const form = document.getElementById('presupuesto-form');
+  const result = document.getElementById('form-result');
+
+  if (form && result) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = 'Enviando...';
+      submitBtn.disabled = true;
+
+      const fd = new FormData(form);
+      const val = (k) => (fd.get(k) || '').toString().trim() || null;
+      const num = (k) => (fd.get(k) ? Number(fd.get(k)) : null);
+
+      const solicitud = {
+        servicio: 'Electricidad Residencial',
+        nombre: val('nombre'),
+        email: val('email'),
+        telefono: val('telefono'),
+        localidad: val('localidad'),
+        tipo_propiedad: val('tipo_propiedad'),
+        superficie_m2: num('superficie_m2'),
+        ambientes: num('ambientes'),
+        tipo_trabajo: val('tipo_trabajo'),
+        tiene_planos: val('tiene_planos'),
+        tramites: val('tramites'),
+        plazo: val('plazo'),
+        mensaje: val('mensaje'),
+      };
+
+      try {
+        const res = await fetch(`${supabaseUrl}/rest/v1/solicitudes_presupuesto`, {
+          method: 'POST',
+          headers: {
+            apikey: supabaseKey,
+            Authorization: `Bearer ${supabaseKey}`,
+            'Content-Type': 'application/json',
+            Prefer: 'return=minimal',
+          },
+          body: JSON.stringify(solicitud),
+        });
+
+        if (res.ok) {
+          // Aviso por email (no bloquea la respuesta al usuario)
+          const resumen = Object.entries(solicitud)
+            .filter(([, v]) => v != null)
+            .map(([k, v]) => `${k}: ${v}`)
+            .join('\n');
+          fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              access_key: formsKey,
+              subject: `Nueva solicitud de presupuesto residencial: ${solicitud.nombre}`,
+              from_name: 'Web IntegracionMP',
+              message: resumen,
+            }),
+          }).catch(() => {});
+
+          result.textContent = '¡Solicitud enviada! Ya la recibimos y nos vamos a contactar a la brevedad.';
+          result.className = 'block text-center py-4 rounded-lg bg-accent-100 text-accent-700';
+          form.reset();
+        } else {
+          result.textContent = 'Hubo un error al enviar la solicitud. Por favor intentá nuevamente.';
+          result.className = 'block text-center py-4 rounded-lg bg-red-100 text-red-700';
+        }
+      } catch {
+        result.textContent = 'Error de conexión. Por favor intentá más tarde.';
+        result.className = 'block text-center py-4 rounded-lg bg-red-100 text-red-700';
+      } finally {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      }
+    });
+  }
+</script>

@@ -16,6 +16,9 @@ const services = defineCollection({
     gallery: z.array(z.string()).optional(),
     emoji: z.string().optional(),
     comingSoon: z.boolean().default(false),
+    ctaLabel: z.string().optional(),
+    ctaText: z.string().optional(),
+    ctaHref: z.string().optional(),
   }),
 });
 

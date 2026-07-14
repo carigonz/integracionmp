@@ -100,6 +100,11 @@ export const siteConfig: SiteConfig = {
       provider: 'web3forms',
       accessKey: 'e4b03d0b-641c-4711-b778-12dd1b5113f4',
     },
+    supabase: {
+      // Clave "publishable": es pública por diseño; la seguridad la dan las políticas RLS.
+      url: 'https://vbqzlfammgmjzpiysqsg.supabase.co',
+      anonKey: 'sb_publishable_IacA83Qv6hBoGyJgQXvdPA_oGeBIDQ3',
+    },
     analytics: {
       provider: 'none',
     },
