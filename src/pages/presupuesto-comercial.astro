@@ -1,0 +1,44 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro';
+import Container from '@/components/common/Container.astro';
+import SectionWrapper from '@/components/common/SectionWrapper.astro';
+import PresupuestoForm from '@/components/sections/PresupuestoForm.astro';
+---
+
+<PageLayout
+  title="Presupuesto de Instalación Comercial"
+  description="Solicitá un presupuesto detallado para la instalación eléctrica de tu comercio, oficina o local. Habilitaciones, factibilidad y proyecto."
+  subtitle="Contanos tu proyecto comercial con el mayor detalle posible, así te brindamos un asesoramiento personalizado."
+>
+  <SectionWrapper>
+    <Container class="max-w-2xl">
+      <PresupuestoForm
+        servicio="Electricidad Comercial"
+        carpeta="comercial"
+        tipoLugarLabel="Tipo de establecimiento *"
+        tipoLugarOpciones={['Local comercial', 'Oficina', 'Galpón / depósito', 'Edificio / consorcio', 'Otro']}
+        rubroLabel="Rubro del comercio"
+        rubroPlaceholder="Ej: gastronomía, indumentaria, supermercado…"
+        tipoTrabajoOpciones={[
+          'Habilitación DCI/CAIE',
+          'Factibilidad de potencia T1 / T2 / T3',
+          'Obra civil eléctrica (sala o gabinete de medidores)',
+          'Proyecto, diseño y montaje eléctrico',
+          'Adecuación de instalación existente',
+          'Otro',
+        ]}
+        potenciaLabel="¿Qué potencia tenés contratada o necesitás?"
+        potenciaPlaceholder="Ej: 20 kW / no sé"
+        tramitesLabel="¿Necesitás trámites o gestiones?"
+        tramitesOpciones={[
+          'Con la distribuidora (EDENOR / EDESUR)',
+          'Con el Colegio de Técnicos (visado / DCI)',
+          'Ambos',
+          'Ninguno',
+          'No sé',
+        ]}
+        mensajePlaceholder="Describí tu proyecto: estado del local, qué necesitás habilitar o instalar, plazos de apertura…"
+      />
+    </Container>
+  </SectionWrapper>
+</PageLayout>

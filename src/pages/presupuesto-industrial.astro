@@ -1,0 +1,40 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro';
+import Container from '@/components/common/Container.astro';
+import SectionWrapper from '@/components/common/SectionWrapper.astro';
+import PresupuestoForm from '@/components/sections/PresupuestoForm.astro';
+---
+
+<PageLayout
+  title="Presupuesto de Instalación Industrial"
+  description="Solicitá un presupuesto detallado para la instalación eléctrica de tu planta o establecimiento productivo. Tableros, fuerza motriz y mediciones."
+  subtitle="Contanos tu proyecto industrial con el mayor detalle posible, así te brindamos un asesoramiento personalizado."
+>
+  <SectionWrapper>
+    <Container class="max-w-2xl">
+      <PresupuestoForm
+        servicio="Electricidad Industrial"
+        carpeta="industrial"
+        tipoLugarLabel="Tipo de establecimiento *"
+        tipoLugarOpciones={['Planta industrial', 'Depósito / logística', 'Taller', 'Obra en construcción', 'Otro']}
+        rubroLabel="Actividad / rubro de la planta"
+        rubroPlaceholder="Ej: alimenticia, metalúrgica, textil…"
+        tipoTrabajoOpciones={[
+          'Tableros eléctricos (diseño, armado, montaje)',
+          'Fuerza motriz (motores, bombas, maquinaria)',
+          'Tendido y canalización (bandejas, cañerías)',
+          'Grupo electrógeno',
+          'Mantenimiento preventivo / correctivo',
+          'Mediciones y certificaciones (puesta a tierra, SRT 900/15)',
+          'Proyecto integral',
+          'Otro',
+        ]}
+        potenciaLabel="¿Qué potencia tenés contratada o necesitás?"
+        potenciaPlaceholder="Ej: 50 kW / no sé"
+        tramitesLabel="¿Necesitás trámites o gestiones?"
+        tramitesOpciones={['Con la distribuidora (EDENOR / EDESUR)', 'Ninguno', 'No sé']}
+        mensajePlaceholder="Describí tu proyecto: qué produce la planta, estado de la instalación, qué necesitás hacer…"
+      />
+    </Container>
+  </SectionWrapper>
+</PageLayout>
