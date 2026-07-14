@@ -106,6 +106,20 @@ const lbl = 'block text-sm font-medium text-neutral-700 mb-1';
         </div>
 
         <div>
+          <label for="presupuesto_estimado" class={lbl}>¿Tenés un presupuesto destinado a este proyecto?</label>
+          <p class="text-xs text-neutral-500 mb-2">
+            Si tenés un monto pensado, contanoslo acá: nos ayuda a entender y adecuarnos lo mejor posible a tus necesidades y posibilidades.
+          </p>
+          <input
+            type="text"
+            id="presupuesto_estimado"
+            name="presupuesto_estimado"
+            class={inp}
+            placeholder="Ej: $2.000.000 aprox. / a definir"
+          />
+        </div>
+
+        <div>
           <label for="mensaje" class={lbl}>Contanos tu proyecto *</label>
           <textarea
             id="mensaje"
@@ -114,6 +128,27 @@ const lbl = 'block text-sm font-medium text-neutral-700 mb-1';
             rows={5}
             class={`${inp} resize-y`}
             placeholder="Describí tu idea o proyecto: estado actual de la instalación, qué querés hacer, detalles del lugar…"></textarea>
+        </div>
+
+        <div>
+          <span class={lbl}>Archivos adjuntos (opcional)</span>
+          <p class="text-xs text-neutral-500 mb-2">
+            Podés sumar de a un archivo: planos (AutoCAD, PDF), fotos o lo que consideres útil para que podamos presupuestar.
+            Hasta 5 archivos de 15 MB cada uno.
+          </p>
+          <ul id="archivos-lista" class="space-y-1.5 mb-2"></ul>
+          <label
+            id="archivo-boton"
+            class="inline-flex items-center gap-2 cursor-pointer text-sm font-medium text-primary-700 border border-primary-300 bg-primary-50 hover:bg-primary-100 rounded-lg px-4 py-2.5 transition-colors"
+          >
+            + Agregar archivo
+            <input
+              type="file"
+              id="archivo-input"
+              class="hidden"
+              accept=".pdf,.dwg,.dxf,.jpg,.jpeg,.png,.heic,.zip,.rar,.doc,.docx,.xls,.xlsx"
+            />
+          </label>
         </div>
 
         <div>
@@ -135,6 +170,71 @@ const lbl = 'block text-sm font-medium text-neutral-700 mb-1';
 >
   const form = document.getElementById('presupuesto-form');
   const result = document.getElementById('form-result');
+
+  // --- Manejo de archivos adjuntos (de a uno, hasta 5) ---
+  const MAX_ARCHIVOS = 5;
+  const MAX_MB = 15;
+  const archivos = [];
+  const lista = document.getElementById('archivos-lista');
+  const inputArchivo = document.getElementById('archivo-input');
+  const botonArchivo = document.getElementById('archivo-boton');
+
+  function dibujarLista() {
+    lista.innerHTML = '';
+    archivos.forEach((file, i) => {
+      const li = document.createElement('li');
+      li.className = 'flex items-center gap-2 text-sm text-neutral-700 bg-neutral-50 border border-neutral-200 rounded-lg px-3 py-2';
+      const nombre = document.createElement('span');
+      nombre.className = 'flex-1 min-w-0 truncate';
+      nombre.textContent = `${file.name} (${(file.size / 1048576).toFixed(1)} MB)`;
+      const quitar = document.createElement('button');
+      quitar.type = 'button';
+      quitar.textContent = 'Quitar';
+      quitar.className = 'text-red-600 text-xs font-medium hover:underline shrink-0';
+      quitar.addEventListener('click', () => {
+        archivos.splice(i, 1);
+        dibujarLista();
+      });
+      li.appendChild(nombre);
+      li.appendChild(quitar);
+      lista.appendChild(li);
+    });
+    botonArchivo.style.display = archivos.length >= MAX_ARCHIVOS ? 'none' : '';
+  }
+
+  inputArchivo?.addEventListener('change', () => {
+    const file = inputArchivo.files?.[0];
+    inputArchivo.value = '';
+    if (!file) return;
+    if (file.size > MAX_MB * 1048576) {
+      alert(`El archivo supera los ${MAX_MB} MB. Comprimilo o mandalo por WhatsApp.`);
+      return;
+    }
+    if (archivos.length >= MAX_ARCHIVOS) return;
+    archivos.push(file);
+    dibujarLista();
+  });
+
+  async function subirArchivos() {
+    const carpeta = `residencial/${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    const rutas = [];
+    for (const file of archivos) {
+      const limpio = file.name.replace(/[^\w.\-]+/g, '_');
+      const ruta = `${carpeta}/${limpio}`;
+      const res = await fetch(`${supabaseUrl}/storage/v1/object/solicitudes/${ruta}`, {
+        method: 'POST',
+        headers: {
+          apikey: supabaseKey,
+          Authorization: `Bearer ${supabaseKey}`,
+          'Content-Type': file.type || 'application/octet-stream',
+        },
+        body: file,
+      });
+      if (!res.ok) throw new Error('upload');
+      rutas.push(ruta);
+    }
+    return rutas;
+  }
 
   if (form && result) {
     form.addEventListener('submit', async (e) => {
@@ -161,10 +261,16 @@ const lbl = 'block text-sm font-medium text-neutral-700 mb-1';
         tiene_planos: val('tiene_planos'),
         tramites: val('tramites'),
         plazo: val('plazo'),
+        presupuesto_estimado: val('presupuesto_estimado'),
         mensaje: val('mensaje'),
       };
 
       try {
+        if (archivos.length) {
+          submitBtn.textContent = 'Subiendo archivos...';
+          solicitud.archivos = await subirArchivos();
+        }
+        submitBtn.textContent = 'Enviando...';
         const res = await fetch(`${supabaseUrl}/rest/v1/solicitudes_presupuesto`, {
           method: 'POST',
           headers: {
@@ -180,7 +286,7 @@ const lbl = 'block text-sm font-medium text-neutral-700 mb-1';
           // Aviso por email (no bloquea la respuesta al usuario)
           const resumen = Object.entries(solicitud)
             .filter(([, v]) => v != null)
-            .map(([k, v]) => `${k}: ${v}`)
+            .map(([k, v]) => `${k}: ${Array.isArray(v) ? v.length + ' archivo(s) adjunto(s) — ver en el panel' : v}`)
             .join('\n');
           fetch('https://api.web3forms.com/submit', {
             method: 'POST',
@@ -196,6 +302,8 @@ const lbl = 'block text-sm font-medium text-neutral-700 mb-1';
           result.textContent = '¡Solicitud enviada! Ya la recibimos y nos vamos a contactar a la brevedad.';
           result.className = 'block text-center py-4 rounded-lg bg-accent-100 text-accent-700';
           form.reset();
+          archivos.length = 0;
+          dibujarLista();
         } else {
           result.textContent = 'Hubo un error al enviar la solicitud. Por favor intentá nuevamente.';
           result.className = 'block text-center py-4 rounded-lg bg-red-100 text-red-700';
