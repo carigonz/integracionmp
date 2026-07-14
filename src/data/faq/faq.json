@@ -7,20 +7,20 @@
       "order": 2
     },
     {
-      "question": "¿Sus electricistas están matriculados?",
-      "answer": "Sí, todo nuestro equipo técnico cuenta con matrícula habilitante vigente. Además, realizamos capacitaciones periódicas en seguridad y nuevas tecnologías.",
+      "question": "¿Sus profesionales son matriculados?",
+      "answer": "Contamos con profesionales matriculados y con experiencia en el rubro específico a desarrollar. Si por ejemplo se trata de DCI, contamos con un profesional matriculado con experiencia en certificaciones de conformidad de instalaciones. Así podemos agilizar la gestión ante EDENOR o EDESUR para tramitar nuevos suministros, o visar planos en el Colegio de Técnicos de la provincia de Bs. As.",
       "category": "general",
       "order": 3
     },
     {
       "question": "¿Ofrecen presupuesto sin cargo?",
-      "answer": "Sí, realizamos la visita de diagnóstico y presupuesto sin cargo dentro de nuestra zona de cobertura. El presupuesto incluye detalle de materiales, mano de obra y plazos estimados.",
+      "answer": "Depende. Se analiza la solicitud del cliente conforme a la primera información que se nos envía; luego podemos realizar algún intercambio de información por medio digital o videollamada. Si es necesaria una visita técnica para realizar una cotización sobre un proyecto, sí se cobra. El valor dependerá del tipo de presupuesto.",
       "category": "presupuesto",
       "order": 4
     },
     {
       "question": "¿Qué garantía ofrecen sobre los trabajos?",
-      "answer": "Todos nuestros trabajos incluyen garantía escrita. La garantía cubre tanto la mano de obra como los materiales provistos por ElectriPro. El período varía según el tipo de trabajo, con un mínimo de 6 meses.",
+      "answer": "Sí, ofrecemos garantía sobre nuestros trabajos y sobre los productos que nosotros instalemos. Esto es muy relativo al proyecto que se esté ejecutando; es por esto que la garantía será evaluada conforme al tipo de proyecto que se haga.",
       "category": "garantia",
       "order": 5
     },

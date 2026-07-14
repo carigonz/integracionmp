@@ -80,7 +80,7 @@ export const siteConfig: SiteConfig = {
     },
     {
       title: 'Presupuesto',
-      description: 'Evaluamos tu caso y te enviamos un presupuesto sin cargo. Para trabajos complejos, visitamos el lugar.',
+      description: 'Evaluamos tu caso y te enviamos un presupuesto. Para trabajos complejos, coordinamos una visita técnica.',
       icon: 'lucide:file-text',
     },
     {
