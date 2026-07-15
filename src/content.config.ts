@@ -19,6 +19,7 @@ const services = defineCollection({
     ctaLabel: z.string().optional(),
     ctaText: z.string().optional(),
     ctaHref: z.string().optional(),
+    theme: z.enum(['azul', 'verde']).default('azul'),
   }),
 });
 

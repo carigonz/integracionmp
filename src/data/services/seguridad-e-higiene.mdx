@@ -1,27 +1,101 @@
 ---
 title: "Seguridad e Higiene"
-description: "Asesoramiento y gestión en seguridad e higiene laboral. Cumplimiento normativo, relevamientos y capacitaciones."
-excerpt: "Gestión integral de seguridad e higiene eléctrica con certificaciones y capacitaciones."
+description: "Mediciones y estudios de higiene y seguridad en el trabajo según Ley 19.587 y protocolos SRT. Prevención de riesgos físicos, químicos y ergonómicos."
+excerpt: "Mediciones y estudios del ambiente laboral para prevenir riesgos, según la Ley 19.587 y los protocolos de la SRT."
 icon: "lucide:shield-check"
+theme: "verde"
 order: 4
 featured: false
-tags: ["seguridad", "higiene", "normativas", "capacitacion"]
-comingSoon: true
+tags: ["seguridad", "higiene", "normativas", "mediciones"]
 ---
 
-## Seguridad e higiene eléctrica
+import MedicionesRadial from '@/components/sections/MedicionesRadial.astro';
+import { Icon } from 'astro-icon/components';
 
-La seguridad no es negociable. Nuestro servicio de seguridad e higiene garantiza que todas las instalaciones cumplan con las normativas vigentes y protejan a las personas.
+<div class="not-prose max-w-3xl mx-auto text-center">
+  <h3 class="text-2xl font-bold text-accent-900 mb-4">¿Qué son las mediciones de Higiene y Seguridad?</h3>
+  <p class="text-neutral-600 leading-relaxed">
+    Toda actividad económica genera riesgos para la salud de los trabajadores expuestos: físicos
+    (ruido, iluminación, vibraciones, carga térmica), químicos (gases, material particulado) y
+    ergonómicos. Identificarlos, monitorearlos periódicamente y definir los mecanismos de control
+    adecuados es la clave para prevenir enfermedades profesionales. Lo hacemos cumpliendo con la
+    <strong>Ley de Higiene y Seguridad en el Trabajo N° 19.587</strong> y los <strong>protocolos de la SRT</strong>.
+  </p>
+</div>
 
-### Servicios de seguridad
+<div class="not-prose text-center mt-12 mb-2">
+  <h3 class="text-2xl md:text-3xl font-bold text-accent-900">Nuestras mediciones</h3>
+  <p class="text-neutral-500 mt-2">Tocá cada burbuja para ver el detalle.</p>
+</div>
 
-- **Relevamientos**: Inspección completa de instalaciones eléctricas existentes
-- **Mediciones**: Puesta a tierra, aislación, continuidad y resistencia de contacto
-- **Certificaciones**: Emisión de certificados de instalación eléctrica según normas IRAM
-- **Capacitaciones**: Formación en seguridad eléctrica para personal de empresas
-- **Planes de evacuación**: Diseño e instalación de iluminación y señalización de emergencia
-- **Protocolos**: Desarrollo de protocolos de seguridad eléctrica personalizados
+<MedicionesRadial
+  items={[
+    {
+      titulo: 'Nivel de iluminación',
+      norma: 'Res. SRT 84/12',
+      descripcion:
+        'Medimos la iluminación en cada puesto de trabajo según el protocolo oficial de la SRT, verificando que cumpla con los valores mínimos que exige la normativa para cada tipo de tarea.',
+    },
+    {
+      titulo: 'Nivel sonoro',
+      norma: 'Res. SRT 85/12',
+      descripcion:
+        'Medimos el ruido del ambiente laboral según el protocolo oficial de la SRT, para determinar la exposición de los trabajadores y la necesidad de medidas de control o protección auditiva.',
+    },
+    {
+      titulo: 'Estrés térmico',
+      norma: 'Res. MTSS 295/03',
+      descripcion:
+        'Evaluamos la carga térmica en puestos expuestos a calor o frío, para determinar si las condiciones son aceptables y definir los regímenes de trabajo y descanso adecuados.',
+    },
+    {
+      titulo: 'Ventilación',
+      norma: 'Decreto 351/79',
+      descripcion:
+        'Verificamos la ventilación y renovación de aire de los locales de trabajo, para asegurar condiciones ambientales saludables según la reglamentación.',
+    },
+    {
+      titulo: 'Aparatos sometidos a presión',
+      norma: 'Decreto 351/79',
+      descripcion:
+        'Relevamiento y control de recipientes y aparatos sometidos a presión, conforme a los requisitos de la normativa vigente.',
+    },
+    {
+      titulo: 'Puesta a tierra',
+      norma: 'Res. SRT 900/15',
+      descripcion:
+        'Medimos el valor de puesta a tierra y verificamos la continuidad de las masas con el protocolo oficial de la SRT, para proteger a los trabajadores frente a contactos eléctricos indirectos.',
+    },
+    {
+      titulo: 'Ruidos molestos al vecindario',
+      norma: 'IRAM 4062',
+      descripcion:
+        'Medimos los ruidos que tu actividad transmite al vecindario según la norma IRAM 4062, para verificar si generan molestia y definir cómo mitigarlos.',
+    },
+    {
+      titulo: 'Seguridad ocupacional',
+      norma: 'Asesoramiento',
+      descripcion:
+        'Te acompañamos con asesoramiento integral en higiene y seguridad ocupacional: relevamientos, plan de acción y cumplimiento normativo para tu empresa.',
+    },
+  ]}
+/>
 
-### Normativas que aplicamos
-
-Trabajamos bajo las normas IRAM, reglamentaciones de AEA (Asociación Electrotécnica Argentina) y legislación vigente de seguridad e higiene laboral (Ley 19.587 y decretos reglamentarios).
+<div class="not-prose max-w-3xl mx-auto mt-14 grid sm:grid-cols-2 gap-x-10 gap-y-6">
+  <div class="flex gap-3 items-start">
+    <Icon name="lucide:activity" class="size-5 text-accent-700 shrink-0 mt-1" />
+    <p class="text-sm text-neutral-600 leading-relaxed">
+      <strong class="text-accent-900 block mb-0.5">Mediciones laborales</strong>
+      Monitoreamos el ámbito donde cada persona desarrolla sus tareas, para determinar si está
+      expuesta a agentes de riesgo que puedan perjudicar su salud.
+    </p>
+  </div>
+  <div class="flex gap-3 items-start">
+    <Icon name="lucide:microscope" class="size-5 text-accent-700 shrink-0 mt-1" />
+    <p class="text-sm text-neutral-600 leading-relaxed">
+      <strong class="text-accent-900 block mb-0.5">Estudios laborales</strong>
+      Cuando un riesgo observado no se puede determinar fehacientemente con una medición, lo
+      evaluamos mediante estudios específicos que definen el tipo de riesgo y su medida preventiva.
+    </p>
+  </div>
+</div>

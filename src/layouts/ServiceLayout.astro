@@ -15,6 +15,7 @@ interface Props {
   ctaLabel?: string;
   ctaText?: string;
   ctaHref?: string;
+  theme?: 'azul' | 'verde';
 }
 
 const {
@@ -28,13 +29,21 @@ const {
   ctaLabel = 'Solicitar presupuesto',
   ctaText = 'Contactanos para solicitar tu presupuesto.',
   ctaHref = '/#contacto',
+  theme = 'azul',
 } = Astro.props;
+
+// Tema de color de la sección: azul (eléctrico, default) o verde (Seguridad e Higiene)
+const verde = theme === 'verde';
+const heroBg = verde ? 'bg-gradient-to-br from-accent-700 to-accent-900' : 'bg-primary-700';
+const claro = verde ? 'text-accent-100' : 'text-primary-100';
+const ctaBg = verde ? 'bg-accent-800' : 'bg-primary-700';
+const botonContacto = verde ? 'text-accent-800 hover:bg-accent-50' : 'text-primary-700 hover:bg-primary-50';
 ---
 
 <BaseLayout title={title} description={description}>
   <main id="main-content">
     <!-- Service Header -->
-    <section class="bg-primary-700 py-8 md:py-12">
+    <section class={`${heroBg} py-8 md:py-12`}>
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <!-- Titulo (a la izquierda en desktop) -->
@@ -47,7 +56,7 @@ const {
                 <span class="text-6xl lg:text-8xl leading-none shrink-0" aria-hidden="true">{emoji}</span>
               )}
             </div>
-            <p class="mt-4 text-lg md:text-xl text-primary-100 max-w-2xl mx-auto lg:mx-0 lg:text-justify">
+            <p class={`mt-4 text-lg md:text-xl ${claro} max-w-2xl mx-auto lg:mx-0 lg:text-justify`}>
               {excerpt}
             </p>
           </div>
@@ -57,7 +66,7 @@ const {
             <h3 class="text-2xl md:text-3xl font-extrabold text-secondary-400 uppercase tracking-wide mb-3">
               Presupuesto Personalizado
             </h3>
-            <p class="text-sm text-primary-100 mb-5">
+            <p class={`text-sm ${claro} mb-5`}>
               {ctaText}
             </p>
             <a
@@ -103,7 +112,7 @@ const {
                   class="w-28 sm:w-36 mb-6 rounded-lg shadow-soft ring-1 ring-neutral-200 min-[1640px]:absolute min-[1640px]:top-0 min-[1640px]:right-full min-[1640px]:mr-10 min-[1640px]:mb-0 min-[1640px]:w-44"
                 />
               )}
-              <div class="prose prose-lg max-w-3xl text-justify">
+              <div class={`prose prose-lg text-justify ${gallery && gallery.length > 0 ? 'max-w-3xl' : 'max-w-none'}`}>
                 <slot />
               </div>
             </div>
@@ -120,18 +129,18 @@ const {
     )}
 
     <!-- CTA Section -->
-    <section class="bg-primary-700 py-16">
+    <section class={`${ctaBg} py-16`}>
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">
-          Listo para comenzar tu proyecto?
+          Consultanos tus dudas, estamos para ayudarte
         </h2>
-        <p class="text-lg text-primary-100 mb-8 max-w-2xl mx-auto">
-          Nuestro equipo está listo para ayudarte. Contactanos hoy para una consulta.
+        <p class={`text-lg ${claro} mb-8 max-w-2xl mx-auto`}>
+          Escribinos por el formulario o por WhatsApp y te respondemos a la brevedad.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <a
             href="/#contacto"
-            class="inline-flex items-center justify-center px-8 py-3 bg-white text-primary-700 font-semibold rounded-lg hover:bg-primary-50 transition-colors"
+            class={`inline-flex items-center justify-center px-8 py-3 bg-white ${botonContacto} font-semibold rounded-lg transition-colors`}
           >
             Contactanos
           </a>

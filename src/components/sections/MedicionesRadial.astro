@@ -1,0 +1,237 @@
+---
+// Diagrama orbital de mediciones: esfera central con halo + burbujas flotando en órbita.
+// En mobile se convierte en grilla de burbujas. Click/tap muestra la descripción.
+interface Item {
+  titulo: string;
+  norma?: string;
+  descripcion?: string;
+  fotos?: string[]; // rutas dentro de /public, ej: "seguridad/med-01.jpg"
+}
+interface Props {
+  centro?: string;
+  items: Item[];
+}
+const { centro = 'S&H Mediciones', items = [] } = Astro.props;
+
+// Posiciones alrededor del centro (arrancando arriba)
+const n = items.length;
+const RADIO = 38; // % del contenedor — coincide con el anillo punteado
+const pos = items.map((_, i) => {
+  const ang = (i / n) * 2 * Math.PI - Math.PI / 2;
+  return {
+    x: 50 + RADIO * Math.cos(ang),
+    y: 50 + RADIO * Math.sin(ang),
+  };
+});
+---
+
+<div class="not-prose my-10" data-mediciones>
+  <!-- Orbital (pantallas medianas y grandes) -->
+  <div class="hidden md:block relative w-full max-w-2xl mx-auto aspect-square select-none">
+    <!-- Anillos de órbita -->
+    <div class="anillo-giro absolute inset-[12%] rounded-full border-2 border-dashed border-accent-400/50"></div>
+    <div class="absolute inset-[27%] rounded-full border border-accent-200"></div>
+
+    <!-- Esfera central con halo pulsante -->
+    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+      <div class="halo absolute inset-0 rounded-full bg-accent-500/40" aria-hidden="true"></div>
+      <div class="relative size-40 lg:size-44 rounded-full bg-gradient-to-br from-accent-500 via-accent-700 to-accent-900 text-white grid place-items-center text-center font-bold text-xl px-5 shadow-glow">
+        {centro}
+      </div>
+    </div>
+
+    <!-- Burbujas flotando -->
+    {items.map((it, i) => (
+      <div class="absolute -translate-x-1/2 -translate-y-1/2 z-10" style={`left:${pos[i].x}%; top:${pos[i].y}%;`}>
+        <button
+          type="button"
+          data-burbuja={i}
+          class="burbuja flotar size-28 lg:size-32 rounded-full bg-white/90 backdrop-blur ring-2 ring-accent-300 text-accent-900 grid place-items-center text-center text-sm font-semibold px-2 leading-tight cursor-pointer transition-all duration-300 hover:scale-110 hover:ring-accent-500 hover:shadow-glow shadow-soft"
+          style={`animation-delay:${(i * 0.55).toFixed(2)}s`}
+        >
+          <span>
+            {it.titulo}
+            {it.norma && <span class="block text-[11px] font-normal opacity-70 mt-0.5">{it.norma}</span>}
+          </span>
+        </button>
+      </div>
+    ))}
+  </div>
+
+  <!-- Grilla (celular) -->
+  <div class="md:hidden flex flex-wrap justify-center gap-3">
+    <div class="w-full grid place-items-center mb-2">
+      <div class="relative">
+        <div class="halo absolute inset-0 rounded-full bg-accent-500/40" aria-hidden="true"></div>
+        <div class="relative size-28 rounded-full bg-gradient-to-br from-accent-500 via-accent-700 to-accent-900 text-white grid place-items-center text-center font-bold px-3 shadow-glow">
+          {centro}
+        </div>
+      </div>
+    </div>
+    {items.map((it, i) => (
+      <button
+        type="button"
+        data-burbuja={i}
+        class="burbuja size-24 rounded-full bg-white ring-2 ring-accent-300 text-accent-900 grid place-items-center text-center text-xs font-semibold px-2 leading-tight cursor-pointer transition-all duration-200 active:scale-95 shadow-soft"
+      >
+        <span>
+          {it.titulo}
+          {it.norma && <span class="block text-[10px] font-normal opacity-70 mt-0.5">{it.norma}</span>}
+        </span>
+      </button>
+    ))}
+  </div>
+
+  <!-- Pop-up de detalle -->
+  <div data-modal class="hidden fixed inset-0 z-50">
+    <div data-modal-fondo class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+    <div class="relative h-full grid place-items-center p-4 pointer-events-none">
+      <div
+        data-modal-caja
+        class="pointer-events-auto bg-white rounded-3xl w-full max-w-lg max-h-[85vh] overflow-y-auto shadow-lift ring-1 ring-accent-200 p-6 md:p-7"
+      >
+        <div class="flex items-start justify-between gap-3 mb-1">
+          <p data-modal-titulo class="text-xl font-bold text-accent-900"></p>
+          <button
+            type="button"
+            data-modal-cerrar
+            aria-label="Cerrar"
+            class="shrink-0 grid place-items-center size-9 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-600 text-xl leading-none transition-colors"
+          >&times;</button>
+        </div>
+        <p data-modal-norma class="hidden text-xs font-semibold text-accent-700 bg-accent-50 ring-1 ring-accent-200 rounded-full px-3 py-1 w-fit mb-3"></p>
+        <p data-modal-texto class="text-neutral-700 text-sm leading-relaxed"></p>
+        <div data-modal-fotos class="hidden grid grid-cols-2 gap-2 mt-5"></div>
+      </div>
+    </div>
+  </div>
+
+  <script define:vars={{ items }}>
+    const root = document.currentScript.closest('[data-mediciones]');
+    const modal = root.querySelector('[data-modal]');
+    const caja = root.querySelector('[data-modal-caja]');
+    const mTitulo = root.querySelector('[data-modal-titulo]');
+    const mNorma = root.querySelector('[data-modal-norma]');
+    const mTexto = root.querySelector('[data-modal-texto]');
+    const mFotos = root.querySelector('[data-modal-fotos]');
+
+    const fondo = root.querySelector('[data-modal-fondo]');
+    const sinMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let origen = null; // burbuja desde la que se abrió
+
+    // Desplazamiento y escala desde la burbuja hasta el centro
+    function desdeOrigen() {
+      const r = origen.getBoundingClientRect();
+      const c = caja.getBoundingClientRect();
+      const dx = r.left + r.width / 2 - (c.left + c.width / 2);
+      const dy = r.top + r.height / 2 - (c.top + c.height / 2);
+      return `translate(${dx}px, ${dy}px) scale(${(r.width / c.width).toFixed(3)})`;
+    }
+
+    function abrir(i, burbuja) {
+      const it = items[i];
+      origen = burbuja;
+      mTitulo.textContent = it.titulo;
+      if (it.norma) {
+        mNorma.textContent = it.norma;
+        mNorma.classList.remove('hidden');
+      } else {
+        mNorma.classList.add('hidden');
+      }
+      mTexto.textContent = it.descripcion || 'Consultanos por esta medición.';
+      mFotos.innerHTML = '';
+      if (it.fotos && it.fotos.length) {
+        it.fotos.forEach((f) => {
+          const img = document.createElement('img');
+          img.src = '/' + f;
+          img.alt = it.titulo;
+          img.loading = 'lazy';
+          img.className = 'w-full aspect-[4/3] object-cover rounded-xl ring-1 ring-neutral-200';
+          mFotos.appendChild(img);
+        });
+        mFotos.classList.remove('hidden');
+      } else {
+        mFotos.classList.add('hidden');
+      }
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+
+      if (sinMovimiento) return;
+      // Arranca como círculo sobre la burbuja y se transforma en el rectángulo final
+      fondo.style.transition = 'none';
+      fondo.style.opacity = '0';
+      caja.style.transition = 'none';
+      caja.style.transform = desdeOrigen();
+      caja.style.borderRadius = '50%';
+      caja.style.opacity = '0.4';
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          fondo.style.transition = 'opacity 1s ease';
+          fondo.style.opacity = '1';
+          caja.style.transition =
+            'transform 1s cubic-bezier(0.22, 1, 0.36, 1), border-radius 1s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.7s ease';
+          caja.style.transform = 'translate(0, 0) scale(1)';
+          caja.style.borderRadius = '1.5rem';
+          caja.style.opacity = '1';
+        });
+      });
+    }
+
+    function cerrar() {
+      if (sinMovimiento || !origen) {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+        return;
+      }
+      // Viaje inverso: vuelve a hacerse círculo y se mete en su burbuja
+      fondo.style.transition = 'opacity 0.5s ease';
+      fondo.style.opacity = '0';
+      caja.style.transition =
+        'transform 0.5s cubic-bezier(0.55, 0, 0.55, 0.2), border-radius 0.5s cubic-bezier(0.55, 0, 0.55, 0.2), opacity 0.45s ease';
+      caja.style.transform = desdeOrigen();
+      caja.style.borderRadius = '50%';
+      caja.style.opacity = '0';
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        caja.style.transform = '';
+        caja.style.borderRadius = '';
+        caja.style.opacity = '';
+        fondo.style.opacity = '';
+        document.body.style.overflow = '';
+      }, 500);
+    }
+
+    root.querySelectorAll('[data-burbuja]').forEach((b) => {
+      b.addEventListener('click', () => abrir(Number(b.dataset.burbuja), b));
+    });
+    root.querySelector('[data-modal-cerrar]').addEventListener('click', cerrar);
+    root.querySelector('[data-modal-fondo]').addEventListener('click', cerrar);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) cerrar();
+    });
+  </script>
+
+  <style>
+    @keyframes flotar {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-9px); }
+    }
+    .flotar { animation: flotar 4.5s ease-in-out infinite; }
+
+    @keyframes giro {
+      to { transform: rotate(360deg); }
+    }
+    .anillo-giro { animation: giro 90s linear infinite; }
+
+    @keyframes halo {
+      0% { transform: scale(1); opacity: 0.5; }
+      100% { transform: scale(1.4); opacity: 0; }
+    }
+    .halo { animation: halo 2.8s ease-out infinite; }
+
+    /* Respetar la preferencia de menos movimiento */
+    @media (prefers-reduced-motion: reduce) {
+      .flotar, .anillo-giro, .halo { animation: none; }
+    }
+  </style>
+</div>
