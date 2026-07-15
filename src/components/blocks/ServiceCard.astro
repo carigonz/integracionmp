@@ -6,9 +6,10 @@ interface Props {
   excerpt: string;
   icon: string;
   href: string;
+  comingSoon?: boolean;
 }
 
-const { title, excerpt, icon, href } = Astro.props;
+const { title, excerpt, icon, href, comingSoon = false } = Astro.props;
 ---
 
 <a
@@ -30,6 +31,6 @@ const { title, excerpt, icon, href } = Astro.props;
   <span class="inline-flex items-center flex-wrap gap-1 text-primary-600 font-medium text-sm mt-5 group-hover:gap-2 transition-all">
     Más información <span aria-hidden="true">&rarr;</span>
     <span class="text-neutral-300 mx-1" aria-hidden="true">·</span>
-    Presupuesto Personalizado
+    {comingSoon ? <span class="text-amber-600">En construcción</span> : 'Presupuesto Personalizado'}
   </span>
 </a>
