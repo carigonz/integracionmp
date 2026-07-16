@@ -18,6 +18,7 @@ interface Props {
   potenciaPlaceholder?: string;
   tramitesLabel?: string;
   tramitesOpciones: string[];
+  mostrarPresupuesto?: boolean;
   mensajePlaceholder: string;
 }
 
@@ -37,6 +38,7 @@ const {
   potenciaPlaceholder = 'Ej: 10 kW / no sé',
   tramitesLabel = '¿Necesitás trámites o gestiones?',
   tramitesOpciones,
+  mostrarPresupuesto = true,
   mensajePlaceholder,
 } = Astro.props;
 
@@ -175,19 +177,21 @@ const lbl = 'block text-sm font-medium text-neutral-700 mb-1';
     </select>
   </div>
 
-  <div>
-    <label for="presupuesto_estimado" class={lbl}>¿Tenés un presupuesto destinado a este proyecto?</label>
-    <p class="text-xs text-neutral-500 mb-2">
-      Si tenés un monto pensado, contanoslo acá: nos ayuda a entender y adecuarnos lo mejor posible a tus necesidades y posibilidades.
-    </p>
-    <input
-      type="text"
-      id="presupuesto_estimado"
-      name="presupuesto_estimado"
-      class={inp}
-      placeholder="Ej: $2.000.000 aprox. / a definir"
-    />
-  </div>
+  {mostrarPresupuesto && (
+    <div>
+      <label for="presupuesto_estimado" class={lbl}>¿Tenés un presupuesto destinado a este proyecto?</label>
+      <p class="text-xs text-neutral-500 mb-2">
+        Si tenés un monto pensado, contanoslo acá: nos ayuda a entender y adecuarnos lo mejor posible a tus necesidades y posibilidades.
+      </p>
+      <input
+        type="text"
+        id="presupuesto_estimado"
+        name="presupuesto_estimado"
+        class={inp}
+        placeholder="Ej: $2.000.000 aprox. / a definir"
+      />
+    </div>
+  )}
 
   <div>
     <label for="mensaje" class={lbl}>Contanos tu proyecto *</label>
