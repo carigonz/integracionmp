@@ -7,20 +7,22 @@ interface Props {
   subtitle?: string;
   canonicalUrl?: string;
   image?: string;
+  theme?: 'azul' | 'verde';
 }
 
-const { title, description, subtitle, canonicalUrl, image } = Astro.props;
+const { title, description, subtitle, canonicalUrl, image, theme = 'azul' } = Astro.props;
+const verde = theme === 'verde';
 ---
 
 <BaseLayout title={title} description={description} canonicalUrl={canonicalUrl} image={image}>
   <main id="main-content">
-    <section class="bg-primary-700 py-16 md:py-24">
+    <section class={`${verde ? 'bg-gradient-to-br from-accent-700 to-accent-900' : 'bg-primary-700'} py-16 md:py-24`}>
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white">
           {title}
         </h1>
         {subtitle && (
-          <p class="mt-4 text-lg md:text-xl text-primary-100 max-w-2xl mx-auto">
+          <p class={`mt-4 text-lg md:text-xl ${verde ? 'text-accent-100' : 'text-primary-100'} max-w-2xl mx-auto`}>
             {subtitle}
           </p>
         )}

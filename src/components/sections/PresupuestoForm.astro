@@ -10,6 +10,9 @@ interface Props {
   rubroLabel?: string;
   rubroPlaceholder?: string;
   mostrarAmbientes?: boolean;
+  mostrarEmpleados?: boolean;
+  tipoTrabajoLabel?: string;
+  tipoTrabajoMultiple?: boolean;
   tipoTrabajoOpciones: string[];
   potenciaLabel?: string;
   potenciaPlaceholder?: string;
@@ -26,6 +29,9 @@ const {
   rubroLabel,
   rubroPlaceholder = 'Ej: gastronomía, indumentaria, logística…',
   mostrarAmbientes = false,
+  mostrarEmpleados = false,
+  tipoTrabajoLabel = 'Tipo de trabajo',
+  tipoTrabajoMultiple = false,
   tipoTrabajoOpciones,
   potenciaLabel,
   potenciaPlaceholder = 'Ej: 10 kW / no sé',
@@ -101,15 +107,36 @@ const lbl = 'block text-sm font-medium text-neutral-700 mb-1';
         </select>
       </div>
     )}
+    {mostrarEmpleados && (
+      <div>
+        <label for="empleados" class={lbl}>Cantidad de personal del establecimiento</label>
+        <input type="number" id="empleados" name="empleados" min="1" class={inp} placeholder="Ej: 15" />
+      </div>
+    )}
   </div>
 
-  <div>
-    <label for="tipo_trabajo" class={lbl}>Tipo de trabajo *</label>
-    <select id="tipo_trabajo" name="tipo_trabajo" required class={inp}>
-      <option value="">Seleccioná…</option>
-      {tipoTrabajoOpciones.map((o) => <option>{o}</option>)}
-    </select>
-  </div>
+  {tipoTrabajoMultiple ? (
+    <div>
+      <span class={lbl}>{tipoTrabajoLabel} *</span>
+      <div class="grid sm:grid-cols-2 gap-2">
+        {tipoTrabajoOpciones.map((o) => (
+          <label class="flex items-center gap-2.5 text-sm text-neutral-700 border border-neutral-300 rounded-lg px-3 py-2.5 cursor-pointer transition-colors has-[:checked]:border-primary-500 has-[:checked]:bg-primary-50">
+            <input type="checkbox" name="tipo_trabajo" value={o} class="accent-primary-600 size-4 shrink-0" />
+            {o}
+          </label>
+        ))}
+      </div>
+      <p id="tipo-trabajo-error" class="hidden text-xs text-red-600 mt-1">Elegí al menos una opción.</p>
+    </div>
+  ) : (
+    <div>
+      <label for="tipo_trabajo" class={lbl}>{tipoTrabajoLabel} *</label>
+      <select id="tipo_trabajo" name="tipo_trabajo" required class={inp}>
+        <option value="">Seleccioná…</option>
+        {tipoTrabajoOpciones.map((o) => <option>{o}</option>)}
+      </select>
+    </div>
+  )}
 
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
     {mostrarAmbientes && (
@@ -202,6 +229,7 @@ const lbl = 'block text-sm font-medium text-neutral-700 mb-1';
     formsKey: siteConfig.integrations.forms.accessKey,
     servicio,
     carpeta,
+    tipoTrabajoMultiple,
   }}
 >
   const form = document.getElementById('presupuesto-form');
@@ -384,6 +412,19 @@ const lbl = 'block text-sm font-medium text-neutral-700 mb-1';
       const val = (k) => (fd.get(k) || '').toString().trim() || null;
       const num = (k) => (fd.get(k) ? Number(fd.get(k)) : null);
 
+      // Con casilleros: exigir al menos una opción tildada
+      const ttError = document.getElementById('tipo-trabajo-error');
+      if (tipoTrabajoMultiple) {
+        if (fd.getAll('tipo_trabajo').length === 0) {
+          ttError?.classList.remove('hidden');
+          ttError?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+          return;
+        }
+        ttError?.classList.add('hidden');
+      }
+
       const solicitud = {
         servicio,
         nombre: val('nombre'),
@@ -394,7 +435,8 @@ const lbl = 'block text-sm font-medium text-neutral-700 mb-1';
         rubro: val('rubro'),
         superficie_m2: num('superficie_m2'),
         ambientes: num('ambientes'),
-        tipo_trabajo: val('tipo_trabajo'),
+        empleados: num('empleados'),
+        tipo_trabajo: tipoTrabajoMultiple ? fd.getAll('tipo_trabajo').join(' · ') : val('tipo_trabajo'),
         tiene_planos: val('tiene_planos'),
         tramites: val('tramites'),
         potencia: val('potencia'),

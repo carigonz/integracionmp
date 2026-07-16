@@ -1,0 +1,43 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro';
+import Container from '@/components/common/Container.astro';
+import SectionWrapper from '@/components/common/SectionWrapper.astro';
+import PresupuestoForm from '@/components/sections/PresupuestoForm.astro';
+---
+
+<PageLayout
+  title="Presupuesto de Seguridad e Higiene"
+  description="Solicitá un presupuesto para mediciones y estudios de higiene y seguridad laboral según Ley 19.587 y protocolos SRT."
+  subtitle="Contanos qué mediciones necesitás y los datos de tu establecimiento, así te brindamos un asesoramiento personalizado."
+  theme="verde"
+>
+  <SectionWrapper>
+    <Container class="max-w-2xl">
+      <PresupuestoForm
+        servicio="Seguridad e Higiene"
+        carpeta="seguridad"
+        tipoLugarLabel="Tipo de establecimiento *"
+        tipoLugarOpciones={['Industria / planta', 'Comercio', 'Oficina', 'Depósito / logística', 'Obra en construcción', 'Otro']}
+        rubroLabel="Rubro / actividad"
+        rubroPlaceholder="Ej: alimenticia, metalúrgica, gastronomía…"
+        mostrarEmpleados
+        tipoTrabajoLabel="¿Qué mediciones o estudios necesitás?"
+        tipoTrabajoMultiple
+        tipoTrabajoOpciones={[
+          'Nivel de iluminación (SRT 84/12)',
+          'Nivel sonoro (SRT 85/12)',
+          'Estrés térmico (MTSS 295/03)',
+          'Ventilación (Dec. 351/79)',
+          'Aparatos sometidos a presión (Dec. 351/79)',
+          'Puesta a tierra (SRT 900/15)',
+          'Ruidos molestos al vecindario (IRAM 4062)',
+          'Asesoramiento en seguridad ocupacional',
+          'No sé, necesito orientación',
+        ]}
+        tramitesLabel="¿Es un requerimiento de la ART o de un organismo?"
+        tramitesOpciones={['Sí, de la ART', 'Sí, de otro organismo (municipio, SRT, etc.)', 'No, es por decisión propia', 'No sé']}
+        mensajePlaceholder="Contanos sobre tu establecimiento: actividad, turnos de trabajo, si tuviste requerimientos de la ART, qué necesitás resolver…"
+      />
+    </Container>
+  </SectionWrapper>
+</PageLayout>
