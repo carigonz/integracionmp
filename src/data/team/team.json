@@ -33,8 +33,17 @@
       "name": "Candela Pugliese",
       "role": "Community Manager",
       "bio": "Encargada de relaciones públicas y redes sociales.",
+      "photo": "/equipo/candela-pugliese.jpg",
       "certifications": [],
       "order": 5
+    },
+    {
+      "name": "María Paz Schrainer",
+      "role": "Responsable de Proyectos Técnicos",
+      "bio": "Responsable de proyectos técnicos, habilitaciones y mediciones de seguridad e higiene.",
+      "photo": "/equipo/maria-paz-schrainer.jpg",
+      "certifications": ["Téc. Electromecánica", "Lic. en Seguridad e Higiene"],
+      "order": 6
     }
   ]
 }
