@@ -15,6 +15,9 @@ interface Props {
 }
 
 const { title, description, canonicalUrl, noindex, image } = Astro.props;
+
+const analytics = siteConfig.integrations.analytics as { provider: string; measurementId?: string };
+const gaId = analytics.provider === 'google' ? analytics.measurementId : undefined;
 ---
 
 <!doctype html>
@@ -51,6 +54,18 @@ const { title, description, canonicalUrl, noindex, image } = Astro.props;
     />
 
     <slot name="head" />
+
+    {gaId && (
+      <>
+        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+        <script is:inline define:vars={{ gaId }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag() { dataLayer.push(arguments); }
+          gtag('js', new Date());
+          gtag('config', gaId);
+        </script>
+      </>
+    )}
   </head>
   <body class="min-h-screen flex flex-col bg-white text-neutral-800 font-body antialiased">
     <a

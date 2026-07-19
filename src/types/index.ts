@@ -78,10 +78,15 @@ export interface SiteConfig {
       provider: 'web3forms';
       accessKey: string;
     };
+    supabase?: {
+      url: string;
+      anonKey: string;
+    };
     analytics?: {
-      provider: 'umami' | 'plausible' | 'none';
+      provider: 'google' | 'umami' | 'plausible' | 'none';
       siteId?: string;
       scriptUrl?: string;
+      measurementId?: string;
     };
     maps?: {
       embedUrl: string;
