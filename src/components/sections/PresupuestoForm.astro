@@ -19,6 +19,7 @@ interface Props {
   tramitesLabel?: string;
   tramitesOpciones: string[];
   mostrarPresupuesto?: boolean;
+  pisoTrigger?: string; // valor de tipo_propiedad que muestra el campo "piso" (ej: "Departamento")
   mensajePlaceholder: string;
 }
 
@@ -39,6 +40,7 @@ const {
   tramitesLabel = '¿Necesitás trámites o gestiones?',
   tramitesOpciones,
   mostrarPresupuesto = true,
+  pisoTrigger,
   mensajePlaceholder,
 } = Astro.props;
 
@@ -81,6 +83,21 @@ const lbl = 'block text-sm font-medium text-neutral-700 mb-1';
       </select>
     </div>
   </div>
+
+  {pisoTrigger && (
+    <div id="piso-campo" class="hidden" data-piso-trigger={pisoTrigger}>
+      <label for="piso" class={lbl}>Piso de la unidad funcional</label>
+      <input
+        type="text"
+        id="piso"
+        name="piso"
+        inputmode="numeric"
+        class={inp}
+        placeholder="Ej: 5 (PB = 0)"
+      />
+      <p id="piso-error" class="hidden text-xs text-red-600 mt-1"></p>
+    </div>
+  )}
 
   {rubroLabel && (
     <div>
@@ -331,6 +348,42 @@ const lbl = 'block text-sm font-medium text-neutral-700 mb-1';
     telError.classList.add('hidden');
   });
 
+  // --- Campo "piso" condicional (aparece según tipo de propiedad) ---
+  const tipoPropInput = document.getElementById('tipo_propiedad');
+  const pisoCampo = document.getElementById('piso-campo');
+  const pisoInput = document.getElementById('piso');
+  const pisoError = document.getElementById('piso-error');
+  const pisoTrigger = pisoCampo?.dataset.pisoTrigger;
+
+  function actualizarPiso() {
+    if (!pisoCampo) return;
+    const mostrar = tipoPropInput.value === pisoTrigger;
+    pisoCampo.classList.toggle('hidden', !mostrar);
+    if (!mostrar) {
+      pisoInput.value = '';
+      pisoError.classList.add('hidden');
+    }
+  }
+  tipoPropInput?.addEventListener('change', actualizarPiso);
+
+  // Solo números en el campo piso
+  pisoInput?.addEventListener('input', () => {
+    pisoInput.value = pisoInput.value.replace(/\D/g, '');
+    pisoError.classList.add('hidden');
+  });
+
+  // Devuelve true si podemos seguir; si supera 99 pisos pide confirmación
+  function validarPiso() {
+    if (!pisoCampo || pisoCampo.classList.contains('hidden')) return true;
+    const v = pisoInput.value.trim();
+    if (!v) return true; // opcional
+    const n = Number(v);
+    if (v.length > 2) {
+      return confirm(`Ingresaste el piso ${n}. ¿Es correcto? En Argentina es poco común un edificio de más de 99 pisos.`);
+    }
+    return true;
+  }
+
   // --- Manejo de archivos adjuntos (de a uno, hasta 5) ---
   const MAX_ARCHIVOS = 5;
   const MAX_MB = 15;
@@ -407,6 +460,10 @@ const lbl = 'block text-sm font-medium text-neutral-700 mb-1';
         telInput.focus();
         return;
       }
+      if (!validarPiso()) {
+        pisoInput.focus();
+        return;
+      }
       const submitBtn = form.querySelector('button[type="submit"]');
       const originalText = submitBtn.textContent;
       submitBtn.textContent = 'Enviando...';
@@ -436,6 +493,7 @@ const lbl = 'block text-sm font-medium text-neutral-700 mb-1';
         telefono: val('telefono'),
         localidad: val('localidad'),
         tipo_propiedad: val('tipo_propiedad'),
+        piso: val('piso'),
         rubro: val('rubro'),
         superficie_m2: num('superficie_m2'),
         ambientes: num('ambientes'),
