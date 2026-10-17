@@ -40,17 +40,19 @@ const { url, anonKey } = siteConfig.integrations.supabase;
   </main>
 
   <!-- Visor del tablero a pantalla completa -->
-  <div id="tablero-viewer" class="hidden fixed inset-0 z-40 bg-white overflow-auto">
-    <div class="sticky top-0 bg-white/95 backdrop-blur border-b border-neutral-200 flex items-center justify-between px-4 py-3 z-10">
+  <div id="tablero-viewer" class="hidden fixed inset-0 z-[60] bg-white overflow-auto">
+    <div class="sticky top-0 bg-white/95 backdrop-blur border-b border-neutral-200 flex items-center gap-3 px-4 py-3">
+      <button id="tablero-viewer-cerrar" class="inline-flex items-center gap-1.5 text-sm font-semibold text-white bg-primary-700 hover:bg-primary-800 rounded-lg px-3 py-2 shrink-0">
+        <span aria-hidden="true">←</span> Volver
+      </button>
       <p id="tablero-viewer-titulo" class="font-semibold text-neutral-900 truncate"></p>
-      <button id="tablero-viewer-cerrar" class="text-sm font-medium text-primary-700 shrink-0 ml-3">Cerrar ✕</button>
     </div>
-    <p class="text-xs text-neutral-500 px-4 py-2">Tocá cada punto para ver qué circuito es. Hacé zoom con los dedos.</p>
-    <div id="tablero-viewer-body" class="px-2 pb-12"></div>
+    <p class="text-xs text-neutral-500 px-4 py-2 max-w-2xl mx-auto">Tocá cada punto para ver qué circuito es. Hacé zoom con los dedos.</p>
+    <div id="tablero-viewer-body" class="px-2 pb-12 max-w-2xl mx-auto"></div>
   </div>
 
   <!-- Popup al tocar un punto del tablero -->
-  <div id="punto-modal" class="hidden fixed inset-0 z-50 grid place-items-end sm:place-items-center">
+  <div id="punto-modal" class="hidden fixed inset-0 z-[70] grid place-items-end sm:place-items-center">
     <div id="punto-fondo" class="absolute inset-0 bg-black/50"></div>
     <div class="relative bg-white w-full sm:max-w-sm rounded-t-2xl sm:rounded-2xl p-5 shadow-lift">
       <p id="punto-titulo" class="text-lg font-bold text-neutral-900 mb-1"></p>
