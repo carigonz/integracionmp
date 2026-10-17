@@ -39,6 +39,16 @@ const { url, anonKey } = siteConfig.integrations.supabase;
     </div>
   </main>
 
+  <!-- Visor del tablero a pantalla completa -->
+  <div id="tablero-viewer" class="hidden fixed inset-0 z-40 bg-white overflow-auto">
+    <div class="sticky top-0 bg-white/95 backdrop-blur border-b border-neutral-200 flex items-center justify-between px-4 py-3 z-10">
+      <p id="tablero-viewer-titulo" class="font-semibold text-neutral-900 truncate"></p>
+      <button id="tablero-viewer-cerrar" class="text-sm font-medium text-primary-700 shrink-0 ml-3">Cerrar ✕</button>
+    </div>
+    <p class="text-xs text-neutral-500 px-4 py-2">Tocá cada punto para ver qué circuito es. Hacé zoom con los dedos.</p>
+    <div id="tablero-viewer-body" class="px-2 pb-12"></div>
+  </div>
+
   <!-- Popup al tocar un punto del tablero -->
   <div id="punto-modal" class="hidden fixed inset-0 z-50 grid place-items-end sm:place-items-center">
     <div id="punto-fondo" class="absolute inset-0 bg-black/50"></div>
@@ -129,36 +139,53 @@ const { url, anonKey } = siteConfig.integrations.supabase;
     cont.innerHTML = '';
     tableros.forEach((t) => {
       if (!t.imagen) return;
-      const card = document.createElement('div');
-      card.className = 'bg-white border border-neutral-200 rounded-xl p-3';
-      const h = document.createElement('p');
-      h.className = 'text-sm font-semibold text-neutral-900 mb-1';
-      h.textContent = t.nombre || 'Tablero interactivo';
-      const hint = document.createElement('p');
-      hint.className = 'text-xs text-neutral-500 mb-2';
-      hint.textContent = 'Tocá cada punto para ver qué circuito es. Hacé zoom con los dedos.';
-      const wrap = document.createElement('div');
-      wrap.className = 'relative w-full rounded-lg overflow-hidden border border-neutral-200';
-      const img = document.createElement('img');
-      img.src = t.imagen;
-      img.className = 'w-full block';
-      wrap.appendChild(img);
-      const puntos = Array.isArray(t.puntos) ? t.puntos : [];
-      puntos.forEach((p, i) => {
-        const dot = document.createElement('button');
-        dot.type = 'button';
-        dot.className = 'absolute -translate-x-1/2 -translate-y-1/2 size-6 rounded-full bg-primary-600 text-white text-xs font-bold grid place-items-center shadow ring-2 ring-white';
-        dot.style.left = p.x + '%';
-        dot.style.top = p.y + '%';
-        dot.textContent = String(i + 1);
-        dot.addEventListener('click', () => abrirPunto(i + 1, p.titulo, p.descripcion));
-        wrap.appendChild(dot);
-      });
-      card.appendChild(h);
-      card.appendChild(hint);
-      card.appendChild(wrap);
-      cont.appendChild(card);
+      const row = document.createElement('div');
+      row.className = 'flex items-center gap-3 bg-white border border-neutral-200 rounded-xl p-3';
+      const info = document.createElement('div');
+      info.className = 'min-w-0 flex-1';
+      const titulo = document.createElement('p');
+      titulo.className = 'text-sm font-medium text-neutral-900 truncate';
+      titulo.textContent = t.nombre || 'Tablero interactivo';
+      const sub = document.createElement('p');
+      sub.className = 'text-xs text-neutral-500';
+      sub.textContent = 'Tocá para ver las térmicas';
+      info.appendChild(titulo);
+      info.appendChild(sub);
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'text-sm font-medium text-white bg-primary-700 hover:bg-primary-800 rounded-lg px-3 py-1.5 shrink-0';
+      btn.textContent = 'Abrir';
+      btn.addEventListener('click', () => openViewer(t));
+      row.appendChild(info);
+      row.appendChild(btn);
+      cont.appendChild(row);
     });
+  }
+
+  function openViewer(t) {
+    const v = document.getElementById('tablero-viewer');
+    const body = document.getElementById('tablero-viewer-body');
+    document.getElementById('tablero-viewer-titulo').textContent = t.nombre || 'Tablero interactivo';
+    body.innerHTML = '';
+    const wrap = document.createElement('div');
+    wrap.className = 'relative w-full';
+    const img = document.createElement('img');
+    img.src = t.imagen;
+    img.className = 'w-full block';
+    wrap.appendChild(img);
+    const puntos = Array.isArray(t.puntos) ? t.puntos : [];
+    puntos.forEach((p, i) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'absolute -translate-x-1/2 -translate-y-1/2 size-7 rounded-full bg-primary-600 text-white text-xs font-bold grid place-items-center shadow ring-2 ring-white';
+      dot.style.left = p.x + '%';
+      dot.style.top = p.y + '%';
+      dot.textContent = String(i + 1);
+      dot.addEventListener('click', () => abrirPunto(i + 1, p.titulo, p.descripcion));
+      wrap.appendChild(dot);
+    });
+    body.appendChild(wrap);
+    v.classList.remove('hidden');
   }
 
   function abrirPunto(num, titulo, descripcion) {
@@ -214,8 +241,13 @@ const { url, anonKey } = siteConfig.integrations.supabase;
     const cerrar = () => modal.classList.add('hidden');
     document.getElementById('punto-cerrar').addEventListener('click', cerrar);
     document.getElementById('punto-fondo').addEventListener('click', cerrar);
+    const viewer = document.getElementById('tablero-viewer');
+    document.getElementById('tablero-viewer-cerrar').addEventListener('click', () => viewer.classList.add('hidden'));
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') cerrar();
+      if (e.key === 'Escape') {
+        cerrar();
+        viewer.classList.add('hidden');
+      }
     });
   })();
 
