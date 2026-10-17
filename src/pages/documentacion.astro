@@ -57,10 +57,12 @@ const { url, anonKey } = siteConfig.integrations.supabase;
   <!-- Popup al tocar un punto del tablero -->
   <div id="punto-modal" class="hidden fixed inset-0 z-[70] grid place-items-end sm:place-items-center">
     <div id="punto-fondo" class="absolute inset-0 bg-black/50"></div>
-    <div class="relative bg-white w-full sm:max-w-sm rounded-t-2xl sm:rounded-2xl p-5 shadow-lift">
+    <div class="relative bg-white w-full sm:max-w-sm rounded-t-2xl sm:rounded-2xl p-5 shadow-lift max-h-[85vh] overflow-y-auto">
       <p id="punto-titulo" class="text-lg font-bold text-neutral-900 mb-1"></p>
-      <p id="punto-desc" class="text-sm text-neutral-600 leading-relaxed"></p>
-      <button id="punto-cerrar" class="mt-4 w-full text-sm font-medium text-white bg-primary-700 hover:bg-primary-800 rounded-lg py-2.5">
+      <p id="punto-desc" class="text-sm font-medium text-neutral-700"></p>
+      <div id="punto-detalle" class="hidden text-sm text-neutral-600 leading-relaxed whitespace-pre-line mt-2"></div>
+      <a id="punto-enlace" class="hidden items-center justify-center gap-1.5 mt-3 w-full text-sm font-medium text-primary-700 border border-primary-200 hover:bg-primary-50 rounded-lg py-2.5" target="_blank" rel="noopener noreferrer">Ver más ↗</a>
+      <button id="punto-cerrar" class="mt-3 w-full text-sm font-medium text-white bg-primary-700 hover:bg-primary-800 rounded-lg py-2.5">
         Cerrar
       </button>
     </div>
@@ -217,16 +219,54 @@ const { url, anonKey } = siteConfig.integrations.supabase;
       dot.style.left = p.x + '%';
       dot.style.top = p.y + '%';
       dot.textContent = String(i + 1);
-      dot.addEventListener('click', () => abrirPunto(i + 1, p.titulo, p.descripcion));
+      dot.addEventListener('click', () => abrirPunto(i + 1, p));
       wrap.appendChild(dot);
     });
     body.appendChild(wrap);
   }
 
-  function abrirPunto(num, titulo, descripcion) {
+  // Convierte el texto en nodos, haciendo tocables los links (sin HTML inseguro)
+  function linkificar(el, texto) {
+    el.innerHTML = '';
+    const re = /(https?:\/\/[^\s]+)/g;
+    let last = 0;
+    let m;
+    while ((m = re.exec(texto)) !== null) {
+      if (m.index > last) el.appendChild(document.createTextNode(texto.slice(last, m.index)));
+      const a = document.createElement('a');
+      a.href = m[0];
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.className = 'text-primary-700 underline break-all';
+      a.textContent = m[0];
+      el.appendChild(a);
+      last = m.index + m[0].length;
+    }
+    if (last < texto.length) el.appendChild(document.createTextNode(texto.slice(last)));
+  }
+
+  function abrirPunto(num, p) {
     const modal = document.getElementById('punto-modal');
-    document.getElementById('punto-titulo').textContent = (titulo || ('Punto ' + num));
-    document.getElementById('punto-desc').textContent = descripcion || 'Sin descripción.';
+    document.getElementById('punto-titulo').textContent = p.titulo || ('Punto ' + num);
+    const desc = document.getElementById('punto-desc');
+    desc.textContent = p.descripcion || '';
+    desc.style.display = p.descripcion ? '' : 'none';
+    const det = document.getElementById('punto-detalle');
+    if (p.detalle && p.detalle.trim()) {
+      linkificar(det, p.detalle);
+      det.classList.remove('hidden');
+    } else {
+      det.classList.add('hidden');
+    }
+    const link = document.getElementById('punto-enlace');
+    if (p.enlace && p.enlace.trim()) {
+      link.href = /^https?:\/\//.test(p.enlace) ? p.enlace : 'https://' + p.enlace;
+      link.classList.remove('hidden');
+      link.classList.add('flex');
+    } else {
+      link.classList.add('hidden');
+      link.classList.remove('flex');
+    }
     modal.classList.remove('hidden');
   }
 
