@@ -46,6 +46,7 @@ const { url, anonKey } = siteConfig.integrations.supabase;
 </BaseLayout>
 
 <script is:inline define:vars={{ supabaseUrl: url, supabaseKey: anonKey }}>
+  document.body.classList.add('qr-page');
   const params = new URLSearchParams(location.search);
   const token = params.get('id');
   const estado = document.getElementById('estado');
@@ -153,13 +154,13 @@ const { url, anonKey } = siteConfig.integrations.supabase;
   cargar();
 </script>
 
-<style>
+<style is:global>
   @media print {
     @page { margin: 1.5cm; }
-    /* Ocultamos todo el contenido del sitio… */
-    body > * { display: none !important; }
+    /* Solo en esta página (body.qr-page): ocultamos todo el sitio… */
+    body.qr-page > * { display: none !important; }
     /* …y mostramos solo el bloque de impresión */
-    #print-area {
+    body.qr-page #print-area {
       display: flex !important;
       flex-direction: column;
       align-items: center;
@@ -167,7 +168,7 @@ const { url, anonKey } = siteConfig.integrations.supabase;
       gap: 20px;
       min-height: 90vh;
     }
-    #print-titulo {
+    body.qr-page #print-titulo {
       font-size: 22px;
       font-weight: 700;
       text-align: center;
