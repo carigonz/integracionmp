@@ -1,0 +1,146 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { siteConfig } from '@/config/site.config';
+const { url, anonKey } = siteConfig.integrations.supabase;
+---
+
+<BaseLayout title="Documentación técnica" description="Documentación técnica de tu instalación eléctrica." noindex={true}>
+  <main id="main-content" class="min-h-[70vh] bg-neutral-50">
+    <div class="max-w-2xl mx-auto px-4 py-10">
+      <div class="flex items-center gap-2 mb-6">
+        <span class="grid place-items-center size-9 rounded-lg bg-primary-700 text-white font-bold text-sm">MP</span>
+        <div>
+          <p class="font-semibold text-neutral-900 leading-tight">IntegracionMP</p>
+          <p class="text-xs text-neutral-500">Electricidad / Obra civil / S&amp;H</p>
+        </div>
+      </div>
+
+      <div id="estado" class="text-neutral-500 text-sm py-10 text-center">Cargando documentación…</div>
+
+      <div id="contenido" class="hidden">
+        <h1 id="titulo" class="text-2xl font-bold text-neutral-900"></h1>
+        <p id="subtitulo" class="text-sm text-neutral-500 mb-6"></p>
+        <ul id="docs" class="space-y-2 mb-8"></ul>
+
+        <div class="border-t border-neutral-200 pt-6">
+          <button id="btn-qr" class="text-sm font-medium text-primary-700 border border-primary-200 hover:bg-primary-50 rounded-lg px-4 py-2">
+            Ver QR para imprimir
+          </button>
+          <div id="qr-box" class="hidden mt-5 text-center">
+            <div id="qr" class="inline-block bg-white p-4 rounded-xl ring-1 ring-neutral-200"></div>
+            <p class="text-xs text-neutral-500 mt-2">Escaneá para abrir esta página. Pegalo en el tablero.</p>
+            <button id="btn-print" class="mt-3 text-sm font-medium text-white bg-primary-700 hover:bg-primary-800 rounded-lg px-4 py-2 no-print">
+              Imprimir QR
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<script is:inline define:vars={{ supabaseUrl: url, supabaseKey: anonKey }}>
+  const params = new URLSearchParams(location.search);
+  const token = params.get('id');
+  const estado = document.getElementById('estado');
+  const contenido = document.getElementById('contenido');
+
+  function tipoIcono() {
+    return '📄';
+  }
+
+  async function cargar() {
+    if (!token) {
+      estado.textContent = 'Link inválido. Pedile a IntegracionMP el enlace correcto.';
+      return;
+    }
+    try {
+      const res = await fetch(`${supabaseUrl}/rest/v1/rpc/documentacion_qr`, {
+        method: 'POST',
+        headers: { apikey: supabaseKey, Authorization: `Bearer ${supabaseKey}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ p_token: token }),
+      });
+      const data = await res.json();
+      if (!data || !data.proyecto) {
+        estado.textContent = 'No encontramos documentación para este link.';
+        return;
+      }
+      document.getElementById('titulo').textContent = data.proyecto;
+      document.getElementById('subtitulo').textContent = data.cliente ? data.cliente : '';
+      const docs = Array.isArray(data.docs) ? data.docs : [];
+      const ul = document.getElementById('docs');
+      if (docs.length === 0) {
+        ul.innerHTML = '<li class="text-sm text-neutral-500">Todavía no hay documentos disponibles.</li>';
+      } else {
+        docs.forEach((d) => {
+          const li = document.createElement('li');
+          li.className = 'flex items-center gap-3 bg-white border border-neutral-200 rounded-xl p-3';
+          const info = document.createElement('div');
+          info.className = 'min-w-0 flex-1';
+          const t = document.createElement('p');
+          t.className = 'text-sm font-medium text-neutral-900 truncate';
+          t.textContent = d.descripcion || d.nombre || d.tipo || 'Documento';
+          const s = document.createElement('p');
+          s.className = 'text-xs text-neutral-500';
+          s.textContent = d.tipo || '';
+          info.appendChild(t);
+          info.appendChild(s);
+          const a = document.createElement('a');
+          a.href = d.url;
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          a.className = 'text-sm font-medium text-primary-700 hover:underline shrink-0';
+          a.textContent = 'Abrir';
+          li.appendChild(info);
+          li.appendChild(a);
+          ul.appendChild(li);
+        });
+      }
+      estado.classList.add('hidden');
+      contenido.classList.remove('hidden');
+    } catch (e) {
+      estado.textContent = 'Hubo un problema al cargar la documentación. Probá de nuevo.';
+    }
+  }
+
+  // QR: se genera con una librería liviana cargada desde CDN al tocar el botón
+  let qrLibCargada = false;
+  function cargarQrLib() {
+    return new Promise((resolve, reject) => {
+      if (qrLibCargada || window.QRCode) return resolve();
+      const s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+      s.onload = () => { qrLibCargada = true; resolve(); };
+      s.onerror = () => reject();
+      document.head.appendChild(s);
+    });
+  }
+
+  document.getElementById('btn-qr').addEventListener('click', async () => {
+    const box = document.getElementById('qr-box');
+    box.classList.toggle('hidden');
+    const cont = document.getElementById('qr');
+    if (!box.classList.contains('hidden') && cont.childElementCount === 0) {
+      try {
+        await cargarQrLib();
+        new window.QRCode(cont, { text: location.href, width: 220, height: 220, correctLevel: window.QRCode.CorrectLevel.M });
+      } catch {
+        cont.innerHTML = '<p class="text-xs text-red-600">No se pudo generar el QR.</p>';
+      }
+    }
+  });
+
+  document.getElementById('btn-print').addEventListener('click', () => window.print());
+
+  cargar();
+</script>
+
+<style>
+  @media print {
+    #main-content > div > *:not(#contenido),
+    #contenido > *:not(.border-t),
+    .no-print,
+    #btn-qr { display: none !important; }
+    .border-t { border: 0 !important; }
+  }
+</style>
