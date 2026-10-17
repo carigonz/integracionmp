@@ -20,6 +20,7 @@ const { url, anonKey } = siteConfig.integrations.supabase;
       <div id="contenido" class="hidden">
         <h1 id="titulo" class="text-2xl font-bold text-neutral-900"></h1>
         <p id="subtitulo" class="text-sm text-neutral-500 mb-6"></p>
+        <div id="tableros" class="space-y-4 mb-8"></div>
         <ul id="docs" class="space-y-2 mb-8"></ul>
 
         <div class="border-t border-neutral-200 pt-6">
@@ -37,6 +38,18 @@ const { url, anonKey } = siteConfig.integrations.supabase;
       </div>
     </div>
   </main>
+
+  <!-- Popup al tocar un punto del tablero -->
+  <div id="punto-modal" class="hidden fixed inset-0 z-50 grid place-items-end sm:place-items-center">
+    <div id="punto-fondo" class="absolute inset-0 bg-black/50"></div>
+    <div class="relative bg-white w-full sm:max-w-sm rounded-t-2xl sm:rounded-2xl p-5 shadow-lift">
+      <p id="punto-titulo" class="text-lg font-bold text-neutral-900 mb-1"></p>
+      <p id="punto-desc" class="text-sm text-neutral-600 leading-relaxed"></p>
+      <button id="punto-cerrar" class="mt-4 w-full text-sm font-medium text-white bg-primary-700 hover:bg-primary-800 rounded-lg py-2.5">
+        Cerrar
+      </button>
+    </div>
+  </div>
 
   <!-- Solo se ve al imprimir: QR grande + título centrado abajo -->
   <div id="print-area" class="hidden">
@@ -103,11 +116,56 @@ const { url, anonKey } = siteConfig.integrations.supabase;
           ul.appendChild(li);
         });
       }
+      renderTableros(Array.isArray(data.tableros) ? data.tableros : []);
       estado.classList.add('hidden');
       contenido.classList.remove('hidden');
     } catch (e) {
       estado.textContent = 'Hubo un problema al cargar la documentación. Probá de nuevo.';
     }
+  }
+
+  function renderTableros(tableros) {
+    const cont = document.getElementById('tableros');
+    cont.innerHTML = '';
+    tableros.forEach((t) => {
+      if (!t.imagen) return;
+      const card = document.createElement('div');
+      card.className = 'bg-white border border-neutral-200 rounded-xl p-3';
+      const h = document.createElement('p');
+      h.className = 'text-sm font-semibold text-neutral-900 mb-1';
+      h.textContent = t.nombre || 'Tablero interactivo';
+      const hint = document.createElement('p');
+      hint.className = 'text-xs text-neutral-500 mb-2';
+      hint.textContent = 'Tocá cada punto para ver qué circuito es. Hacé zoom con los dedos.';
+      const wrap = document.createElement('div');
+      wrap.className = 'relative w-full rounded-lg overflow-hidden border border-neutral-200';
+      const img = document.createElement('img');
+      img.src = t.imagen;
+      img.className = 'w-full block';
+      wrap.appendChild(img);
+      const puntos = Array.isArray(t.puntos) ? t.puntos : [];
+      puntos.forEach((p, i) => {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'absolute -translate-x-1/2 -translate-y-1/2 size-6 rounded-full bg-primary-600 text-white text-xs font-bold grid place-items-center shadow ring-2 ring-white';
+        dot.style.left = p.x + '%';
+        dot.style.top = p.y + '%';
+        dot.textContent = String(i + 1);
+        dot.addEventListener('click', () => abrirPunto(i + 1, p.titulo, p.descripcion));
+        wrap.appendChild(dot);
+      });
+      card.appendChild(h);
+      card.appendChild(hint);
+      card.appendChild(wrap);
+      cont.appendChild(card);
+    });
+  }
+
+  function abrirPunto(num, titulo, descripcion) {
+    const modal = document.getElementById('punto-modal');
+    document.getElementById('punto-titulo').textContent = (titulo || ('Punto ' + num));
+    document.getElementById('punto-desc').textContent = descripcion || 'Sin descripción.';
+    modal.classList.remove('hidden');
   }
 
   // QR: se genera con una librería liviana cargada desde CDN al tocar el botón
@@ -150,6 +208,16 @@ const { url, anonKey } = siteConfig.integrations.supabase;
       window.print();
     }
   });
+
+  (function () {
+    const modal = document.getElementById('punto-modal');
+    const cerrar = () => modal.classList.add('hidden');
+    document.getElementById('punto-cerrar').addEventListener('click', cerrar);
+    document.getElementById('punto-fondo').addEventListener('click', cerrar);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') cerrar();
+    });
+  })();
 
   cargar();
 </script>
