@@ -61,11 +61,11 @@ const { url, anonKey } = siteConfig.integrations.supabase;
         body: JSON.stringify({ p_token: token }),
       });
       const data = await res.json();
-      if (!data || !data.proyecto) {
+      if (!data || !data.titulo) {
         estado.textContent = 'No encontramos documentación para este link.';
         return;
       }
-      document.getElementById('titulo').textContent = data.proyecto;
+      document.getElementById('titulo').textContent = data.titulo;
       document.getElementById('subtitulo').textContent = data.cliente ? data.cliente : '';
       const docs = Array.isArray(data.docs) ? data.docs : [];
       const ul = document.getElementById('docs');
