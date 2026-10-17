@@ -41,11 +41,14 @@ const { url, anonKey } = siteConfig.integrations.supabase;
 
   <!-- Visor del tablero a pantalla completa -->
   <div id="tablero-viewer" class="hidden fixed inset-0 z-[60] bg-white overflow-auto">
-    <div class="sticky top-0 bg-white/95 backdrop-blur border-b border-neutral-200 flex items-center gap-3 px-4 py-3">
-      <button id="tablero-viewer-cerrar" class="inline-flex items-center gap-1.5 text-sm font-semibold text-white bg-primary-700 hover:bg-primary-800 rounded-lg px-3 py-2 shrink-0">
-        <span aria-hidden="true">←</span> Volver
-      </button>
-      <p id="tablero-viewer-titulo" class="font-semibold text-neutral-900 truncate"></p>
+    <div class="sticky top-0 bg-white/95 backdrop-blur border-b border-neutral-200 z-10">
+      <div class="flex items-center gap-3 px-4 py-3">
+        <button id="tablero-viewer-cerrar" class="inline-flex items-center gap-1.5 text-sm font-semibold text-white bg-primary-700 hover:bg-primary-800 rounded-lg px-3 py-2 shrink-0">
+          <span aria-hidden="true">←</span> Volver
+        </button>
+        <p id="tablero-viewer-titulo" class="font-semibold text-neutral-900 truncate"></p>
+      </div>
+      <div id="tablero-tabs" class="hidden gap-2 overflow-x-auto px-4 pb-2"></div>
     </div>
     <p class="text-xs text-neutral-500 px-4 py-2 max-w-2xl mx-auto">Tocá cada punto para ver qué circuito es. Hacé zoom con los dedos.</p>
     <div id="tablero-viewer-body" class="px-2 pb-12 max-w-2xl mx-auto"></div>
@@ -136,38 +139,69 @@ const { url, anonKey } = siteConfig.integrations.supabase;
     }
   }
 
+  let viewerTableros = [];
+
   function renderTableros(tableros) {
     const cont = document.getElementById('tableros');
     cont.innerHTML = '';
-    tableros.forEach((t) => {
-      if (!t.imagen) return;
-      const row = document.createElement('div');
-      row.className = 'flex items-center gap-3 bg-white border border-neutral-200 rounded-xl p-3';
-      const info = document.createElement('div');
-      info.className = 'min-w-0 flex-1';
-      const titulo = document.createElement('p');
-      titulo.className = 'text-sm font-medium text-neutral-900 truncate';
-      titulo.textContent = t.nombre || 'Tablero interactivo';
-      const sub = document.createElement('p');
-      sub.className = 'text-xs text-neutral-500';
-      sub.textContent = 'Tocá para ver las térmicas';
-      info.appendChild(titulo);
-      info.appendChild(sub);
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'text-sm font-medium text-white bg-primary-700 hover:bg-primary-800 rounded-lg px-3 py-1.5 shrink-0';
-      btn.textContent = 'Abrir';
-      btn.addEventListener('click', () => openViewer(t));
-      row.appendChild(info);
-      row.appendChild(btn);
-      cont.appendChild(row);
-    });
+    const conFoto = tableros.filter((t) => t.imagen);
+    if (conFoto.length === 0) return;
+    const row = document.createElement('div');
+    row.className = 'flex items-center gap-3 bg-white border border-neutral-200 rounded-xl p-3';
+    const info = document.createElement('div');
+    info.className = 'min-w-0 flex-1';
+    const titulo = document.createElement('p');
+    titulo.className = 'text-sm font-medium text-neutral-900 truncate';
+    titulo.textContent = 'Tablero interactivo';
+    const sub = document.createElement('p');
+    sub.className = 'text-xs text-neutral-500';
+    sub.textContent = conFoto.length > 1 ? `${conFoto.length} vistas · tocá para abrir` : 'Tocá para ver las térmicas';
+    info.appendChild(titulo);
+    info.appendChild(sub);
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'text-sm font-medium text-white bg-primary-700 hover:bg-primary-800 rounded-lg px-3 py-1.5 shrink-0';
+    btn.textContent = 'Abrir';
+    btn.addEventListener('click', () => openViewer(conFoto));
+    row.appendChild(info);
+    row.appendChild(btn);
+    cont.appendChild(row);
   }
 
-  function openViewer(t) {
-    const v = document.getElementById('tablero-viewer');
+  function openViewer(tableros) {
+    viewerTableros = tableros;
+    const tabs = document.getElementById('tablero-tabs');
+    tabs.innerHTML = '';
+    if (tableros.length > 1) {
+      tabs.classList.remove('hidden');
+      tabs.classList.add('flex');
+      tableros.forEach((t, i) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.dataset.i = String(i);
+        b.textContent = t.nombre || 'Vista ' + (i + 1);
+        b.addEventListener('click', () => selectTab(i));
+        tabs.appendChild(b);
+      });
+    } else {
+      tabs.classList.add('hidden');
+      tabs.classList.remove('flex');
+    }
+    selectTab(0);
+    document.getElementById('tablero-viewer').classList.remove('hidden');
+  }
+
+  function selectTab(i) {
+    const activa = 'text-xs font-semibold text-white bg-primary-700 rounded-full px-3 py-1.5 shrink-0 whitespace-nowrap';
+    const inactiva = 'text-xs font-medium text-neutral-600 bg-neutral-100 hover:bg-neutral-200 rounded-full px-3 py-1.5 shrink-0 whitespace-nowrap';
+    document.querySelectorAll('#tablero-tabs button').forEach((b) => {
+      b.className = Number(b.dataset.i) === i ? activa : inactiva;
+    });
+    renderBodyFor(viewerTableros[i]);
+  }
+
+  function renderBodyFor(t) {
     const body = document.getElementById('tablero-viewer-body');
-    document.getElementById('tablero-viewer-titulo').textContent = t.nombre || 'Tablero interactivo';
     body.innerHTML = '';
     const wrap = document.createElement('div');
     wrap.className = 'relative w-full';
@@ -187,7 +221,6 @@ const { url, anonKey } = siteConfig.integrations.supabase;
       wrap.appendChild(dot);
     });
     body.appendChild(wrap);
-    v.classList.remove('hidden');
   }
 
   function abrirPunto(num, titulo, descripcion) {
